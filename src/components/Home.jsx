@@ -53,7 +53,7 @@ function Home() {
         } duration-300 h-full p-5 pt-8 bg-blue-900 relative`}
       >
         <img
-          src="../src/assets/cara01.png"
+          src="../src/assets/Arrow.png"
           className={`absolute cursor-pointer rounded-full -right-3 top-9 w-9 border-2 border-gray-700 ${
             !open && "rotate-180"
           }`}
@@ -62,7 +62,7 @@ function Home() {
         />
         <div className="flex gap-x-4 items-center">
           <img
-            src="../src/assets/twitch_tile_logo_icon_170382.png"
+            src="../src/assets/cmb02.png"
             className="cursor-pointer duration-500 w-10"
             alt="Logo"
           />

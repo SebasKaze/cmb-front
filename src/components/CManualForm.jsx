@@ -17,12 +17,12 @@ function CargaManual() {
         seccion4: {},
         seccion5: {},
         seccion6: {},
-        seccion7: {},
+        seccion7: [],
     });
 
     const [sections, setSections] = useState([]);
     const [sections2, setSections2] = useState([]);
-
+    
     const handleTabClick = (tab) => {
         if (["section1", "section2", "section3", "section4", "section5", "section6", "section7"].includes(tab)) {
             setActiveTab(tab);
@@ -83,7 +83,7 @@ function CargaManual() {
                 {activeTab === "section4" && <Section4 formData={formData} setFormData={setFormData}/>}
                 {activeTab === "section5" && <Section5 formData={formData} setFormData={setFormData}/>}
                 {activeTab === "section6" && <Section6 formData={formData} setFormData={setFormData}/>}
-                {activeTab === "section7" && <Section7 />}
+                {activeTab === "section7" && <Section7 formData={formData} setFormData={setFormData}/>}
             </div>
             <button
                 onClick={handleSubmit}
