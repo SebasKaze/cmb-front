@@ -198,7 +198,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="dest_ori">Destino/Origen</label>
                         <select  className="w-full border border-gray-300 rounded p-2 bg-white" 
-                        name="clavePedi"
+                        name="dest_ori"
                         onChange={handleChange}
                         >
                             <option value="" disabled selected>Seleccione una opción</option>
@@ -608,15 +608,26 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                 <div className="grid grid-cols-3 gap-4">
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="efec">Efectivo</label>
-                        <input className="w-full border border-gray-300 rounded p-2" type="number" id="efec" name="efec" />
+                        <input className="w-full border border-gray-300 rounded p-2" type="number" 
+                        name="efec"
+                        value={formData.seccion1?.efec || ""}
+                        onChange={handleChange}
+                        />
                     </div>
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="otro_efec">Otros</label>
-                        <input className="w-full border border-gray-300 rounded p-2" type="number" id="otro_efec" name="otro_efec" />
+                        <input className="w-full border border-gray-300 rounded p-2" type="number" 
+                        name="otros"
+                        value={formData.seccion1?.otros || ""}
+                        onChange={handleChange} />
                     </div>
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="total">Total</label>
-                        <input className="w-full border border-gray-300 rounded p-2" type="number" id="total" name="total" />
+                        <input className="w-full border border-gray-300 rounded p-2" type="number" 
+                        name="total"
+                        value={formData.seccion1?.total || ""}
+                        onChange={handleChange} 
+                        />
                     </div>
                 </div>
         </div>
