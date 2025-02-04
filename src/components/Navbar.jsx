@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 
 export default function NavBar({ userData }) {
     const navigate = useNavigate();
-
     const handleLogout = () => {
         localStorage.removeItem("token");    
         console.log("Token después de logout:", localStorage.getItem("token")); // Verifica si se eliminó correctamente
