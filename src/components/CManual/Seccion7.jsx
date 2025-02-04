@@ -39,7 +39,6 @@ function Seccion7({ formData, setFormData }) {
             sec: "",
             fraccion: "",
             vinc: "",
-            Subd: "",
             MetS7P: "",
             UMCS7P: "",
             CantiUMCS7P: "",
@@ -119,15 +118,6 @@ function Seccion7({ formData, setFormData }) {
                                         type="text"
                                         value={section.vinc}
                                         onChange={(e) => handleSectionChange(section.id, "vinc", e.target.value)}
-                                    />
-                                </div>
-                                <div className="flex flex-col items-center text-center">
-                                    <label className="mb-2">Subd.</label>
-                                    <input
-                                        className="w-full border border-gray-300 rounded p-2"
-                                        type="text"
-                                        value={section.Subd}
-                                        onChange={(e) => handleSectionChange(section.id, "Subd", e.target.value)}
                                     />
                                 </div>
                                 <div className="flex flex-col items-center text-center">

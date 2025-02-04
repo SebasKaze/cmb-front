@@ -28,7 +28,7 @@ function Seccion6({ formData, setFormData }) {
                     <textarea
                     className="w-full border border-gray-300 rounded p-2 resize-none"
                     rows="4"
-                    name="rev1" // Nombre para identificar este campo en el estado
+                    name="1rev" // Nombre para identificar este campo en el estado
                     onChange={handleChange}
                     >
                     </textarea>
@@ -38,7 +38,7 @@ function Seccion6({ formData, setFormData }) {
                     <textarea
                     className="w-full border border-gray-300 rounded p-2 resize-none"
                     rows="4"
-                    name="rev2" // Nombre para identificar este campo en el estado
+                    name="2rev" // Nombre para identificar este campo en el estado
                     onChange={handleChange}
                     >
                     </textarea>
