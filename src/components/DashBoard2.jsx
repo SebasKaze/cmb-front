@@ -1,106 +1,164 @@
-import { useState, useEffect, useRef } from 'react';
+export default function DashBoard2(){
+    return(
+        <div >
+            <div class="overflow-x-auto">
+              <table class="table">
+                
+                <thead>
+                  <tr>
+                    <th>
+                      <label>
+                        <input type="checkbox" class="checkbox" />
+                      </label>
+                    </th>
+                    <th>Name</th>
+                    <th>Job</th>
+                    <th>Favorite Color</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  
+                  <tr>
+                    <th>
+                      <label>
+                        <input type="checkbox" class="checkbox" />
+                      </label>
+                    </th>
+                    <td>
+                      <div class="flex items-center gap-3">
+                        <div class="avatar">
+                          <div class="mask mask-squircle h-12 w-12">
+                            <img
+                              src="https://img.daisyui.com/images/profile/demo/2@94.webp"
+                              alt="Avatar Tailwind CSS Component" />
+                          </div>
+                        </div>
+                        <div>
+                          <div class="font-bold">Hart Hagerty</div>
+                          <div class="text-sm opacity-50">United States</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      Zemlak, Daniel and Leannon
+                      <br />
+                      <span class="badge badge-ghost badge-sm">Desktop Support Technician</span>
+                    </td>
+                    <td>Purple</td>
+                    <th>
+                      <button class="btn btn-ghost btn-xs">details</button>
+                    </th>
+                  </tr>
+                  
+                  <tr>
+                    <th>
+                      <label>
+                        <input type="checkbox" class="checkbox" />
+                      </label>
+                    </th>
+                    <td>
+                      <div class="flex items-center gap-3">
+                        <div class="avatar">
+                          <div class="mask mask-squircle h-12 w-12">
+                            <img
+                              src="https://img.daisyui.com/images/profile/demo/3@94.webp"
+                              alt="Avatar Tailwind CSS Component" />
+                          </div>
+                        </div>
+                        <div>
+                          <div class="font-bold">Brice Swyre</div>
+                          <div class="text-sm opacity-50">China</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      Carroll Group
+                      <br />
+                      <span class="badge badge-ghost badge-sm">Tax Accountant</span>
+                    </td>
+                    <td>Red</td>
+                    <th>
+                      <button class="btn btn-ghost btn-xs">details</button>
+                    </th>
+                  </tr>
+                  
+                  <tr>
+                    <th>
+                      <label>
+                        <input type="checkbox" class="checkbox" />
+                      </label>
+                    </th>
+                    <td>
+                      <div class="flex items-center gap-3">
+                        <div class="avatar">
+                          <div class="mask mask-squircle h-12 w-12">
+                            <img
+                              src="https://img.daisyui.com/images/profile/demo/4@94.webp"
+                              alt="Avatar Tailwind CSS Component" />
+                          </div>
+                        </div>
+                        <div>
+                          <div class="font-bold">Marjy Ferencz</div>
+                          <div class="text-sm opacity-50">Russia</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      Rowe-Schoen
+                      <br />
+                      <span class="badge badge-ghost badge-sm">Office Assistant I</span>
+                    </td>
+                    <td>Crimson</td>
+                    <th>
+                      <button class="btn btn-ghost btn-xs">details</button>
+                    </th>
+                  </tr>
+                  
+                  <tr>
+                    <th>
+                      <label>
+                        <input type="checkbox" class="checkbox" />
+                      </label>
+                    </th>
+                    <td>
+                      <div class="flex items-center gap-3">
+                        <div class="avatar">
+                          <div class="mask mask-squircle h-12 w-12">
+                            <img
+                              src="https://img.daisyui.com/images/profile/demo/5@94.webp"
+                              alt="Avatar Tailwind CSS Component" />
+                          </div>
+                        </div>
+                        <div>
+                          <div class="font-bold">Yancy Tear</div>
+                          <div class="text-sm opacity-50">Brazil</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td>
+                      Wyman-Ledner
+                      <br />
+                      <span class="badge badge-ghost badge-sm">Community Outreach Specialist</span>
+                    </td>
+                    <td>Indigo</td>
+                    <th>
+                      <button class="btn btn-ghost btn-xs">details</button>
+                    </th>
+                  </tr>
+                </tbody>
 
-const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const sidebarRef = useRef(null);
-  const triggerRef = useRef(null);
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (
-        isOpen &&
-        !sidebarRef.current?.contains(event.target) &&
-        !triggerRef.current?.contains(event.target)
-      ) {
-        setIsOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isOpen]);
-
-  return (
-    <div>
-      {/* Botón para abrir el menú */}
-      <button
-        ref={triggerRef}
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed p-4 text-gray-600 hover:text-gray-800 z-20"
-      >
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 6h16M4 12h16M4 18h16"
-          />
-        </svg>
-      </button>
-
-      {/* Sidebar */}
-      <aside
-        ref={sidebarRef}
-        className={`fixed left-0 top-0 h-full bg-white shadow-lg w-64 transform transition-transform duration-300 z-30 ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
-        {/* Encabezado del menú */}
-        <div className="p-4 border-b">
-          <h2 className="text-xl font-semibold">Menú</h2>
+                <tfoot>
+                  <tr>
+                    <th></th>
+                    <th>Name</th>
+                    <th>Job</th>
+                    <th>Favorite Color</th>
+                    <th></th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
         </div>
-
-        {/* Submenús */}
-        <div className="p-4">
-          {/* Submenú 1 */}
-          <div className="mb-4">
-            <h3 className="font-medium mb-2">Productos</h3>
-            <ul className="space-y-1">
-              <li>
-                <a href="#" className="block p-2 hover:bg-gray-100 rounded">
-                  Todos los productos
-                </a>
-              </li>
-              <li>
-                <a href="#" className="block p-2 hover:bg-gray-100 rounded">
-                  Categorías
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Submenú 2 */}
-          <div className="mb-4">
-            <h3 className="font-medium mb-2">Configuración</h3>
-            <ul className="space-y-1">
-              <li>
-                <a href="#" className="block p-2 hover:bg-gray-100 rounded">
-                  Perfil
-                </a>
-              </li>
-              <li>
-                <a href="#" className="block p-2 hover:bg-gray-100 rounded">
-                  Seguridad
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </aside>
-
-      {/* Overlay para móviles */}
-      {isOpen && (
-        <div className="fixed inset-0 bg-black/30 z-20 lg:hidden"></div>
-      )}
-    </div>
-  );
-};
-
-export default Sidebar;
+    )
+}
