@@ -1,8 +1,21 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route, Link, Navigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+
+//Rutas a componentes
 import Footer from "../components/Footer";
 import Dashboard from "../components/Dashboard";
 import CargarManual from "../components/CManualForm";
+import Pedimento from "../components/Pedimentos";
+import EntradaMercancia from "../components/EntradaMercancia";
+import Materiales from "../components/Materiales";
+import MaterialesCarga from  "../components/Materiales_Carga";
+import Productos from "../components/Productos";
+import ProductosCarga from "../components/Productos_Carga";
+
+
+import Sidebar from "./DashBoard2"
+
 
 function Home() {
   const [open, setOpen] = useState(true);
@@ -11,6 +24,8 @@ function Home() {
   const toggleSubMenu = (menu) => {
     setSubMenuOpen((prev) => ({ ...prev, [menu]: !prev[menu] }));
   };
+
+
 
   const menus = [
     { title: "DashBoard", route: "/" },
@@ -115,22 +130,25 @@ function Home() {
             </li>
           ))}
         </ul>
+
       </div>
 
       {/* Contenido principal */}
       <div className="flex-1 p-7 overflow-auto">
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/pedimentos" element={<h1>Pedimentos</h1>} />
+          <Route path="/pedimentos" element={<Pedimento/>} />
           <Route path="/carga-manual" element={<CargarManual />} />
-          <Route path="/carga-masiva" element={<h1>Carga Masiva</h1>} />
-          <Route path="/entrada-mercancias" element={<h1>Entrada de Mercancías</h1>} />
+          <Route path="/carga-masiva" element={<Sidebar/>} />
+          <Route path="/entrada-mercancias" element={<EntradaMercancia/>} />
           <Route path="/salida-mercancias" element={<h1>Salida de Mercancías</h1>} />
           <Route path="/saldos" element={<h1>Saldos</h1>} />
           <Route path="/materiales-utilizados" element={<h1>Materiales Utilizados</h1>} />
           <Route path="/activo-fijo" element={<h1>Activo Fijo</h1>} />
-          <Route path="/materiales" element={<h1>Materiales</h1>} />
-          <Route path="/productos" element={<h1>Productos</h1>} />
+          <Route path="/materiales" element={<Materiales />} />
+          <Route path="/productos" element={<Productos/>} />
+          <Route path="/materiales/nuevomaterial" element={<MaterialesCarga/>} />
+          <Route path="/productos/nuevoproducto" element={<ProductosCarga/>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         <Footer />

@@ -474,3 +474,124 @@ function Contribuciones({ contribuciones, setContribuciones }) {
 }
 
 export default Contribuciones;
+
+
+
+// Codigo para agregar props
+
+import { useState, useEffect } from "react";
+import { FaAccessibleIcon } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
+
+function Materiales() {
+
+    const [data, setData] = useState([]);
+
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+
+    useEffect(() => {
+    fetch("http://localhost:4000/api/verMateriales")
+        .then((response) => response.json())
+        .then((data) => setData(data))
+        .catch((error) => console.error("Error al obtener los datos:", error));
+    }, []);
+
+
+    const handleOpenPopup = () => setIsPopupOpen(true);
+    const handleClosePopup = () => setIsPopupOpen(false);
+    return (
+        <div>
+            <div className="w-full">
+            <button 
+            className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 shadow-md transition-all duration-300 hover:bg-green-600 hover:scale-105"
+            onClick={handleOpenPopup}>
+            Nuevo material <FaPlus />
+            </button>
+            </div>
+            <div className="w-full max-w-5xl p-4">
+                <table className="w-full border border-gray-300 shadow-lg bg-white">
+                <thead className="bg-gray-200">
+                    <tr>
+                    <th className="border p-2">ID</th>
+                    <th className="border p-2">Nombre</th>
+                    <th className="border p-2">Fraccion</th>
+                    <th className="border p-2">Descripcion</th>
+                    <th className="border p-2">Unidad de medida</th>
+                    <th className="border p-2"> </th>
+                    </tr>
+                </thead>
+                <tbody>
+                {data.map((row) => (
+                    <tr key={row.id_material_interno} className="text-center">
+                    <td className="border p-2">{row.id_material_interno}</td>
+                    <td className="border p-2">Nombre</td>
+                    <td className="border p-2">{row.fraccion_arancelaria}</td>
+                    <td className="border p-2">Descripcion</td>
+                    <td className="border p-2">Unidad de mediad</td>
+                    <td className="border p-2 flex justify-center gap-2">
+                        <button className="text-blue-500 hover:text-blue-800">
+                        <FaAccessibleIcon />
+                        </button>
+                    </td>
+                    </tr>
+                ))}
+                </tbody>
+                </table>
+            </div>
+            {/* Este es PopUp */}
+            {isPopupOpen && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                    <h2 className="text-lg font-bold mb-4">Nuevo Material</h2>
+                    <form>
+                    <div className="mb-2">
+                        <label className="block text-gray-700">ID</label>
+                        <input 
+                        type="text" 
+                        name="id" 
+                        
+                        className="w-full border rounded-md p-2 focus:outline-none focus:ring focus:ring-green-300" 
+                        />
+                    </div>
+                    <div className="mb-2">
+                        <label className="block text-gray-700">Nombre</label>
+                        <input 
+                        type="text" 
+                        name="nombre" 
+                        
+                        className="w-full border rounded-md p-2 focus:outline-none focus:ring focus:ring-green-300" 
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <label className="block text-gray-700">Descripción</label>
+                        <input 
+                        type="text" 
+                        name="descripcion" 
+                    
+                        className="w-full border rounded-md p-2 focus:outline-none focus:ring focus:ring-green-300" 
+                        />
+                    </div>
+                    <div className="flex justify-end gap-2">
+                        <button 
+                        type="button" 
+                        className="bg-gray-400 text-white px-4 py-2 rounded-md hover:bg-gray-500"
+                        onClick={handleClosePopup}
+                        >
+                        Cancelar
+                        </button>
+                        <button 
+                        type="submit" 
+                        className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
+                        >
+                        Guardar
+                        </button>
+                    </div>
+                    </form>
+                </div>
+                </div>
+            )}
+
+        </div>
+    )
+}
+export default Materiales;

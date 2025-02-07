@@ -1,79 +1,80 @@
-export default function Dashboard(){
-    return(
-        <div className="flex justify-center">
+// App.js
+import { useState } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { UserIcon, CurrencyDollarIcon, ChartBarIcon, ShoppingCartIcon } from '@heroicons/react/24/outline';
 
+// Datos ficticios
+const chartData = [
+    { month: 'Ene', usuarios: 4000, ventas: 2400 },
+    { month: 'Feb', usuarios: 3000, ventas: 1398 },
+    { month: 'Mar', usuarios: 2000, ventas: 9800 },
+    { month: 'Abr', usuarios: 2780, ventas: 3908 },
+    { month: 'May', usuarios: 1890, ventas: 4800 },
+    { month: 'Jun', usuarios: 2390, ventas: 3800 },
+];
 
+const stats = [
+    { title: 'Usuarios totales', value: '12,361', icon: UserIcon, color: 'bg-blue-100' },
+    { title: 'Ingresos mensuales', value: '$34,545', icon: CurrencyDollarIcon, color: 'bg-green-100' },
+    { title: 'Conversión', value: '3.8%', icon: ChartBarIcon, color: 'bg-purple-100' },
+    { title: 'Pedidos', value: '1,234', icon: ShoppingCartIcon, color: 'bg-red-100' },
+    ];
 
+export default function Dashboard() {
+    const [sidebarOpen, setSidebarOpen] = useState(false);
 
-
-
-
-
-
-
-
-
-
-
-
-            <div class="stats shadow">
-            <div class="stat">
-                <div class="stat-figure text-secondary">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    class="inline-block h-8 w-8 stroke-current">
-                    <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                </svg>
+    return (
+        <div className="min-h-screen bg-gray-50">
+        {/* Contenido principal */}
+            <div className="p-6">
+                <h1 className="text-3xl font-bold text-gray-900 mb-6">Dashboard</h1>
+                
+                {/* Estadísticas */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                {stats.map((stat, index) => (
+                    <div key={index} className="bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                    <div className="flex items-center justify-between">
+                        <div>
+                        <p className="text-sm text-gray-500">{stat.title}</p>
+                        <p className="text-2xl font-bold mt-2">{stat.value}</p>
+                        </div>
+                        <div className={`${stat.color} p-4 rounded-lg`}>
+                        <stat.icon className="w-6 h-6 text-gray-700" />
+                        </div>
+                    </div>
+                    </div>
+                ))}
                 </div>
-                <div class="stat-title">Downloads</div>
-                <div class="stat-value">31K</div>
-                <div class="stat-desc">Jan 1st - Feb 1st</div>
-            </div>
 
-            <div class="stat">
-                <div class="stat-figure text-secondary">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    class="inline-block h-8 w-8 stroke-current">
-                    <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
-                </svg>
+                {/* Gráfico */}
+                <div className="bg-white p-6 rounded-xl shadow-sm">
+                <h2 className="text-xl font-semibold mb-4">Rendimiento Mensual</h2>
+                <div className="h-80">
+                    <ResponsiveContainer width="100%" height="100%">
+                    <LineChart data={chartData}>
+                        <CartesianGrid strokeDasharray="3 3" />
+                        <XAxis dataKey="month" />
+                        <YAxis />
+                        <Tooltip />
+                        <Line 
+                        type="monotone" 
+                        dataKey="ventas" 
+                        stroke="#3B82F6" 
+                        strokeWidth={2}
+                        name="Ventas"
+                        />
+                        <Line 
+                        type="monotone" 
+                        dataKey="usuarios" 
+                        stroke="#10B981" 
+                        strokeWidth={2}
+                        name="Usuarios"
+                        />
+                    </LineChart>
+                    </ResponsiveContainer>
                 </div>
-                <div class="stat-title">New Users</div>
-                <div class="stat-value">4,200</div>
-                <div class="stat-desc">↗︎ 400 (22%)</div>
-            </div>
-
-            <div class="stat">
-                <div class="stat-figure text-secondary">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    class="inline-block h-8 w-8 stroke-current">
-                    <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"></path>
-                </svg>
                 </div>
-                <div class="stat-title">New Registers</div>
-                <div class="stat-value">1,200</div>
-                <div class="stat-desc">↘︎ 90 (14%)</div>
-            </div>
             </div>
         </div>
-    )
+    );
 }
