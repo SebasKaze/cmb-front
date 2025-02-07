@@ -4,8 +4,9 @@ import { useNavigate } from "react-router-dom"; // Importa useNavigate
 //Imports de iconos
 import { CiEdit } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
 
-function Materiales() {
+function Productos() {
 
     const [data, setData] = useState([]);
     const navigate = useNavigate(); // Inicializa useNavigate
@@ -14,24 +15,24 @@ function Materiales() {
     const [editedData, setEditedData] = useState({}); // Datos editados temporalmente
 
     useEffect(() => {
-    fetch("http://localhost:4000/api/verMateriales")
+    fetch("http://localhost:4000/api/verproductos")
         .then((response) => response.json())
         .then((data) => setData(data))
         .catch((error) => console.error("Error al obtener los datos:", error));
     }, []);
 
     const handleNuevoMaterial = () => {
-        navigate("/materiales/nuevomaterial"); // Navega a la ruta /nuevo-material
+        navigate("/productos/nuevoproducto"); // Navega a la ruta /nuevo-material
     }
 
     const handleEditClick = (row) => {
-        setEditingRowId(row.id_material_interno);
+        setEditingRowId(row.id_producto_interno);
         setEditedData(row); // Cargar los datos actuales de la fila en el estado
     };
 
     const handleSaveClick = (id) => {
         // Enviar los datos actualizados al backend
-        fetch(`http://localhost:4000/api/editarMaterial/${id}`, {
+        fetch(`http://localhost:4000/api/editarproducto/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -43,7 +44,7 @@ function Materiales() {
                 // Actualizar la tabla localmente
                 setData((prevData) =>
                     prevData.map((row) =>
-                        row.id_material_interno === id ? updatedData : row
+                        row.id_producto_interno === id ? updatedData : row
                     )
                 );
                 setEditingRowId(null); // Salir del modo edición
@@ -65,12 +66,12 @@ function Materiales() {
     return (
         <div>
             <div className="w-full">
-            <button 
-            className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 shadow-md transition-all duration-300 hover:bg-green-600 hover:scale-105"
-            onClick={handleNuevoMaterial}
-            >
-            Nuevo material <FaPlus />
-            </button>
+                <button 
+                className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 shadow-md transition-all duration-300 hover:bg-green-600 hover:scale-105"
+                onClick={handleNuevoMaterial}
+                >
+                Nuevo Producto <FaPlus />
+                </button>
             </div>
             <div className="w-full max-w-5xl p-4">
                 <table className="w-full border border-gray-300 shadow-lg bg-white">
@@ -86,10 +87,10 @@ function Materiales() {
                 </thead>
                 <tbody>
                 {data.map((row) => (
-                            <tr key={row.id_material_interno} className="text-center">
-                                <td className="border p-2">{row.id_material_interno}</td>
+                            <tr key={row.id_producto_interno} className="text-center">
+                                <td className="border p-2">{row.id_producto_interno}</td>
                                 <td className="border p-2">
-                                    {editingRowId === row.id_material_interno ? (
+                                    {editingRowId === row.id_producto_interno ? (
                                         <input
                                             type="text"
                                             value={editedData.nombre_interno || ""}
@@ -101,7 +102,7 @@ function Materiales() {
                                     )}
                                 </td>
                                 <td className="border p-2">
-                                    {editingRowId === row.id_material_interno ? (
+                                    {editingRowId === row.id_producto_interno ? (
                                         <input
                                             type="text"
                                             value={editedData.fraccion_arancelaria || ""}
@@ -113,7 +114,7 @@ function Materiales() {
                                     )}
                                 </td>
                                 <td className="border p-2">
-                                    {editingRowId === row.id_material_interno ? (
+                                    {editingRowId === row.id_producto_interno ? (
                                         <input
                                             type="text"
                                             value={editedData.descripcion_fraccion || ""}
@@ -125,7 +126,7 @@ function Materiales() {
                                     )}
                                 </td>
                                 <td className="border p-2">
-                                    {editingRowId === row.id_material_interno ? (
+                                    {editingRowId === row.id_producto_interno ? (
                                         <input
                                             type="text"
                                             value={editedData.unidad_medida || ""}
@@ -137,10 +138,10 @@ function Materiales() {
                                     )}
                                 </td>
                                 <td className="border p-2 flex justify-center gap-2">
-                                    {editingRowId === row.id_material_interno ? (
+                                    {editingRowId === row.id_producto_interno ? (
                                         <button
                                             className="text-green-500 hover:text-green-800"
-                                            onClick={() => handleSaveClick(row.id_material_interno)}
+                                            onClick={() => handleSaveClick(row.id_producto_interno)}
                                         >
                                             Guardar
                                         </button>
@@ -163,4 +164,4 @@ function Materiales() {
         </div>
     )
 }
-export default Materiales;
+export default Productos;

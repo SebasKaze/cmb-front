@@ -1,11 +1,18 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Routes, Route, Link, Navigate } from "react-router-dom";
-import NavBar from "../components/Navbar";
+import { jwtDecode } from "jwt-decode";
+
+//Rutas a componentes
 import Footer from "../components/Footer";
 import Dashboard from "../components/Dashboard";
 import CargarManual from "../components/CManualForm";
 import Pedimento from "../components/Pedimentos";
 import EntradaMercancia from "../components/EntradaMercancia";
+import Materiales from "../components/Materiales";
+import MaterialesCarga from  "../components/Materiales_Carga";
+import Productos from "../components/Productos";
+import ProductosCarga from "../components/Productos_Carga";
+
 
 import Sidebar from "./DashBoard2"
 
@@ -128,7 +135,6 @@ function Home() {
 
       {/* Contenido principal */}
       <div className="flex-1 p-7 overflow-auto">
-        <NavBar />
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/pedimentos" element={<Pedimento/>} />
@@ -139,8 +145,10 @@ function Home() {
           <Route path="/saldos" element={<h1>Saldos</h1>} />
           <Route path="/materiales-utilizados" element={<h1>Materiales Utilizados</h1>} />
           <Route path="/activo-fijo" element={<h1>Activo Fijo</h1>} />
-          <Route path="/materiales" element={<h1>Materiales</h1>} />
-          <Route path="/productos" element={<h1>Productos</h1>} />
+          <Route path="/materiales" element={<Materiales />} />
+          <Route path="/productos" element={<Productos/>} />
+          <Route path="/materiales/nuevomaterial" element={<MaterialesCarga/>} />
+          <Route path="/productos/nuevoproducto" element={<ProductosCarga/>} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         <Footer />

@@ -30,7 +30,7 @@ return (
                 <td className="border p-2">{row.clave_ped}</td>
                 <td className="border p-2 flex justify-center gap-2">
                     <button className="text-blue-500 hover:text-blue-800">
-                    <FaEye />
+                        <FaEye />
                     </button>
                 </td>
                 </tr>
