@@ -9,7 +9,7 @@ import Section7 from "./CManual/Seccion7";
 
 function CargaManual() {
     const [activeTab, setActiveTab] = useState("section1");
-
+    const userData = JSON.parse(localStorage.getItem("userData"));
     const [formData, setFormData] = useState({
         seccion1: {},
         seccion2: {},
@@ -32,6 +32,9 @@ function CargaManual() {
     const handleSubmit = async () => {
         try {
             const payload = {
+                id_usuario: userData.id_usuario,
+                id_empresa: userData.id_empresa,
+                nombre_usuario: userData.nombre_usuario,
                 ...formData,
                 contribuciones: sections,
                 CuadroLiquidacion: sections2,
