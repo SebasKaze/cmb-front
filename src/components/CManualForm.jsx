@@ -96,5 +96,4 @@ function CargaManual() {
         </div>
     );
 }
-
 export default CargaManual;
