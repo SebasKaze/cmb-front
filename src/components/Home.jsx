@@ -12,12 +12,17 @@ import Materiales from "../components/Materiales";
 import MaterialesCarga from  "../components/Materiales_Carga";
 import Productos from "../components/Productos";
 import ProductosCarga from "../components/Productos_Carga";
+import Domicilios from "../components/Domicilios";
+import DatosGenerales from "../components/DatosGenerales";
+import ActivoFijo from "../components/ActivoFijo";
+import Registro from "../components/Registro";
 
+import Sidebar from "./DashBoard2";
 
-import Sidebar from "./DashBoard2"
+// Importar iconos (puedes usar react-icons o cualquier otra librería de iconos)
+import { FaHome, FaBox, FaUpload, FaCogs, FaWarehouse, FaChartLine, FaArrowCircleLeft, FaArrowCircleDown } from "react-icons/fa";
 
-
-function Home() {
+function Home({ userData }) {
   const [open, setOpen] = useState(true);
   const [subMenuOpen, setSubMenuOpen] = useState({});
 
@@ -25,13 +30,12 @@ function Home() {
     setSubMenuOpen((prev) => ({ ...prev, [menu]: !prev[menu] }));
   };
 
-
-
   const menus = [
-    { title: "DashBoard", route: "/" },
-    { title: "Pedimentos", route: "/pedimentos" },
+    { title: "DashBoard", route: "/", icon: <FaHome /> },
+    { title: "Pedimentos", route: "/pedimentos", icon: <FaBox /> },
     {
       title: "Carga de datos",
+      icon: <FaUpload />,
       items: [
         { name: "Carga manual", route: "/carga-manual" },
         { name: "Carga masiva", route: "/carga-masiva" },
@@ -39,6 +43,7 @@ function Home() {
     },
     {
       title: "Procesos",
+      icon: <FaCogs />,
       items: [
         { name: "Entrada de Mercancías", route: "/entrada-mercancias" },
         { name: "Salida de Mercancías", route: "/salida-mercancias" },
@@ -46,9 +51,10 @@ function Home() {
         { name: "Materiales utilizados", route: "/materiales-utilizados" },
       ],
     },
-    { title: "Activo Fijo", route: "/activo-fijo" },
+    { title: "Activo Fijo", route: "/activo-fijo", icon: <FaWarehouse /> },
     {
       title: "Catálogos",
+      icon: <FaChartLine />,
       items: [
         { name: "Materiales", route: "/materiales" },
         { name: "Productos", route: "/productos" },
@@ -62,7 +68,7 @@ function Home() {
       <div
         className={`${
           open ? "w-72" : "w-24"
-        } duration-300 h-full p-5 pt-8 bg-blue-900 relative`}
+        } duration-300 h-full p-5 pt-8 bg-blue-900 relative shadow-lg`}
       >
         <img
           src="../src/assets/Arrow.png"
@@ -92,23 +98,29 @@ function Home() {
               {menu.route ? (
                 <Link
                   to={menu.route}
-                  className="flex items-center justify-between cursor-pointer text-gray-300 p-2 hover:bg-light-white"
+                  className="flex items-center justify-between cursor-pointer text-gray-300 p-2 hover:bg-blue-800 rounded-lg transition-all duration-200"
                 >
-                  <span className={`${!open && "hidden"} duration-300`}>
-                    {menu.title}
-                  </span>
+                  <div className="flex items-center">
+                    <span className="mr-2">{menu.icon}</span>
+                    <span className={`${!open && "hidden"} duration-300`}>
+                      {menu.title}
+                    </span>
+                  </div>
                 </Link>
               ) : (
                 <div>
                   <div
-                    className="flex items-center justify-between cursor-pointer text-gray-300 p-2 hover:bg-light-white"
+                    className="flex items-center justify-between cursor-pointer text-gray-300 p-2 hover:bg-blue-800 rounded-lg transition-all duration-200"
                     onClick={() => toggleSubMenu(menu.title)}
                   >
-                    <span className={`${!open && "hidden"} duration-300`}>
-                      {menu.title}
-                    </span>
+                    <div className="flex items-center">
+                      <span className="mr-2">{menu.icon}</span>
+                      <span className={`${!open && "hidden"} duration-300`}>
+                        {menu.title}
+                      </span>
+                    </div>
                     <span className="text-sm">
-                      {subMenuOpen[menu.title] ? "▲" : "▼"}
+                      {subMenuOpen[menu.title] ? <FaArrowCircleDown /> : <FaArrowCircleLeft />}
                     </span>
                   </div>
                   {menu.items && subMenuOpen[menu.title] && (
@@ -117,7 +129,7 @@ function Home() {
                         <li key={idx}>
                           <Link
                             to={item.route}
-                            className="text-sm text-gray-300 mb-2 block hover:underline"
+                            className="text-sm text-gray-300 mb-2 block hover:underline hover:text-white transition-all duration-200"
                           >
                             • {item.name}
                           </Link>
@@ -130,25 +142,27 @@ function Home() {
             </li>
           ))}
         </ul>
-
       </div>
 
       {/* Contenido principal */}
       <div className="flex-1 p-7 overflow-auto">
         <Routes>
           <Route path="/" element={<Dashboard />} />
+          <Route path="/datosgenerales" element={<DatosGenerales/>} />
+          <Route path="/domicilios" element={<Domicilios/>} />
+          <Route path="/registro" element={<Registro/>} />
           <Route path="/pedimentos" element={<Pedimento/>} />
-          <Route path="/carga-manual" element={<CargarManual />} />
+          <Route path="/carga-manual" element={<CargarManual userData={userData}/>} />
           <Route path="/carga-masiva" element={<Sidebar/>} />
           <Route path="/entrada-mercancias" element={<EntradaMercancia/>} />
           <Route path="/salida-mercancias" element={<h1>Salida de Mercancías</h1>} />
           <Route path="/saldos" element={<h1>Saldos</h1>} />
           <Route path="/materiales-utilizados" element={<h1>Materiales Utilizados</h1>} />
-          <Route path="/activo-fijo" element={<h1>Activo Fijo</h1>} />
-          <Route path="/materiales" element={<Materiales />} />
+          <Route path="/activo-fijo" element={<ActivoFijo/>} />
+          <Route path="/materiales" element={<Materiales userData={userData}/>} />
           <Route path="/productos" element={<Productos/>} />
-          <Route path="/materiales/nuevomaterial" element={<MaterialesCarga/>} />
-          <Route path="/productos/nuevoproducto" element={<ProductosCarga/>} />
+          <Route path="/materiales/nuevomaterial" element={<MaterialesCarga />} />
+          <Route path="/productos/nuevoproducto" element={<ProductosCarga />} />
           <Route path="*" element={<Navigate to="/" />} />
         </Routes>
         <Footer />

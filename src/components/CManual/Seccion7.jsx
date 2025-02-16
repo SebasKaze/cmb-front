@@ -153,7 +153,7 @@ function Seccion7({ formData, setFormData }) {
                                     <input
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="number"
-                                        value={section.CantiUMCS7P}
+                                        value={section.CantiUMCS7P || 0}
                                         onChange={(e) => handleSectionChange(section.id, "CantiUMCS7P", e.target.value)}
                                     />
                                 </div>
