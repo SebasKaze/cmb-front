@@ -20,8 +20,8 @@ export default function NavBar({ userData }) {
     }
 
     if (idEmpresa) {
-      let url = "http://localhost:4000/api/verDomicilios";
-      url += `?id_empresa=${idEmpresa}`;
+      let url = `http://localhost:4000/api/verDomicilios?id_empresa=${idEmpresa}`;
+      
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
@@ -29,29 +29,40 @@ export default function NavBar({ userData }) {
             "Listado de domicilios:",
             data.map((addr) => `${addr.id_domicilio} - ${addr.domicilio}`)
           );
+
           setAddresses(data);
+
           if (data.length > 0) {
-            setSelectedAddress(data[0].id_domicilio); // Selecciona el primer id de domicilio por defecto
+            const firstDomicilio = data[0].id_domicilio;
+            setSelectedAddress(firstDomicilio); 
+
+            const storedUserData = JSON.parse(localStorage.getItem("userData")) || {};
+            storedUserData.id_domicilio = firstDomicilio;
+            localStorage.setItem("userData", JSON.stringify(storedUserData));
+
+            console.log("ID del domicilio seleccionado:", firstDomicilio);
           }
         })
-        .catch((error) =>
-          console.error("Error al cargar domicilios:", error)
-        );
+        .catch((error) => console.error("Error al cargar domicilios:", error));
     }
   }, []);
 
   const handleAddressChange = (event) => {
-    const selectedId = event.target.value; // id_domicilio seleccionado
+    const selectedId = event.target.value;
     setSelectedAddress(selectedId);
-    // Guardar el id en localStorage de forma individual
+
+    // Guardar el id en localStorage
     localStorage.setItem("selectedDomicilio", selectedId);
-    // Recuperar el userData existente, actualizarlo y volver a guardarlo
-    const userData = JSON.parse(localStorage.getItem("userData")) || {};
-    userData.id_domicilio = selectedId; // Agrega o actualiza la propiedad
-    localStorage.setItem("userData", JSON.stringify(userData));
-    console.log("ID del domicilio seleccionado:", userData.id_domicilio);
+
+    // Recuperar y actualizar `userData`
+    const storedUserData = JSON.parse(localStorage.getItem("userData")) || {};
+    storedUserData.id_domicilio = selectedId;
+    localStorage.setItem("userData", JSON.stringify(storedUserData));
+
+    console.log("ID del domicilio seleccionado:", selectedId);
+
+    window.location.reload();
   };
-  
 
   const handleLogout = () => {
     localStorage.removeItem("token");

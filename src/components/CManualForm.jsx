@@ -35,10 +35,15 @@ function CargaManual() {
                 id_usuario: userData.id_usuario,
                 id_empresa: userData.id_empresa,
                 nombre_usuario: userData.nombre_usuario,
+                id_domicilio: userData.id_domicilio,
                 ...formData,
                 contribuciones: sections,
                 CuadroLiquidacion: sections2,
             };
+            console.log("ID Usuario:", payload.id_usuario);
+            console.log("ID Empresa:", payload.id_empresa);
+            console.log("Nombre Usuario:", payload.nombre_usuario);
+            console.log("ID Domicilio:", payload.id_domicilio);
             const response = await fetch("http://localhost:4000/api/cmpedimento", {
                 method: "POST",
                 headers: {

@@ -7,13 +7,14 @@ export default function Pedimento() {
 
   useEffect(() => {
     // Obtener y parsear el token del localStorage
-    const token = localStorage.getItem("token");
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    console.log("Token del localStorage:", userData);
+
     let idEmpresa, idDomicilio;
 
     try {
-      const parsedToken = JSON.parse(token);
-      idEmpresa = parsedToken.id_empresa;
-      idDomicilio = parsedToken.id_domicilio;
+      idEmpresa = userData.id_empresa;
+      idDomicilio = userData.id_domicilio;
     } catch (error) {
       console.error("Error al parsear el token:", error);
     }
