@@ -20,26 +20,38 @@ export default function NavBar({ userData }) {
     }
 
     if (idEmpresa) {
-        let url = "http://localhost:4000/api/verDomicilios";
-        url += `?id_empresa=${idEmpresa}`;
+      let url = "http://localhost:4000/api/verDomicilios";
+      url += `?id_empresa=${idEmpresa}`;
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
-          console.log("Listado de domicilios:", data.map((addr) => addr.domicilio)); // Muestra los domicilios en consola
+          console.log(
+            "Listado de domicilios:",
+            data.map((addr) => `${addr.id_domicilio} - ${addr.domicilio}`)
+          );
           setAddresses(data);
           if (data.length > 0) {
-            setSelectedAddress(data[0].domicilio); // Selecciona el primer domicilio por defecto
+            setSelectedAddress(data[0].id_domicilio); // Selecciona el primer id de domicilio por defecto
           }
         })
-        .catch((error) => console.error("Error al cargar domicilios:", error));
+        .catch((error) =>
+          console.error("Error al cargar domicilios:", error)
+        );
     }
   }, []);
 
   const handleAddressChange = (event) => {
-    const selectedDomicilio = event.target.value;
-    setSelectedAddress(selectedDomicilio);
-    console.log("Domicilio seleccionado:", selectedDomicilio);
+    const selectedId = event.target.value; // id_domicilio seleccionado
+    setSelectedAddress(selectedId);
+    // Guardar el id en localStorage de forma individual
+    localStorage.setItem("selectedDomicilio", selectedId);
+    // Recuperar el userData existente, actualizarlo y volver a guardarlo
+    const userData = JSON.parse(localStorage.getItem("userData")) || {};
+    userData.id_domicilio = selectedId; // Agrega o actualiza la propiedad
+    localStorage.setItem("userData", JSON.stringify(userData));
+    console.log("ID del domicilio seleccionado:", userData.id_domicilio);
   };
+  
 
   const handleLogout = () => {
     localStorage.removeItem("token");
@@ -66,7 +78,7 @@ export default function NavBar({ userData }) {
             onChange={handleAddressChange}
           >
             {addresses.map((addr) => (
-              <option key={addr.id_domicilio} value={addr.domicilio}>
+              <option key={addr.id_domicilio} value={addr.id_domicilio}>
                 {addr.domicilio}
               </option>
             ))}
@@ -96,8 +108,12 @@ export default function NavBar({ userData }) {
             tabIndex="0"
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow translate-y-8"
           >
-            <li><a>Datos generales</a></li>
-            <li><a>Domicilios</a></li>
+            <li>
+              <a>Datos generales</a>
+            </li>
+            <li>
+              <a>Domicilios</a>
+            </li>
             <li>
               <button
                 onClick={handleLogout}
