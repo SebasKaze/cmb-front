@@ -4,7 +4,9 @@ import { useNavigate } from "react-router-dom";
 export default function NavBar({ userData }) {
   const navigate = useNavigate();
   const [addresses, setAddresses] = useState([]);
-  const [selectedAddress, setSelectedAddress] = useState("");
+  const [selectedAddress, setSelectedAddress] = useState(
+    localStorage.getItem("selectedDomicilio") || ""
+  );
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -21,26 +23,25 @@ export default function NavBar({ userData }) {
 
     if (idEmpresa) {
       let url = `http://localhost:4000/api/verDomicilios?id_empresa=${idEmpresa}`;
-      
+
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
-          console.log(
-            "Listado de domicilios:",
-            data.map((addr) => `${addr.id_domicilio} - ${addr.domicilio}`)
-          );
+          console.log("Listado de domicilios:", data);
 
           setAddresses(data);
 
           if (data.length > 0) {
-            const firstDomicilio = data[0].id_domicilio;
-            setSelectedAddress(firstDomicilio); 
+            const storedDomicilio = localStorage.getItem("selectedDomicilio");
+            const firstDomicilio = storedDomicilio || data[0].id_domicilio;
+            setSelectedAddress(firstDomicilio);
 
+            // Actualiza userData en localStorage
             const storedUserData = JSON.parse(localStorage.getItem("userData")) || {};
             storedUserData.id_domicilio = firstDomicilio;
             localStorage.setItem("userData", JSON.stringify(storedUserData));
 
-            console.log("ID del domicilio seleccionado:", firstDomicilio);
+            console.log("Domicilio seleccionado:", firstDomicilio);
           }
         })
         .catch((error) => console.error("Error al cargar domicilios:", error));
@@ -61,7 +62,8 @@ export default function NavBar({ userData }) {
 
     console.log("ID del domicilio seleccionado:", selectedId);
 
-    window.location.reload();
+    // Actualizar sin recargar la página
+    navigate(0, { replace: true }); // Fuerza una actualización sin perder el estado
   };
 
   const handleLogout = () => {
@@ -83,17 +85,21 @@ export default function NavBar({ userData }) {
 
       <div className="navbar-end">
         <div className="p-2 flex items-center">
-          <select
-            className="select select-bordered mr-2"
-            value={selectedAddress}
-            onChange={handleAddressChange}
-          >
-            {addresses.map((addr) => (
-              <option key={addr.id_domicilio} value={addr.id_domicilio}>
-                {addr.domicilio}
-              </option>
-            ))}
-          </select>
+          {addresses.length > 0 ? (
+            <select
+              className="select select-bordered mr-2"
+              value={selectedAddress}
+              onChange={handleAddressChange}
+            >
+              {addresses.map((addr) => (
+                <option key={addr.id_domicilio} value={addr.id_domicilio}>
+                  {addr.domicilio}
+                </option>
+              ))}
+            </select>
+          ) : (
+            <span className="text-gray-500">No hay domicilios disponibles</span>
+          )}
           <div>
             <h2 className="font-bold">
               {userData?.nombre_empresa || "Empresa no disponible"}

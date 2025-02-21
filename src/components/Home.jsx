@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import Dashboard from "../components/Dashboard";
 import CargarManual from "../components/CManualForm";
 import Pedimento from "../components/Pedimentos";
+import PedimentosVer from "../components/PedimentosVer";
 import EntradaMercancia from "../components/EntradaMercancia";
 import Materiales from "../components/Materiales";
 import MaterialesCarga from  "../components/Materiales_Carga";
@@ -138,6 +139,7 @@ function Home() {
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/pedimentos" element={<Pedimento/>} />
+          <Route path="/pedimentos/ver/:no_pedimento" element={<PedimentosVer />} />
           <Route path="/carga-manual" element={<CargarManual />} />
           <Route path="/carga-masiva" element={<Sidebar/>} />
           <Route path="/entrada-mercancias" element={<EntradaMercancia/>} />
