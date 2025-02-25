@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import { CiEdit } from "react-icons/ci";
-import { FaPlus, FaEye } from "react-icons/fa";
+import { useNavigate } from 'react-router-dom';
+import { CiEdit } from 'react-icons/ci';
+import { FaPlus, FaEye } from 'react-icons/fa';
 
 function Productos() {
     const [data, setData] = useState([]);
@@ -11,12 +11,17 @@ function Productos() {
     const [editingRowId, setEditingRowId] = useState(null);
     const [editedData, setEditedData] = useState({});
 
+    const userData = JSON.parse(localStorage.getItem("userData")) || {};	//puedes cambiar id_domicilio por otro atributo
+    const { id_empresa, id_domicilio } = userData; // Extraer los IDs necesarios
+
     useEffect(() => {
-        fetch("http://localhost:4000/api/verproductos")
-            .then((response) => response.json())
-            .then((data) => setData(data))
-            .catch((error) => console.error("Error al obtener los datos:", error));
-    }, []);
+        if (id_empresa && id_domicilio) {
+            fetch(`http://localhost:4000/api/verProductos?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
+                .then((response) => response.json())
+                .then((data) => setData(data))
+                .catch((error) => console.error("Error al obtener los datos:", error));
+        }
+    }, [id_empresa, id_domicilio]);
 
     const handleNuevoMaterial = () => {
         navigate("/productos/nuevoproducto");
@@ -75,7 +80,7 @@ function Productos() {
                             <th className="border p-2">Fracción</th>
                             <th className="border p-2">Descripción</th>
                             <th className="border p-2">Unidad de medida</th>
-                            <th className="border p-2">Acciones</th>
+                            <th className="border p-2"> </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -113,20 +118,25 @@ function Productos() {
                         <table className="w-full border border-gray-300">
                             <thead>
                                 <tr className="bg-gray-200">
-                                    <th className="border p-2">Campo</th>
-                                    <th className="border p-2">Valor</th>
+                                    <th className="border p-2">ID</th>
+                                    <th className="border p-2">Cantidad</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {Object.entries(popupData).map(([key, value]) => (
-                                    <tr key={key}>
-                                        <td className="border p-2 font-bold">{key}</td>
-                                        <td className="border p-2">{value}</td>
+                                {popupData.map((item, index) => (
+                                    <tr key={index}>
+                                        <td className="border p-2 font-bold">{item.id_material_interno}</td>
+                                        <td className="border p-2">{item.cantidad}</td>
                                     </tr>
                                 ))}
                             </tbody>
                         </table>
-                        <button className="mt-3 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600" onClick={() => setShowPopup(false)}>Cerrar</button>
+                        <button 
+                            className="mt-3 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600" 
+                            onClick={() => setShowPopup(false)}
+                        >
+                            Cerrar
+                        </button>
                     </div>
                 </div>
             )}

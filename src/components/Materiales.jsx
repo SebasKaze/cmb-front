@@ -7,18 +7,22 @@ import { FaPlus } from "react-icons/fa";
 
 function Materiales() {
 
+    const userData = JSON.parse(localStorage.getItem("userData")) || {};	//puedes cambiar id_domicilio por otro atributo
+    const { id_empresa, id_domicilio } = userData; // Extraer los IDs necesarios
+
     const [data, setData] = useState([]);
     const navigate = useNavigate(); // Inicializa useNavigate
-
     const [editingRowId, setEditingRowId] = useState(null); // ID de la fila en edición
     const [editedData, setEditedData] = useState({}); // Datos editados temporalmente
 
     useEffect(() => {
-    fetch("http://localhost:4000/api/verMateriales")
-        .then((response) => response.json())
-        .then((data) => setData(data))
-        .catch((error) => console.error("Error al obtener los datos:", error));
-    }, []);
+        if (id_empresa && id_domicilio) {
+            fetch(`http://localhost:4000/api/verMateriales?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
+                .then((response) => response.json())
+                .then((data) => setData(data))
+                .catch((error) => console.error("Error al obtener los datos:", error));
+        }
+    }, [id_empresa, id_domicilio]);
 
     const handleNuevoMaterial = () => {
         navigate("/materiales/nuevomaterial"); // Navega a la ruta /nuevo-material

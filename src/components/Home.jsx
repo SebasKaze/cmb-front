@@ -92,6 +92,7 @@ function Home({ userData }) {
             Menú
           </h1>
         </div>
+        {/* Menú lateral */}
         <ul className="pt-6">
           {menus.map((menu, index) => (
             <li key={index} className="mb-4">
@@ -120,7 +121,11 @@ function Home({ userData }) {
                       </span>
                     </div>
                     <span className="text-sm">
-                      {subMenuOpen[menu.title] ? <FaArrowCircleDown /> : <FaArrowCircleLeft />}
+                      {subMenuOpen[menu.title] ? (
+                        <FaArrowCircleDown />
+                      ) : (
+                        <FaArrowCircleLeft />
+                      )}
                     </span>
                   </div>
                   {menu.items && subMenuOpen[menu.title] && (
@@ -144,27 +149,30 @@ function Home({ userData }) {
         </ul>
       </div>
 
-      {/* Contenido principal */}
-      <div className="flex-1 p-7 overflow-auto">
-        <Routes>
-          <Route path="/" element={<Dashboard />} />
-          <Route path="/datosgenerales" element={<DatosGenerales/>} />
-          <Route path="/domicilios" element={<Domicilios/>} />
-          <Route path="/registro" element={<Registro/>} />
-          <Route path="/pedimentos" element={<Pedimento/>} />
-          <Route path="/carga-manual" element={<CargarManual userData={userData}/>} />
-          <Route path="/carga-masiva" element={<Sidebar/>} />
-          <Route path="/entrada-mercancias" element={<EntradaMercancia/>} />
-          <Route path="/salida-mercancias" element={<h1>Salida de Mercancías</h1>} />
-          <Route path="/saldos" element={<h1>Saldos</h1>} />
-          <Route path="/materiales-utilizados" element={<h1>Materiales Utilizados</h1>} />
-          <Route path="/activo-fijo" element={<ActivoFijo/>} />
-          <Route path="/materiales" element={<Materiales userData={userData}/>} />
-          <Route path="/productos" element={<Productos/>} />
-          <Route path="/materiales/nuevomaterial" element={<MaterialesCarga />} />
-          <Route path="/productos/nuevoproducto" element={<ProductosCarga />} />
-          <Route path="*" element={<Navigate to="/" />} />
-        </Routes>
+      {/* Contenido principal + Footer */}
+      <div className="flex flex-col flex-1 h-screen">
+        <div className="flex-1 p-7 overflow-auto">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/datosgenerales" element={<DatosGenerales />} />
+            <Route path="/domicilios" element={<Domicilios />} />
+            <Route path="/registro" element={<Registro />} />
+            <Route path="/pedimentos" element={<Pedimento />} />
+            <Route path="/carga-manual" element={<CargarManual userData={userData} />} />
+            <Route path="/carga-masiva" element={<Sidebar />} />
+            <Route path="/entrada-mercancias" element={<EntradaMercancia />} />
+            <Route path="/salida-mercancias" element={<h1>Salida de Mercancías</h1>} />
+            <Route path="/saldos" element={<h1>Saldos</h1>} />
+            <Route path="/materiales-utilizados" element={<h1>Materiales Utilizados</h1>} />
+            <Route path="/activo-fijo" element={<ActivoFijo />} />
+            <Route path="/materiales" element={<Materiales userData={userData} />} />
+            <Route path="/productos" element={<Productos />} />
+            <Route path="/materiales/nuevomaterial" element={<MaterialesCarga />} />
+            <Route path="/productos/nuevoproducto" element={<ProductosCarga />} />
+            <Route path="*" element={<Navigate to="/" />} />
+          </Routes>
+        </div>
+        {/* Footer siempre en la parte inferior */}
         <Footer />
       </div>
     </div>

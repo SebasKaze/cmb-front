@@ -1,30 +1,25 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+
 
 function ActivoFijo() {
-    const userData = JSON.parse(localStorage.getItem("userData")); // Obtener datos de usuario desde localStorage
     const [activos, setActivos] = useState([]);
 
-    useEffect(() => {
-        if (!userData?.id_empresa) {
-            console.error("Faltan datos de la empresa en localStorage");
-            return;
-        }
+    const userData = JSON.parse(localStorage.getItem("userData")) || {};
+    const { id_empresa, id_domicilio } = userData; 
 
-        axios.post("http://localhost:4000/api/activofijo", {
-            id_empresa: userData.id_empresa,
-        })
-        .then((response) => {
-            setActivos(response.data);
-        })
-        .catch((error) => console.error("Error al obtener los datos:", error));
-    }, []);
+    useEffect(() => {
+        if (id_empresa && id_domicilio) {
+            fetch(`http://localhost:4000/api/activofijo?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
+                .then((response) => response.json())
+                .then((data) => setActivos(data)) // Aquí estaba el error, ahora se usa setActivos correctamente
+                .catch((error) => console.error("Error al obtener los datos:", error));
+        }
+    }, [id_empresa, id_domicilio]);
 
     return (
         <div>
             <h2 className="text-2xl font-bold mb-4">Activo Fijo</h2>
 
-            {/* Verifica si hay activos antes de mostrar la tabla */}
             {activos.length > 0 ? (
                 <table className="table-auto border-collapse border border-gray-400 w-full">
                     <thead>

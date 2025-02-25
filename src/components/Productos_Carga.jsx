@@ -2,14 +2,18 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
-import { FaPlus, FaTrash } from "react-icons/fa"; 
+import { FaPlus, FaTrash } from 'react-icons/fa'; 
 
 function ProductosCarga() {
     const navigate = useNavigate();
 
     const [materiales, setMateriales] = useState([]); 
     const [seleccionados, setSeleccionados] = useState([]); // Ahora es un array
-    const userData = JSON.parse(localStorage.getItem("userData"));//Datos de usuario TOKEN
+    const userData = JSON.parse(localStorage.getItem("userData")) || {};//Informacion del token
+
+    const { id_empresa, id_domicilio } = userData; // Extraer los IDs necesarios
+
+    
     const [formData, setFormData] = useState({
         id: "",
         nombre: "",
@@ -20,10 +24,13 @@ function ProductosCarga() {
     });
 
     useEffect(() => {
-        axios.get("http://localhost:4000/api/verMateriales")
-            .then(response => setMateriales(response.data))
-            .catch(error => console.error("Error al obtener materiales:", error));
-    }, []);
+        if (id_empresa && id_domicilio) {
+            fetch(`http://localhost:4000/api/verMateriales?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
+                .then((response) => response.json())
+                .then((data) => setMateriales(data)) // Corrección aquí
+                .catch((error) => console.error("Error al obtener los datos:", error));
+        }
+    }, [id_empresa, id_domicilio]);
 
     const agregarMaterial = (material) => {
         if (!seleccionados.some((m) => m.id_material_interno === material.id_material_interno)) {
@@ -47,6 +54,7 @@ function ProductosCarga() {
             materiales: seleccionados,
             id_usuario: userData.id_usuario,
             id_empresa: userData.id_empresa,
+            id_domicilio: userData.id_domicilio,
         };
         console.log("Datos a enviar:", dataEnviar);
         axios.post("http://localhost:4000/api/cargaproducto", dataEnviar)

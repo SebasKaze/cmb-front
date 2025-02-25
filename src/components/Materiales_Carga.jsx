@@ -8,7 +8,9 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 
 
 export default function CargaMateriales() {
-    const userData = JSON.parse(localStorage.getItem("userData"));//Datos de usuario TOKEN
+    
+    const userData = JSON.parse(localStorage.getItem("userData")) || {};	//puedes cambiar id_domicilio por otro atributo
+    
     const [query, setQuery] = useState("");
     const [resultados, setResultados] = useState([]);
     const [mostrarBusqueda, setMostrarBusqueda] = useState(false); // Estado para controlar la visibilidad
@@ -58,6 +60,7 @@ export default function CargaMateriales() {
             ...formData,
             id_usuario: userData.id_usuario,
             id_empresa: userData.id_empresa,
+            id_domicilio: userData.id_domicilio,
         }
         const response = await fetch("http://localhost:4000/api/cargamateriales", {
             method: "POST",

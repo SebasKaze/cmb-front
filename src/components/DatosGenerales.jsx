@@ -34,7 +34,6 @@ function DatosGe() {
                         rfc: data[0].rfc_empresa,
                         razon_social: data[0].razon_social,
                         no_immex: data[0].no_immex,
-                        dom_fiscal: data[0].dom_fiscal,
                     };
 
                     setUserInfo(usuario);
@@ -81,7 +80,6 @@ function DatosGe() {
                                 <th className="border px-4 py-2">RFC</th>
                                 <th className="border px-4 py-2">Razón Social</th>
                                 <th className="border px-4 py-2">No. IMMEX</th>
-                                <th className="border px-4 py-2">Domicilio Fiscal</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -89,7 +87,7 @@ function DatosGe() {
                                 <td className="border px-4 py-2">{empresaInfo.rfc}</td>
                                 <td className="border px-4 py-2">{empresaInfo.razon_social}</td>
                                 <td className="border px-4 py-2">{empresaInfo.no_immex}</td>
-                                <td className="border px-4 py-2">{empresaInfo.dom_fiscal}</td>
+                                
                             </tr>
                         </tbody>
                     </table>
