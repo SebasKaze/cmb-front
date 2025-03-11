@@ -1,18 +1,17 @@
 import React from "react";
 
-function CuadroLiquidacion ({ section2, onChange, onRemove }) {
-    
+function CuadroLiquidacion({ section2, onChange, onRemove }) {
     return (
         <div className="grid grid-cols-3 gap-4 bg-gray-200 p-4 rounded mb-4">
+            {/* Concepto */}
             <div>
                 <label className="mb-2 block">Concepto</label>
-                <select className="w-full border border-gray-300 rounded p-2 bg-white"
-                value={section2.concepto}
-                onChange={(e) => onChange(section2.id, "concepto", e.target.value)}
+                <select
+                    className="w-full border border-gray-300 rounded p-2 bg-white"
+                    value={section2.concepto || ""}
+                    onChange={(e) => onChange(section2.id_cua, "concepto", e.target.value)}
                 >
-                    <option value="" disabled selected>
-                        Seleccione una opción
-                    </option>
+                    <option value="" disabled>Seleccione una opción</option>
                     <option value="DTA">DTA</option>
                     <option value="C.C.">C.C.</option>
                     <option value="IVA">IVA</option>
@@ -44,14 +43,16 @@ function CuadroLiquidacion ({ section2, onChange, onRemove }) {
                     <option value="DFC">DFC</option>
                 </select>
             </div>
+
+            {/* Forma de pago */}
             <div>
                 <label className="mb-2 block">Forma de pago</label>
                 <select
-                className="w-full border border-gray-300 rounded p-2 bg-white"
-                value={section2.formaPago}
-                onChange={(e) => onChange(section2.id, "formaPago", e.target.value)}
+                    className="w-full border border-gray-300 rounded p-2 bg-white"
+                    value={section2.forma_pago || ""}
+                    onChange={(e) => onChange(section2.id_cua, "forma_pago", e.target.value)}
                 >
-                    <option value="" disabled selected>Seleccione una opción</option>
+                    <option value="" disabled>Seleccione una opción</option>
                     <option value="0">0</option>
                     <option value="2">2</option>
                     <option value="4">4</option>
@@ -71,21 +72,29 @@ function CuadroLiquidacion ({ section2, onChange, onRemove }) {
                     <option value="22">22</option>
                 </select>
             </div>
+
+            {/* Importe */}
             <div>
                 <label className="mb-2 block">Importe</label>
-                <input type="number" className="w-full border border-gray-300 rounded p-2"
-                value={section2.importe}
-                onChange={(e) => onChange(section2.id, "importe", e.target.value)}
+                <input
+                    type="number"
+                    className="w-full border border-gray-300 rounded p-2"
+                    value={section2.importe || ""}
+                    onChange={(e) => onChange(section2.id_cua, "importe", e.target.value)}
                 />
             </div>
+
+            {/* Botón de eliminar */}
             <div className="col-span-3 text-right">
                 <button
-                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                onClick={onRemove}>
+                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                    onClick={() => onRemove(section2.id_cua)}
+                >
                     Eliminar CuaLi
                 </button>
             </div>
         </div>
     );
 }
+
 export default CuadroLiquidacion;

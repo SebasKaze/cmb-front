@@ -18,8 +18,8 @@ function Seccion6({ formData, setFormData }) {
                 <div className="flex flex-col items-center text-center">
                     <label className="mb-2">Numero de candado</label>
                     <input className="w-full border border-gray-300 rounded p-2" type="text"
-                    name="numCandado"
-                    value={formData.seccion6?.numCandado || ""}
+                    name="numero_candado"
+                    value={formData.seccion6?.numero_candado || ""}
                     onChange={handleChange}
                     />
                 </div>
@@ -28,9 +28,10 @@ function Seccion6({ formData, setFormData }) {
                     <textarea
                     className="w-full border border-gray-300 rounded p-2 resize-none"
                     rows="4"
-                    name="rev1" // Nombre para identificar este campo en el estado
+                    name="revision1"
+                    value={formData.seccion6?.revision1 || ""}
                     onChange={handleChange}
-                    >
+                    >                        
                     </textarea>
                 </div>
                 <div className="col-span-1 flex flex-col items-center text-center">
@@ -38,9 +39,11 @@ function Seccion6({ formData, setFormData }) {
                     <textarea
                     className="w-full border border-gray-300 rounded p-2 resize-none"
                     rows="4"
-                    name="rev2" // Nombre para identificar este campo en el estado
+                    name="revision2"
+                    value={formData.seccion6?.revision2 || ""}
                     onChange={handleChange}
                     >
+                        
                     </textarea>
                 </div>
             </div>

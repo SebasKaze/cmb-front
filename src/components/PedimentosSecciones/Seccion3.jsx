@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 
+function Section3({ formData, setFormData }) {
 
-function Seccion3({ formData, setFormData }) {
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
@@ -18,10 +18,10 @@ function Seccion3({ formData, setFormData }) {
             <h2 className="text-xl font-bold mb-4 text-center">Datos del proveedor o comprador</h2>
             <div className="grid grid-cols-3 gap-4">
                 <div className="flex flex-col items-center text-center">
-                    <label className="mb-2" for="">ID Fiscal</label>
-                    <input className="w-full border border-gray-300 rounded p-2" type="text"                
-                    name="idFiscalSec3"
-                    value={formData.seccion3?.idFiscalSec3 || ""}
+                    <label className="mb-2">ID Fiscal</label>
+                    <input className="w-full border border-gray-300 rounded p-2" type="text"
+                    name="id_fiscal"
+                    value={formData.seccion3?.id_fiscal || ""}  // Usamos value, no defaultValue
                     onChange={handleChange}
                     />
                 </div>
@@ -30,90 +30,93 @@ function Seccion3({ formData, setFormData }) {
                     <textarea
                     className="w-full border border-gray-300 rounded p-2 resize-none"
                     rows="2"
-                    name="razonSocialImpoExpo" // Nombre para identificar este campo en el estado
-                    onChange={handleChange} // Maneja los cambios en el valor
-                    >
-                    </textarea>
+                    name="nom_razon_social" 
+                    value={formData.seccion3?.nom_razon_social || ""}  // Usamos value, no defaultValue
+                    onChange={handleChange}
+                    />
                 </div>
                 <div className="col-span-3 flex flex-col items-center text-center">
-                    <label className="mb-2" for="">Domicilio</label>
+                    <label className="mb-2">Domicilio</label>
                     <textarea
                     className="w-full border border-gray-300 rounded p-2 resize-none"
                     rows="4"
-                    name="DomSec3" // Nombre para identificar este campo en el estado
-                    onChange={handleChange} // Maneja los cambios en el valor
-                    >
-                    </textarea>
+                    name="domicilio"
+                    value={formData.seccion3?.domicilio || ""}  // Usamos value, no defaultValue
+                    onChange={handleChange}
+                    />
                 </div>
                 <div className="flex flex-col items-center text-center">
-                    <label className="mb-2" for="">Vinculacion</label>
-                    <select className="w-full border border-gray-300 rounded p-2 bg-white"
-                    name="Vinculacion" 
-                    onChange={handleChange} 
+                    <label className="mb-2">Vinculación</label>
+                    <select
+                    className="w-full border border-gray-300 rounded p-2 bg-white"
+                    name="vinculacion"
+                    value={formData.seccion3?.vinculacion || ""}  // Asegura que tome el valor del estado
+                    onChange={handleChange}
                     >
-                        <option value="" disabled selected> </option>
+                        <option value="" disabled>Seleccione una opción</option>
                         <option value="si">SI</option>
                         <option value="no">NO</option>
                     </select>
                 </div>
                 <div className="flex flex-col items-center text-center">
-                    <label className="mb-2" for="">Num. CDFI</label>
-                    <input className="w-full border border-gray-300 rounded p-2" type="number"
-                    name="numCDFI"
-                    value={formData.seccion3?.numCDFI || ""}
+                    <label className="mb-2">Num. CDFI</label>
+                    <input className="w-full border border-gray-300 rounded p-2" type="text"
+                    name="no_cfdi"
+                    value={formData.seccion3?.no_cfdi || ""}
                     onChange={handleChange}
                     />
                 </div>
                 <div className="flex flex-col items-center text-center">
-                    <label className="mb-2" for="">Fecha</label>
+                    <label className="mb-2">Fecha</label>
                     <input className="w-full border border-gray-300 rounded p-2" type="date"
-                    name="fechaSec3"
-                    value={formData.seccion3?.fechaSec3 || ""}
+                    name="fecha_factu"
+                    value={formData.seccion3?.fecha_factu ? formData.seccion3.fecha_factu.split('T')[0] : ""}
                     onChange={handleChange}
                     />
                 </div>
                 <div className="flex flex-col items-center text-center">
-                    <label className="mb-2" for="">INCOTERM</label>
+                    <label className="mb-2">INCOTERM</label>
                     <input className="w-full border border-gray-300 rounded p-2" type="text"
-                    name="INCOTERM"
-                    value={formData.seccion3?.INCOTERM || ""}
+                    name="incoterm"
+                    value={formData.seccion3?.incoterm || ""}
                     onChange={handleChange}
                     />
                 </div>
                 <div className="flex flex-col items-center text-center">
-                    <label className="mb-2" for="">Moneda Fact.</label>
+                    <label className="mb-2">Moneda Fact.</label>
                     <input className="w-full border border-gray-300 rounded p-2" type="text"
-                    name="moneadaFact"
-                    value={formData.seccion3?.moneadaFact || ""}
+                    name="moneda_fact"
+                    value={formData.seccion3?.moneda_fact || ""}
                     onChange={handleChange}
                     />
                 </div>
                 <div className="flex flex-col items-center text-center">
-                    <label className="mb-2" for="">Val. Mon. Fact.</label>
+                    <label className="mb-2">Val. Mon. Fact.</label>
                     <input className="w-full border border-gray-300 rounded p-2" type="number"
-                    name="valMonFact"
-                    value={formData.seccion3?.valMonFact || ""}
+                    name="val_mon_fact"
+                    value={formData.seccion3?.val_mon_fact || ""}
                     onChange={handleChange}
                     />
                 </div>
                 <div className="flex flex-col items-center text-center">
-                    <label className="mb-2" for="">Factor Mon. Fact.</label>
+                    <label className="mb-2">Factor Mon. Fact.</label>
                     <input className="w-full border border-gray-300 rounded p-2" type="number"
-                    name="factorMonFact"
-                    value={formData.seccion3?.factorMonFact || ""}
+                    name="factor_mon_fact"
+                    value={formData.seccion3?.factor_mon_fact || ""}
                     onChange={handleChange}
                     />
                 </div>
                 <div className="flex flex-col items-center text-center">
-                    <label className="mb-2" for="">Val. Dolares</label>
+                    <label className="mb-2">Val. Dolares</label>
                     <input className="w-full border border-gray-300 rounded p-2" type="number"
-                    name="valDolares"
-                    value={formData.seccion3?.valDolares || ""}
+                    name="val_dolares"
+                    value={formData.seccion3?.val_dolares || ""}
                     onChange={handleChange}
                     />
                 </div>
             </div>
         </div>
-    )
-};
-export default Seccion3;
+    );
+}
+
+export default Section3;

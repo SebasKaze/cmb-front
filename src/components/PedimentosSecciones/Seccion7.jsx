@@ -4,38 +4,20 @@ function Seccion7({ formData, setFormData }) {
     const [sections, setSections] = useState(formData.seccion7 || []);
 
     useEffect(() => {
+        if (formData.seccion7 && formData.seccion7 !== sections) {
+            setSections(formData.seccion7);
+        }
+    }, [formData.seccion7]);
+
+    // Sincronizar formData.seccion7 con sections
+    useEffect(() => {
         setFormData((prevData) => ({ ...prevData, seccion7: sections }));
-    }, [sections, setFormData]);
+    }, [sections]);
 
-    // Actualiza los valores de los campos en las secciones
-    const handleSectionChange = (id, field, value) => {
-        setSections(
-            sections.map((section) =>
-                section.id === id ? { ...section, [field]: value } : section
-            )
-        );
-    };
-
-    // Actualiza los valores de los campos en las contribuciones
-    const handleContributionChange = (sectionId, contributionId, field, value) => {
-        setSections(
-            sections.map((section) =>
-                section.id === sectionId
-                    ? {
-                        ...section,
-                        contributions: section.contributions.map((contribution) =>
-                            contribution.id === contributionId
-                                ? { ...contribution, [field]: value }
-                                : contribution
-                        ),
-                    }
-                    : section
-            )
-        );
-    };
-
+    // Agregar nueva sección
     const handleAddSection = () => {
-        setSections([...sections, { id: Date.now(), 
+        const newSection = {
+            id_partida: Date.now(),  // Cambio de id a id_partida
             sec: "",
             fraccion: "",
             vinc: "",
@@ -56,35 +38,76 @@ function Seccion7({ formData, setFormData }) {
             ModeloS7P: "",
             CodigoProS7P: "",
             ObserS7P: "",
-            contributions: [] }]);
+            contribuciones: [],
+        };
+        setSections((prevSections) => {
+            const updatedSections = [...prevSections, newSection];
+            console.log('Updated Sections:', updatedSections); // Esto imprimirá el array antes de actualizar el estado
+            setFormData((prevData) => ({ ...prevData, seccion7: updatedSections }));
+            return updatedSections;
+        });
     };
 
-    const handleRemoveSection = (id) => {
-        setSections(sections.filter((section) => section.id !== id));
-    };
-
-    const handleAddContribution = (sectionId) => {
-        setSections(
-            sections.map((section) =>
-                section.id === sectionId
-                    ? { ...section, contributions: [...section.contributions, { id: Date.now(), con: "", tasa: "", tt: "", fp: "", importe: "" }] }
-                    : section
-            )
-        );
-    };
-
-    const handleRemoveContribution = (sectionId, contributionId) => {
-        setSections(
-            sections.map((section) =>
-                section.id === sectionId
+    // Agregar una nueva contribución dentro de una sección
+    const handleAddContribution = (sectionId_partida) => {  // Cambié sectionId a sectionId_partida
+        setSections((prevSections) => {
+            const updatedSections = prevSections.map((section) =>
+                section.id_partida === sectionId_partida  // Comparando con id_partida
                     ? {
-                        ...section,
-                        contributions: section.contributions.filter((contribution) => contribution.id !== contributionId),
-                    }
+                          ...section,
+                          contribuciones: [
+                              ...section.contribuciones,
+                              {
+                                  id_contri: Date.now(),  // Uso de id_contri
+                                  con: "",
+                                  tasa: "",
+                                  tt: "",
+                                  fp: "",
+                                  importe: "",
+                              },
+                          ],
+                      }
                     : section
-            )
-        );
+            );
+            setFormData((prevData) => ({ ...prevData, seccion7: updatedSections }));
+            return updatedSections;
+        });
     };
+
+// Eliminar una contribución de una sección
+const handleRemoveContribution = (sectionId_partida, contributionId_contri) => {
+    console.log('Removing contribution:', contributionId_contri, 'from section:', sectionId_partida);
+    setSections((prevSections) => {
+        const updatedSections = prevSections.map((section) =>
+            section.id_partida === sectionId_partida  // Comprobamos si id_partida coincide
+                ? {
+                      ...section,
+                      contribuciones: section.contribuciones.filter(
+                          (contribution) => {
+                              console.log('Checking contribution id_contri:', contribution.id_contri); // Verifica cada id_contri
+                              return contribution.id_contri !== contributionId_contri; // Comparamos con id_contri
+                          }
+                      ),
+                  }
+                : section
+        );
+        setFormData((prevData) => ({ ...prevData, seccion7: updatedSections }));
+        return updatedSections;
+    });
+};
+
+// Eliminar una sección
+const handleRemoveSection = (id_partida) => {
+    console.log('Removing section with id_partida:', id_partida);
+    setSections((prevSections) => {
+        const updatedSections = prevSections.filter((section) => {
+            console.log('Checking section id_partida:', section.id_partida); // Verifica cada id_partida
+            return section.id_partida !== id_partida; // Comparamos con id_partida
+        });
+        setFormData((prevData) => ({ ...prevData, seccion7: updatedSections }));
+        return updatedSections;
+    });
+};
 
     return (
         <div className="p-6">
@@ -92,13 +115,14 @@ function Seccion7({ formData, setFormData }) {
             <section>
                 <div>
                     {sections.map((section) => (
-                        <div key={section.id} className="mb-6">
+                        <div key={section.id_partidas} className="mb-6">
                             <div className="grid grid-cols-4 gap-4 bg-emerald-100 w-9/12 mx-auto p-4 rounded">
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">Sec</label>
                                     <input
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="text"
+                                        name="sec"
                                         value={section.sec}
                                         onChange={(e) => handleSectionChange(section.id, "sec", e.target.value)}
                                     />
@@ -276,7 +300,7 @@ function Seccion7({ formData, setFormData }) {
                                 </div>
                             </div>
                             <h4 className="text-lg font-bold mt-4 text-center">Contribuciones</h4>
-                            {section.contributions.map((contribution) => (
+                            {section.contribuciones.map((contribution) => (
                                 <div key={contribution.id} className="grid grid-cols-5 gap-4 bg-emerald-200 w-7/12 mx-auto p-4 rounded mb-4">
                                     <div className="flex flex-col items-center text-center">
                                         <label className="mb-2">CON</label>
@@ -355,7 +379,7 @@ function Seccion7({ formData, setFormData }) {
                                     <div className="col-span-5 text-right">
                                         <button
                                             className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                                            onClick={() => handleRemoveContribution(section.id, contribution.id)}>
+                                            onClick={() => handleRemoveContribution(section.id_partida, contribution.id_contri)}>
                                             Eliminar Contribución
                                         </button>
                                     </div>
@@ -364,14 +388,14 @@ function Seccion7({ formData, setFormData }) {
                             <div className="mb-4 text-center">
                                 <button
                                     className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                                    onClick={() => handleAddContribution(section.id)}>
+                                    onClick={() => handleAddContribution(section.id_partida)}>
                                     Agregar Contribución
                                 </button>
                             </div>
                             <div className="text-right">
                                 <button
                                     className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                                    onClick={() => handleRemoveSection(section.id)}>
+                                    onClick={() => handleRemoveSection(section.id_partida)}>
                                     Eliminar Partida
                                 </button>
                             </div>

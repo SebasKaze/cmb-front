@@ -5,38 +5,56 @@ import React, { useState } from "react";
 function Section1({ formData, setFormData,  sections , setSections, sections2, setSections2 }) {
     {/*Seccion para las contribuciones */}
     
+    // Agregar una nueva tasa
     const handleAddSection = () => {
-        setSections([...sections, { id: Date.now(), contribucion: "", clave: "", tasa: "" }]);
-    };;
-    const handleRemoveSection = (id) => {
-        setSections(sections.filter((section) => section.id !== id));
+        setSections((prevSections) => [
+            ...prevSections,
+            { id_tasa: Date.now(), contribucion: "", clave: "", tasa: "" },
+        ]);
     };
-    const handleSectionChange = (id, field, value) => {
-        setSections(
-            sections.map((section) =>
-                section.id === id ? { ...section, [field]: value } : section
+
+    // Eliminar una tasa específica
+    const handleRemoveSection = (id_tasa) => {
+        console.log("Antes de eliminar:", sections);
+        setSections((prevSections) => {
+            const newSections = prevSections.filter((section) => section.id_tasa !== id_tasa);
+            console.log("Después de eliminar:", newSections);
+            return newSections;
+        });
+    };
+
+    // Manejar cambios en los valores de cada tasa
+    const handleSectionChange = (id_tasa, field, value) => {
+        setSections((prevSections) =>
+            prevSections.map((section) =>
+                section.id_tasa === id_tasa ? { ...section, [field]: value } : section
             )
         );
     };
+
+    
 
 
     {/*Seccion para el cuadro de liquidacion */}
     
 
     const handleAddSection2 = () => {
-        setSections2([...sections2, { id: Date.now(), concepto: "", formaPago: "", importe: "" }]);
+        setSections2([...sections2, { id_cua: Date.now(), concepto: "", formaPago: "", importe: "" }]);
     };
-
-    const handleRemoveSection2 = (id) => {
-        setSections2(sections2.filter((section) => section.id !== id));
+    
+    const handleRemoveSection2 = (id_cua) => {
+        console.log("Eliminando sección con id:", id_cua); // Corregido: usé id_cua aquí
+        setSections2(sections2.filter((section) => section.id_cua !== id_cua)); // Usamos id_cua para la comparación
     };
-    const handleSection2Change = (id, field, value) => {
+    
+    const handleSection2Change = (id_cua, field, value) => {
         setSections2(
             sections2.map((section) =>
-                section.id === id ? { ...section, [field]: value } : section
+                section.id_cua === id_cua ? { ...section, [field]: value } : section
             )
         );
     };
+    
     
     //Cosa para guardar y concatenar los valores de los inputs
     const handleChange = (e) => {
@@ -64,16 +82,18 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" >Número de pedimento</label>
                         <input type="text" className="w-full border border-gray-300 rounded p-2"
                         name="noPedimento"
-                        value={formData.seccion1?.noPedimento || ""}
+                        value={formData.seccion1?.no_pedimento || ""}
                         onChange={handleChange}
                         />
                     </div>
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" >Tipo de operacion</label>
-                        <select className="w-full border border-gray-300 rounded p-2 bg-white"
-                        name="tipoOperacion" // Identifica este campo en el estado
-                        onChange={handleChange} // Maneja los cambios en el valor seleccionado
-                        >
+                        <select
+                        className="w-full border border-gray-300 rounded p-2 bg-white"
+                        name="tipo_oper" // Nombre que se usará para identificar en el estado
+                        value={formData.seccion1?.tipo_oper || ""} // El valor debe ser el estado de tipo_oper
+                        onChange={handleChange} // Llama a handleChange cuando se selecciona una opción
+                    >
                             <option value="" disabled selected>Seleccione una opción</option>
                             <option value="IMP">IMP (Importación)</option>
                             <option value="EXP">EXP (Exportacion)</option>
@@ -84,6 +104,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2">Clave de pedimento</label>
                         <select className="w-full border border-gray-300 rounded p-2 bg-white"
                         name="clavePedi"
+                        value={formData.seccion1?.clavePedi || ""}
                         onChange={handleChange} 
                         >
                             <option disabled  selected>Seleccione una opción</option>
@@ -180,6 +201,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2">Regimen</label>
                         <select className="w-full border border-gray-300 rounded p-2 bg-white"
                         name="regimen"
+                        value={formData.seccion1_2?.regimen || ""}
                         onChange={handleChange}
                         >
                             <option value="" disabled selected>Seleccione una opción</option>
@@ -199,6 +221,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="dest_ori">Destino/Origen</label>
                         <select  className="w-full border border-gray-300 rounded p-2 bg-white" 
                         name="dest_ori"
+                        value={formData.seccion1_2?.des_ori || ""}
                         onChange={handleChange}
                         >
                             <option value="" disabled selected>Seleccione una opción</option>
@@ -219,7 +242,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="t_cambio">Tipo de cambio</label>
                         <input type="number" step="0.000001" className="w-full border border-gray-300 rounded p-2"
                         name="tipoCambio"
-                        value={formData.seccion1?.tipoCambio || ""}
+                        value={formData.seccion1_2?.tipo_cambio || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -227,7 +250,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="peso_br">Peso bruto (kg)</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
                         name="pesoBruto"
-                        value={formData.seccion1?.pesoBruto || ""}
+                        value={formData.seccion1_2?.peso_bruto || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -235,7 +258,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="aduana_es">Aduana E/S</label>
                         <input type="text" pattern="\d*"  className="w-full border border-gray-300 rounded p-2"
                         name="aduanaES"
-                        value={formData.seccion1?.aduanaES || ""}
+                        value={formData.seccion1_2?.aduana_e_s || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -243,6 +266,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="m_trans">Medio de transporte</label>
                         <select className="w-full border border-gray-300 rounded p-2 bg-white"
                         name="m_trans"
+                        value={formData.seccion1_2?.aduana_e_s || ""}
                         onChange={handleChange} 
                         >
                             <option value="" disabled selected>Seleccione una opción</option>
@@ -265,6 +289,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="m_trans_arr">Medio de transporte arribo</label>
                         <select className="w-full border border-gray-300 rounded p-2 bg-white"
                         name="m_trans_arr"
+                        value={formData.seccion1_2?.medio_transpo_arri || ""}
                         onChange={handleChange} 
                         >
                             <option value="" disabled selected>Seleccione una opción</option>
@@ -287,6 +312,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="m_trans_sa">Medio de transporte salida</label>
                         <select className="w-full border border-gray-300 rounded p-2 bg-white"
                         name="m_trans_sa"
+                        value={formData.seccion1_2?.medio_transpo_sali || ""}
                         onChange={handleChange} 
                         >
                             <option value="" disabled selected>Seleccione una opción</option>
@@ -309,7 +335,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="v_dol">Valor en dolares</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
                         name="valorDolares"
-                        value={formData.seccion1?.valorDolares || ""}
+                        value={formData.seccion1_2?.valor_dolares || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -317,7 +343,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="v_adu">Valor aduana</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
                         name="valorAduana"
-                        value={formData.seccion1?.valorAduana || ""}
+                        value={formData.seccion1_2?.valor_aduana || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -325,7 +351,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="p_pag_valor">Precio pagado/valor comercial</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
                         name="precioPagado"
-                        value={formData.seccion1?.precioPagado || ""}
+                        value={formData.seccion1_2?.precio_pagado || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -333,7 +359,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="RFC_im_ex">RFC del importador/exportador</label>
                         <input type="text" className="w-full border border-gray-300 rounded p-2"
                         name="rfc_impo_expo"
-                        value={formData.seccion1?.rfc_impo_expo || ""}
+                        value={formData.seccion1_2?.rfc_import_export || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -341,7 +367,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="CURP_im_ex">CURP del importador/exportador</label>
                         <input type="text" className="w-full border border-gray-300 rounded p-2"
                         name="curp_impo_expo"
-                        value={formData.seccion1?.curp_impo_expo || ""}
+                        value={formData.seccion1_2?.curp_import_export || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -352,6 +378,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                             className="w-full border border-gray-300 rounded p-2 resize-none"
                             rows="4"
                             name="razonSocial" // Nombre para identificar este campo en el estado
+                            value={formData.seccion1_2?.razon_so_im_ex || ""}
                             onChange={handleChange} // Maneja los cambios en el valor
                             >
                             </textarea>
@@ -362,6 +389,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                             className="w-full border border-gray-300 rounded p-2 resize-none"
                             rows="4"
                             name="domImpoExpo"
+                            value={formData.seccion1_2?.domicilio_im_ex || ""}
                             onChange={handleChange} 
                             >
                             </textarea>
@@ -370,7 +398,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="val_seguros">Val seguros</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
                         name="valSeguros"
-                        value={formData.seccion1?.valSeguros || ""}
+                        value={formData.seccion1_2?.val_seguros || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -378,7 +406,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="seguros">Seguros</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
                         name="seguros"
-                        value={formData.seccion1?.seguros || ""}
+                        value={formData.seccion1_2?.seguros || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -386,7 +414,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="fletes">Fletes</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
                         name="fletes"
-                        value={formData.seccion1?.fletes || ""}
+                        value={formData.seccion1_2?.fletes || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -394,7 +422,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="embalajes">Embalajes</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
                         name="embalajes"
-                        value={formData.seccion1?.embalajes || ""}
+                        value={formData.seccion1_2?.embalajes || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -402,7 +430,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="o_inc">Otros Incrementales</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
                         name="otrosInc"
-                        value={formData.seccion1?.otrosInc || ""}
+                        value={formData.seccion1_?.otros_incremen || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -410,7 +438,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="t_dec">Transporte decrementales</label>
                         <input type="number"  className="w-full border border-gray-300 rounded p-2"
                         name="transDecre"
-                        value={formData.seccion1?.transDecre || ""}
+                        value={formData.seccion1_2?.transpo_decremen || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -418,7 +446,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="s_dec">Seguros decrementales</label>
                         <input type="number"  className="w-full border border-gray-300 rounded p-2"
                         name="segurosDecre"
-                        value={formData.seccion1?.segurosDecre || ""}
+                        value={formData.seccion1_2?.seguro_decremen || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -426,13 +454,13 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="c_dec">Carga decrementales</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
                         name="cargaDecre"
-                        value={formData.seccion1?.cargaDecre || ""}
+                        value={formData.seccion1_2?.carga_decremen || ""}
                         onChange={handleChange}/>
                     </div>
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="d_dec">Descarga decrementales</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
-                        name="descargaDecre"
+                        name="descarga_decremen"
                         value={formData.seccion1?.descargaDecre || ""}
                         onChange={handleChange}
                         />
@@ -441,7 +469,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="o_dec">Otros decrementales</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
                         name="otrosDecre"
-                        value={formData.seccion1?.otrosDecre || ""}
+                        value={formData.seccion1_2?.otros_decremen || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -449,7 +477,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="acu_ele">Acuse electrónico de validación/Codigo de aceptacion.</label>
                         <input type="text"  className="w-full border border-gray-300 rounded p-2"
                         name="acuseEle"
-                        value={formData.seccion1?.acuseEle || ""}
+                        value={formData.seccion1_2?.acuse_electroni_val || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -457,7 +485,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="c_barras">Codigo de barras</label>
                         <input type="text" className="w-full border border-gray-300 rounded p-2"
                         name="codigoBarras"
-                        value={formData.seccion1?.codigoBarras || ""}
+                        value={formData.seccion1_2?.codigo_barra || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -465,7 +493,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="c_adua_des">Clave de la sección aduanera de despacho.</label>
                         <input type="text" className="w-full border border-gray-300 rounded p-2"
                         name="claveSecAdu"
-                        value={formData.seccion1?.claveSecAdu || ""}
+                        value={formData.seccion1_2?.clv_sec_edu_despacho|| ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -473,7 +501,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="ma_nu_t">Marcas, números y total de bultos.</label>
                         <input type="text" className="w-full border border-gray-300 rounded p-2"
                         name="marcas"
-                        value={formData.seccion1?.marcas || ""}
+                        value={formData.seccion1_2?.total_bultos || ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -483,13 +511,13 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="fec_entr">Entrada</label>
                         <input type="date"  className="w-60 border border-gray-300 rounded p-2"
                         name="fechaEntrada"
-                        value={formData.seccion1?.fechaEntrada || ""}
+                        value={formData.seccion1_2?.fecha_en ? formData.seccion1_2.fecha_en.split('T')[0] : ""}
                         onChange={handleChange}
                         />
                         <label className="mb-2" for="fec_sal">Pago/Salida</label>
                         <input type="date" className="w-60 border border-gray-300 rounded p-2"
                         name="fechaSalida"
-                        value={formData.seccion1?.fechaSalida || ""}
+                        value={formData.seccion1_2?.feca_sal ? formData.seccion1_2.fecha_en.split('T')[0] : ""}
                         onChange={handleChange}
                         />
                     </div>
@@ -497,85 +525,67 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
             </section>   
             <h3 className="text-lg mb-4 text-center">Tasas a nivel de pedimento</h3>
                 <div >
-                    {sections.map((section) => (
-                        <div key={section.id} className="grid grid-cols-3 gap-4 bg-gray-200 p-4 rounded mb-4">
-                            <div>
-                                <label className="mb-2 block">Contribución</label>
-                                <select
-                                    className="w-full border border-gray-300 rounded p-2 bg-white"
-                                    value={section.contribucion}
-                                    onChange={(e) => handleSectionChange(section.id, "contribucion", e.target.value)}
-                                >
-                                    <option value="" disabled>
-                                        Seleccione una opción
-                                    </option>
-                                    <option value="DTA">DTA</option>
-                                    <option value="C.C.">C.C.</option>
-                                    <option value="IVA">IVA</option>
-                                    <option value="ISAN">ISAN</option>
-                                    <option value="IGI/IGE">IGI/IGE</option>
-                                    <option value="REC.">REC.</option>
-                                    <option value="OTROS">OTROS</option>
-                                    <option value="MULT.">MULT.</option>
-                                    <option value="2.5">2.5</option>
-                                    <option value="RT">RT</option>
-                                    <option value="PRV">PRV</option>
-                                    <option value="EUR">EUR</option>
-                                    <option value="REU">REU</option>
-                                    <option value="MT">MT</option>
-                                    <option value="IEPS">IEPS</option>
-                                    <option value="IVA/PRV">IVA/PRV</option>
-                                    <option value="2IB">2IB</option>
-                                    <option value="2IA2">2IA2</option>
-                                    <option value="2IA1">2IA1</option>
-                                    <option value="2IC">2IC</option>
-                                    <option value="2IF">2IF</option>
-                                    <option value="2IG">2IG</option>
-                                    <option value="2IJ">2IJ</option>
-                                    <option value="2II">2II</option>
-                                    <option value="ICF">ICF</option>
-                                    <option value="IEPSDIE">IEPSDIE</option>
-                                    <option value="ICNF">ICNF</option>
-                                    <option value="LIEPS">LIEPS</option>
-                                    <option value="DFC">DFC</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label className="mb-2 block">Clave del tipo de tasa</label>
-                                <select
-                                    className="w-full border border-gray-300 rounded p-2 bg-white"
-                                    value={section.clave}
-                                    onChange={(e) => handleSectionChange(section.id, "clave", e.target.value)}
-                                >
-                                    <option value="" disabled>
-                                        Seleccione una opción
-                                    </option>
-                                    {[...Array(10)].map((_, i) => (
-                                        <option key={i + 1} value={i + 1}>
-                                            {i + 1}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
-                            <div>
-                                <label className="mb-2 block">Tasa</label>
-                                <input
-                                    type="number"
-                                    className="w-full border border-gray-300 rounded p-2"
-                                    value={section.tasa}
-                                    onChange={(e) => handleSectionChange(section.id, "tasa", e.target.value)}
-                                />
-                            </div>
-                            <div className="col-span-3 text-right">
-                                <button
-                                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
-                                    onClick={() => handleRemoveSection(section.id)}
-                                >
-                                    Eliminar Contribución
-                                </button>
-                            </div>
-                        </div>
-                    ))}
+                {sections.map((section) => (
+    <div key={section.id_tasa} className="grid grid-cols-3 gap-4 bg-gray-200 p-4 rounded mb-4">
+        <div>
+            <label className="mb-2 block">Contribución</label>
+            <select
+                className="w-full border border-gray-300 rounded p-2 bg-white"
+                value={section.contribucion}
+                onChange={(e) => handleSectionChange(section.id_tasa, "contribucion", e.target.value)}
+            >
+                <option value="" disabled>Seleccione una opción</option>
+                <option value="DTA">DTA</option>
+                <option value="C.C.">C.C.</option>
+                <option value="IVA">IVA</option>
+                <option value="ISAN">ISAN</option>
+                <option value="IGI/IGE">IGI/IGE</option>
+                <option value="REC.">REC.</option>
+                <option value="OTROS">OTROS</option>
+                <option value="MULT.">MULT.</option>
+                <option value="2.5">2.5</option>
+                <option value="RT">RT</option>
+                <option value="PRV">PRV</option>
+                <option value="EUR">EUR</option>
+                <option value="REU">REU</option>
+                <option value="MT">MT</option>
+                <option value="IEPS">IEPS</option>
+                <option value="IVA/PRV">IVA/PRV</option>
+            </select>
+        </div>
+        <div>
+            <label className="mb-2 block">Clave del tipo de tasa</label>
+            <select
+                className="w-full border border-gray-300 rounded p-2 bg-white"
+                value={section.clave}  // CORREGIDO: antes tenía `cv_t_tasa`
+                onChange={(e) => handleSectionChange(section.id_tasa, "clave", e.target.value)}
+            >
+                <option value="" disabled>Seleccione una opción</option>
+                {[...Array(10)].map((_, i) => (
+                    <option key={i + 1} value={i + 1}>{i + 1}</option>
+                ))}
+            </select>
+        </div>
+        <div>
+            <label className="mb-2 block">Tasa</label>
+            <input
+                type="number"
+                className="w-full border border-gray-300 rounded p-2"
+                value={section.tasa}
+                onChange={(e) => handleSectionChange(section.id_tasa, "tasa", e.target.value)}
+            />
+        </div>
+        <div className="col-span-3 text-right">
+            <button
+                className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                onClick={() => handleRemoveSection(section.id_tasa)} // CORREGIDO: antes tenía `section.id`
+            >
+                Eliminar Contribución
+            </button>
+        </div>
+    </div>
+))}
+
                     <div className="mb-4 text-center">
                         <button
                             className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
@@ -589,13 +599,15 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
 
             <h3 className="text-lg mb-4 text-center">Cuadro de liquidacion</h3>
                 <div>
-                    {sections2.map((section2) => (
+                {sections2.map((section2) => (
                     <CuaLi
-                        key={section2.id}
-                        onRemove={() => handleRemoveSection2(section2.id)}
-                        section2={section2}
-                        onChange={handleSection2Change}
-                    />))}
+                    key={section2.id}
+                    section2={section2}
+                    onChange={handleSection2Change}
+                    onRemove={handleRemoveSection2}
+                    />
+                    ))}
+
                     {/*Boton para agregar contribuciones*/}
                     <div className="mb-4 text-center">
                         <button
