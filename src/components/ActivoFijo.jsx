@@ -1,9 +1,15 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom"; // Importa useNavigate
 
-
+import { FaPlus } from "react-icons/fa";
 function ActivoFijo() {
     const [activos, setActivos] = useState([]);
 
+
+    const navigate = useNavigate(); // Inicializa useNavigate
+    const cambioCrearActivo = () => {
+        navigate("/activo-fijo/crearActivo"); // Navega a la ruta /nuevo-material
+    }
     const userData = JSON.parse(localStorage.getItem("userData")) || {};
     const { id_empresa, id_domicilio } = userData; 
 
@@ -18,8 +24,16 @@ function ActivoFijo() {
 
     return (
         <div>
-            <h2 className="text-2xl font-bold mb-4">Activo Fijo</h2>
 
+            <h2 className="text-2xl font-bold mb-4">Activo Fijo</h2>
+                <div className="w-full p-6">
+                    <button 
+                    className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 shadow-md transition-all duration-300 hover:bg-green-600 hover:scale-105"
+                    onClick={cambioCrearActivo}
+                    >
+                    Agregar Activo Fijo <FaPlus />
+                    </button>
+                </div>
             {activos.length > 0 ? (
                 <table className="table-auto border-collapse border border-gray-400 w-full">
                     <thead>

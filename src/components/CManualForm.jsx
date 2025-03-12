@@ -9,7 +9,7 @@ import Section7 from "./CManual/Seccion7";
 
 function CargaManual() {
     const [activeTab, setActiveTab] = useState("section1");
-
+    const userData = JSON.parse(localStorage.getItem("userData"));
     const [formData, setFormData] = useState({
         seccion1: {},
         seccion2: {},
@@ -32,10 +32,18 @@ function CargaManual() {
     const handleSubmit = async () => {
         try {
             const payload = {
+                id_usuario: userData.id_usuario,
+                id_empresa: userData.id_empresa,
+                nombre_usuario: userData.nombre_usuario,
+                id_domicilio: userData.id_domicilio,
                 ...formData,
                 contribuciones: sections,
                 CuadroLiquidacion: sections2,
             };
+            console.log("ID Usuario:", payload.id_usuario);
+            console.log("ID Empresa:", payload.id_empresa);
+            console.log("Nombre Usuario:", payload.nombre_usuario);
+            console.log("ID Domicilio:", payload.id_domicilio);
             const response = await fetch("http://localhost:4000/api/cmpedimento", {
                 method: "POST",
                 headers: {
@@ -93,5 +101,4 @@ function CargaManual() {
         </div>
     );
 }
-
 export default CargaManual;

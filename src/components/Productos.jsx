@@ -32,23 +32,40 @@ function Productos() {
         setEditedData(row);
     };
 
+    const handleCancelClick = () => {
+        setEditingRowId(null); // Cancela la edición y vuelve a los botones originales
+        setEditedData({}); // Limpia los datos editados para evitar cambios no deseados
+    };
+    
     const handleSaveClick = (id) => {
+        const { id_domicilio } = userData;
+        const updatedData = { ...editedData, id_domicilio };
+    
         fetch(`http://localhost:4000/api/editarproducto/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(editedData),
+            body: JSON.stringify(updatedData),
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) {
+                    return response.json().then((errorData) => {
+                        throw new Error(errorData.message || "Error al actualizar el producto.");
+                    });
+                }
+                return response.json();
+            })
             .then((updatedData) => {
                 setData((prevData) => prevData.map((row) => (row.id_producto_interno === id ? updatedData : row)));
-                setEditingRowId(null);
+                setEditingRowId(null); // Desactiva el modo edición solo si la actualización es exitosa
                 alert("Cambios guardados exitosamente");
             })
             .catch((error) => {
                 console.error("Error al actualizar los datos:", error);
-                alert("Hubo un error al guardar los cambios.");
+                alert(error.message);
             });
     };
+    
+    
 
     const handleChange = (e, field) => {
         setEditedData((prevData) => ({ ...prevData, [field]: e.target.value }));
@@ -93,7 +110,14 @@ function Productos() {
                                 <td className="border p-2">{editingRowId === row.id_producto_interno ? <input type="text" value={editedData.unidad_medida || ""} onChange={(e) => handleChange(e, "unidad_medida")} className="border p-1" /> : row.unidad_medida}</td>
                                 <td className="border p-2 flex justify-center gap-2">
                                     {editingRowId === row.id_producto_interno ? (
-                                        <button className="text-green-500 hover:text-green-800" onClick={() => handleSaveClick(row.id_producto_interno)}>Guardar</button>
+                                        <>
+                                            <button className="text-green-500 hover:text-green-800" onClick={() => handleSaveClick(row.id_producto_interno)}>
+                                                ✔️
+                                            </button>
+                                            <button className="text-red-500 hover:text-red-800" onClick={handleCancelClick}>
+                                                ❌
+                                            </button>
+                                        </>
                                     ) : (
                                         <>
                                             <button className="text-blue-500 hover:text-blue-800" onClick={() => handleEditClick(row)}>
@@ -105,6 +129,7 @@ function Productos() {
                                         </>
                                     )}
                                 </td>
+
                             </tr>
                         ))}
                     </tbody>

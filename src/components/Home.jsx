@@ -2,22 +2,32 @@ import { useState, useEffect } from "react";
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 
-//Rutas a componentes
-import Footer from "../components/Footer";
-import Dashboard from "../components/Dashboard";
-import CargarManual from "../components/CManualForm";
+//Empresa
+import Domicilios from "../components/Domicilios";
+import DatosGenerales from "../components/DatosGenerales";
+import Registro from "../components/Registro";
+//Cargas
 import Pedimento from "../components/Pedimentos";
-import EntradaMercancia from "../components/EntradaMercancia";
+import PedimentosVer from "../components/PedimentosVer";
+import CargarManual from "../components/CManualForm";
+import CargaDocumentos from '../components/CargaDocumentos';
+//Catalogos
 import Materiales from "../components/Materiales";
 import MaterialesCarga from  "../components/Materiales_Carga";
 import Productos from "../components/Productos";
 import ProductosCarga from "../components/Productos_Carga";
-import Domicilios from "../components/Domicilios";
-import DatosGenerales from "../components/DatosGenerales";
+//Activo Fijo
 import ActivoFijo from "../components/ActivoFijo";
-import Registro from "../components/Registro";
-
+import CrearActivo  from "../components/CrearActivo"
+//Procesos
+import SalidaMercancias from '../components/SalidaMercancia';
+import EntradaMercancia from "../components/EntradaMercancia";
+import MaterialesUtilizados from '../components/MaterialesUtilizados';
+import Saldos from '../components/Saldos';
+//DashBoard y footer
 import Sidebar from "./DashBoard2";
+import Dashboard from "../components/Dashboard";
+import Footer from "../components/Footer";
 
 // Importar iconos (puedes usar react-icons o cualquier otra librería de iconos)
 import { FaHome, FaBox, FaUpload, FaCogs, FaWarehouse, FaChartLine, FaArrowCircleLeft, FaArrowCircleDown } from "react-icons/fa";
@@ -39,6 +49,7 @@ function Home({ userData }) {
       items: [
         { name: "Carga manual", route: "/carga-manual" },
         { name: "Carga masiva", route: "/carga-masiva" },
+        { name: "Carga Documentos", route: "/cargadocumentos" },
       ],
     },
     {
@@ -154,21 +165,32 @@ function Home({ userData }) {
         <div className="flex-1 p-7 overflow-auto">
           <Routes>
             <Route path="/" element={<Dashboard />} />
+            
             <Route path="/datosgenerales" element={<DatosGenerales />} />
             <Route path="/domicilios" element={<Domicilios />} />
             <Route path="/registro" element={<Registro />} />
+            {/*Elementos del pedimento */}
             <Route path="/pedimentos" element={<Pedimento />} />
-            <Route path="/carga-manual" element={<CargarManual userData={userData} />} />
+            <Route path="/pedimentos/ver/:no_pedimento" element={<PedimentosVer />} />
+            
+            <Route path="/carga-manual" element={<CargarManual />} />
             <Route path="/carga-masiva" element={<Sidebar />} />
-            <Route path="/entrada-mercancias" element={<EntradaMercancia />} />
-            <Route path="/salida-mercancias" element={<h1>Salida de Mercancías</h1>} />
-            <Route path="/saldos" element={<h1>Saldos</h1>} />
-            <Route path="/materiales-utilizados" element={<h1>Materiales Utilizados</h1>} />
+            <Route path="/cargadocumentos" element={<CargaDocumentos />} />
+
             <Route path="/activo-fijo" element={<ActivoFijo />} />
-            <Route path="/materiales" element={<Materiales userData={userData} />} />
+            <Route path="/activo-fijo/crearActivo" element={<CrearActivo />} />
+            {/*Catalogos */}
+            <Route path="/materiales" element={<Materiales />} />
             <Route path="/productos" element={<Productos />} />
             <Route path="/materiales/nuevomaterial" element={<MaterialesCarga />} />
             <Route path="/productos/nuevoproducto" element={<ProductosCarga />} />
+            {/* Procesos*/}
+            <Route path="/entrada-mercancias" element={<EntradaMercancia />} />
+            <Route path="/salida-mercancias" element={<SalidaMercancias/>} />
+            <Route path="/saldos" element={<Saldos/>} />
+            <Route path="/materiales-utilizados" element={<MaterialesUtilizados/>} />
+
+
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </div>

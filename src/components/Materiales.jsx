@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom"; // Importa useNavigate
 //Imports de iconos
 import { CiEdit } from "react-icons/ci";
 import { FaPlus } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 
 function Materiales() {
 
@@ -34,31 +35,48 @@ function Materiales() {
     };
 
     const handleSaveClick = (id) => {
+        const { id_domicilio } = userData; // Obtener id_domicilio
+    
+        // Agregar id_domicilio a los datos que se enviarán al backend
+        const updatedData = { ...editedData, id_domicilio };
+    
         // Enviar los datos actualizados al backend
         fetch(`http://localhost:4000/api/editarMaterial/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(editedData),
+            body: JSON.stringify(updatedData),
         })
-            .then((response) => response.json())
+            .then((response) => {
+                if (!response.ok) {
+                    return response.json().then((errorData) => {
+                        throw new Error(errorData.message || "Error al actualizar el material.");
+                    });
+                }
+                return response.json();  
+            })
             .then((updatedData) => {
-                // Actualizar la tabla localmente
                 setData((prevData) =>
                     prevData.map((row) =>
                         row.id_material_interno === id ? updatedData : row
                     )
                 );
-                setEditingRowId(null); // Salir del modo edición
-                // Mostrar mensaje de éxito
+                setEditingRowId(null); 
                 alert("Cambios guardados exitosamente");
             })
             .catch((error) => {
                 console.error("Error al actualizar los datos:", error);
-                alert("Hubo un error al guardar los cambios. Por favor, inténtalo de nuevo.");
+                alert(error.message);
             });
     };
+
+    const handleCancelClick = () => {
+        setEditingRowId(null); // Cancela la edición y vuelve a los botones originales
+        setEditedData({}); // Limpia los datos editados para evitar cambios no deseados
+    };
+    
+    
     const handleChange = (e, field) => {
         setEditedData((prevData) => ({
             ...prevData,
@@ -66,15 +84,59 @@ function Materiales() {
         }));
     };
 
+    const handleDeleteClick = (id) => {
+        const { id_domicilio } = userData; 
+        const deleteData = { id_material_interno: id, id_domicilio }; // Asegurar que se envían ambos datos
+
+        if (window.confirm("¿Seguro que deseas eliminar este material?")) {
+            fetch(`http://localhost:4000/api/eliminarmaterial/${id}`, {
+                method: "DELETE",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(deleteData),
+            })
+                .then(async (response) => {
+                    if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.message || "Error desconocido al eliminar el material.");
+                    }
+                    return response.json();
+                })
+                .then(() => {
+                    setData((prevData) => prevData.filter((row) => row.id_material_interno !== id));
+                    alert("Material eliminado exitosamente.");
+                })
+                .then((data) => {
+                    alert(data.message); // Mostrará "Material eliminado exitosamente."
+                    setData((prevData) => prevData.filter((row) => row.id_material_interno !== id));
+                })
+                .catch((error) => {
+                    console.error("Error al eliminar el material:", error);
+
+                    if (error.message.includes("No se encontró el Material")) {
+                        alert("❌ Error: No se encontró el material en la base de datos.");
+                    } else if (error.message.includes("No es posible eliminar")) {
+                        alert("⚠️ No es posible eliminar este material, ya está registrado en Productos.");
+                    } else if (error.message.includes("Error interno del servidor")) {
+                        alert("❌ Error interno del servidor. Intenta más tarde.");
+                    } 
+                });
+        }
+    };
+
+
+
+
     return (
         <div>
             <div className="w-full">
-            <button 
-            className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 shadow-md transition-all duration-300 hover:bg-green-600 hover:scale-105"
-            onClick={handleNuevoMaterial}
-            >
-            Nuevo material <FaPlus />
-            </button>
+                <button 
+                className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 shadow-md transition-all duration-300 hover:bg-green-600 hover:scale-105"
+                onClick={handleNuevoMaterial}
+                >
+                Nuevo material <FaPlus />
+                </button>
             </div>
             <div className="w-full max-w-5xl p-4">
                 <table className="w-full border border-gray-300 shadow-lg bg-white">
@@ -142,19 +204,29 @@ function Materiales() {
                                 </td>
                                 <td className="border p-2 flex justify-center gap-2">
                                     {editingRowId === row.id_material_interno ? (
-                                        <button
-                                            className="text-green-500 hover:text-green-800"
-                                            onClick={() => handleSaveClick(row.id_material_interno)}
-                                        >
-                                            Guardar
-                                        </button>
+                                        <>
+                                            <button
+                                                className="text-green-500 hover:text-green-800"
+                                                onClick={() => handleSaveClick(row.id_material_interno)}
+                                            >
+                                                ✔️
+                                            </button>
+                                            <button className="text-red-500 hover:text-red-800" onClick={handleCancelClick}>
+                                                ❌
+                                            </button>
+                                        </>
+                                        
+                                        
                                     ) : (
-                                        <button
-                                            className="text-blue-500 hover:text-blue-800"
-                                            onClick={() => handleEditClick(row)}
-                                        >
-                                            <CiEdit />
-                                        </button>
+                                        <>
+                                            <button className="text-blue-500 hover:text-blue-800" onClick={() => handleEditClick(row)}>
+                                                <CiEdit />
+                                            </button>
+                                            <button className="text-red-500 hover:text-red-800" onClick={() => handleDeleteClick(row.id_material_interno)}>
+                                                <FaTrash />
+                                            </button>
+                                        </>
+                                        
                                     )}
                                 </td>
                             </tr>
