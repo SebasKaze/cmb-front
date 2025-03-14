@@ -9,7 +9,7 @@ import Section6 from "./PedimentosSecciones/Seccion6";
 import Section7 from "./PedimentosSecciones/Seccion7";
 import { useNavigate } from "react-router-dom";
 
-function PedimentosVer() {
+function PedimentoEditar() {
     const { no_pedimento } = useParams();
     const [activeTab, setActiveTab] = useState("section1");
     const userData = JSON.parse(localStorage.getItem("userData"));
@@ -313,4 +313,4 @@ function PedimentosVer() {
     );
 }
 
-export default PedimentosVer;
+export default PedimentoEditar;

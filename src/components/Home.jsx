@@ -8,7 +8,8 @@ import DatosGenerales from "../components/DatosGenerales";
 import Registro from "../components/Registro";
 //Cargas
 import Pedimento from "../components/Pedimentos";
-import PedimentosVer from "../components/PedimentosVer";
+import PedimentoEditar from "../components/PedimentoEditar";
+import PedimentoVer from "../components/PedimentoVer";
 import CargarManual from "../components/CManualForm";
 import CargaDocumentos from '../components/CargaDocumentos';
 //Catalogos
@@ -171,7 +172,8 @@ function Home({ userData }) {
             <Route path="/registro" element={<Registro />} />
             {/*Elementos del pedimento */}
             <Route path="/pedimentos" element={<Pedimento />} />
-            <Route path="/pedimentos/ver/:no_pedimento" element={<PedimentosVer />} />
+            <Route path="/pedimentos/editar/:no_pedimento" element={<PedimentoEditar />} />
+            <Route path="/pedimentos/ver/:no_pedimento" element={<PedimentoVer />} />
             
             <Route path="/carga-manual" element={<CargarManual />} />
             <Route path="/carga-masiva" element={<Sidebar />} />
