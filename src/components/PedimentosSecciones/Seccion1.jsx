@@ -519,8 +519,8 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         />
                         <label className="mb-2" for="fec_sal">Pago/Salida</label>
                         <input type="date" className="w-60 border border-gray-300 rounded p-2"
-                        name="fecha_sal"
-                        value={formData.seccion1_2?.fecha_sal ? formData.seccion1_2.fecha_sal.split('T')[0] : ""}
+                        name="feca_sal"
+                        value={formData.seccion1_2?.feca_sal ? formData.seccion1_2.feca_sal.split('T')[0] : ""}
                         onChange={handleChange}
                         />
                     </div>

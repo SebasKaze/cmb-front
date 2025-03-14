@@ -68,6 +68,7 @@ function PedimentosVer() {
                 setFormData(formattedData); // Establecemos los datos formateados en el formulario
     
                 console.log("Datos recibidos del backend (formateados):", JSON.stringify(formattedData, null, 2));
+
             } catch (error) {
                 console.error("Error al cargar el pedimento:", error);
             }
@@ -207,9 +208,10 @@ function PedimentosVer() {
                 }
             } else {
                 // Si no es un array, comparamos el valor directo
-                if (JSON.stringify(original[key]) !== JSON.stringify(updated[key])) {
+                if (!original.hasOwnProperty(key) || JSON.stringify(original[key]) !== JSON.stringify(updated[key])) {
                     changes[key] = updated[key];
                 }
+                
             }
         });
     
