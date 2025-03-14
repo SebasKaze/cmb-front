@@ -65,7 +65,7 @@ function Section5({ formData, setFormData }) {
                         className="w-full border border-gray-300 rounded p-2" 
                         type="text" 
                         name="curp_transportista" 
-                        value={formData?.seccion5.curp_transportista || ""} // Valor predeterminado
+                        value={formData?.seccion5.curp_transportista || " "} // Valor predeterminado
                         onChange={handleChange}
                     />
                 </div>

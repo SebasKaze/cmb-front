@@ -3,12 +3,16 @@ import { FaEye } from "react-icons/fa6";
 
 export default function Pedimento() {
     const [data, setData] = useState([]);
+    const userData = JSON.parse(localStorage.getItem("userData")) || {};
+    const { id_empresa, id_domicilio } = userData; 
     useEffect(() => {
-    fetch("http://localhost:4000/api/entradamercancia")
-        .then((response) => response.json())
-        .then((data) => setData(data))
-        .catch((error) => console.error("Error al obtener los datos:", error));
-    }, []);
+        if (id_empresa && id_domicilio) {
+            fetch(`http://localhost:4000/api/procesos/emercancias?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
+                .then((response) => response.json())
+                .then((data) => setActivos(data)) // Aquí estaba el error, ahora se usa setActivos correctamente
+                .catch((error) => console.error("Error al obtener los datos:", error));
+        }
+    }, [id_empresa, id_domicilio]);
 
 return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">

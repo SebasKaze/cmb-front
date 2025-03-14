@@ -125,12 +125,9 @@ export default function NavBar({ userData }) {
             tabIndex="0"
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow translate-y-8"
           >
-            <li>
-              <a>Datos generales</a>
-            </li>
-            <li>
-              <a>Domicilios</a>
-            </li>
+                        <li><a onClick={() => navigate("/datosgenerales")}>Datos generales</a></li>
+                        <li><a onClick={() => navigate("/domicilios")}>Domicilios</a></li>
+                        <li><a onClick={() => navigate("/registro")}>Registros</a></li>
             <li>
               <button
                 onClick={handleLogout}
