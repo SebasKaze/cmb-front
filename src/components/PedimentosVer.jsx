@@ -10,6 +10,7 @@ import Section7 from "./PedimentosSecciones/Seccion7";
 import { useNavigate } from "react-router-dom";
 
 function PedimentosVer() {
+    const navigate = useNavigate();
     const { no_pedimento } = useParams();
     const [activeTab, setActiveTab] = useState("section1");
     const userData = JSON.parse(localStorage.getItem("userData"));

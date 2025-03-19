@@ -55,21 +55,23 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
         );
     };
     
-    
-    //Cosa para guardar y concatenar los valores de los inputs
     const handleChange = (e) => {
         const { name, value } = e.target;
-        setFormData((prev) => ({
-            ...prev,
-            seccion1: {
-                ...prev.seccion1,
-                [name]: value,
-            },
-        }));
+    
+        setFormData((prev) => {
+            // Detectar si el campo pertenece a seccion1 o seccion1_2
+            const sectionKey = prev.seccion1_2?.hasOwnProperty(name) ? "seccion1_2" : "seccion1";
+    
+            return {
+                ...prev,
+                [sectionKey]: {
+                    ...prev[sectionKey],
+                    [name]: value,
+                },
+            };
+        });
     };
-
-
-
+    
     return (
         <div className="p-6">
             <h2 className="text-xl font-bold mb-4 text-center">
@@ -81,9 +83,10 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" >Número de pedimento</label>
                         <input type="text" className="w-full border border-gray-300 rounded p-2"
-                        name="noPedimento"
+                        name="no_pedimento"
                         value={formData.seccion1?.no_pedimento || ""}
                         onChange={handleChange}
+                        disabled
                         />
                     </div>
                     <div className="flex flex-col items-center text-center">
@@ -103,8 +106,8 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2">Clave de pedimento</label>
                         <select className="w-full border border-gray-300 rounded p-2 bg-white"
-                        name="clavePedi"
-                        value={formData.seccion1?.clavePedi || ""}
+                        name="clave_ped"
+                        value={formData.seccion1?.clave_ped || ""}
                         onChange={handleChange} 
                         >
                             <option disabled  selected>Seleccione una opción</option>
@@ -204,7 +207,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         value={formData.seccion1_2?.regimen || ""}
                         onChange={handleChange}
                         >
-                            <option value="" disabled selected>Seleccione una opción</option>
+                            <option value="" disabled >Seleccione una opción</option>
                             <option value="IMD">IMD</option>
                             <option value="EXD">EXD</option>
                             <option value="ITR">ITR</option>
@@ -241,7 +244,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="t_cambio">Tipo de cambio</label>
                         <input type="number" step="0.000001" className="w-full border border-gray-300 rounded p-2"
-                        name="tipoCambio"
+                        name="tipo_cambio"
                         value={formData.seccion1_2?.tipo_cambio || ""}
                         onChange={handleChange}
                         />
@@ -249,7 +252,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="peso_br">Peso bruto (kg)</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
-                        name="pesoBruto"
+                        name="peso_bruto"
                         value={formData.seccion1_2?.peso_bruto || ""}
                         onChange={handleChange}
                         />
@@ -257,7 +260,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="aduana_es">Aduana E/S</label>
                         <input type="text" pattern="\d*"  className="w-full border border-gray-300 rounded p-2"
-                        name="aduanaES"
+                        name="aduana_e_s"
                         value={formData.seccion1_2?.aduana_e_s || ""}
                         onChange={handleChange}
                         />
@@ -265,7 +268,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="m_trans">Medio de transporte</label>
                         <select className="w-full border border-gray-300 rounded p-2 bg-white"
-                        name="m_trans"
+                        name="medio_transpo"
                         value={formData.seccion1_2?.aduana_e_s || ""}
                         onChange={handleChange} 
                         >
@@ -288,7 +291,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="m_trans_arr">Medio de transporte arribo</label>
                         <select className="w-full border border-gray-300 rounded p-2 bg-white"
-                        name="m_trans_arr"
+                        name="medio_transpo_arri"
                         value={formData.seccion1_2?.medio_transpo_arri || ""}
                         onChange={handleChange} 
                         >
@@ -311,7 +314,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="m_trans_sa">Medio de transporte salida</label>
                         <select className="w-full border border-gray-300 rounded p-2 bg-white"
-                        name="m_trans_sa"
+                        name="medio_transpo_sali"
                         value={formData.seccion1_2?.medio_transpo_sali || ""}
                         onChange={handleChange} 
                         >
@@ -334,7 +337,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="v_dol">Valor en dolares</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
-                        name="valorDolares"
+                        name="valor_dolares"
                         value={formData.seccion1_2?.valor_dolares || ""}
                         onChange={handleChange}
                         />
@@ -342,7 +345,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="v_adu">Valor aduana</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
-                        name="valorAduana"
+                        name="valor_aduana"
                         value={formData.seccion1_2?.valor_aduana || ""}
                         onChange={handleChange}
                         />
@@ -350,7 +353,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="p_pag_valor">Precio pagado/valor comercial</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
-                        name="precioPagado"
+                        name="precio_pagado"
                         value={formData.seccion1_2?.precio_pagado || ""}
                         onChange={handleChange}
                         />
@@ -358,7 +361,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="RFC_im_ex">RFC del importador/exportador</label>
                         <input type="text" className="w-full border border-gray-300 rounded p-2"
-                        name="rfc_impo_expo"
+                        name="rfc_import_export"
                         value={formData.seccion1_2?.rfc_import_export || ""}
                         onChange={handleChange}
                         />
@@ -366,7 +369,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="CURP_im_ex">CURP del importador/exportador</label>
                         <input type="text" className="w-full border border-gray-300 rounded p-2"
-                        name="curp_impo_expo"
+                        name="curp_import_export"
                         value={formData.seccion1_2.curp_import_export || " "}
                         onChange={handleChange}
                         />
@@ -377,7 +380,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                             <textarea
                             className="w-full border border-gray-300 rounded p-2 resize-none"
                             rows="4"
-                            name="razonSocial" // Nombre para identificar este campo en el estado
+                            name="razon_so_im_ex" // Nombre para identificar este campo en el estado
                             value={formData.seccion1_2?.razon_so_im_ex || ""}
                             onChange={handleChange} // Maneja los cambios en el valor
                             >
@@ -388,7 +391,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                             <textarea 
                             className="w-full border border-gray-300 rounded p-2 resize-none"
                             rows="4"
-                            name="domImpoExpo"
+                            name="domicilio_im_ex"
                             value={formData.seccion1_2?.domicilio_im_ex || ""}
                             onChange={handleChange} 
                             >
@@ -397,7 +400,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="val_seguros">Val seguros</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
-                        name="valSeguros"
+                        name="val_seguros"
                         value={formData.seccion1_2?.val_seguros || ""}
                         onChange={handleChange}
                         />
@@ -429,7 +432,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="o_inc">Otros Incrementales</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
-                        name="otrosInc"
+                        name="otros_incremen"
                         value={formData.seccion1_?.otros_incremen || ""}
                         onChange={handleChange}
                         />
@@ -437,7 +440,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="t_dec">Transporte decrementales</label>
                         <input type="number"  className="w-full border border-gray-300 rounded p-2"
-                        name="transDecre"
+                        name="transpo_decremen"
                         value={formData.seccion1_2?.transpo_decremen || ""}
                         onChange={handleChange}
                         />
@@ -445,7 +448,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="s_dec">Seguros decrementales</label>
                         <input type="number"  className="w-full border border-gray-300 rounded p-2"
-                        name="segurosDecre"
+                        name="seguro_decremen"
                         value={formData.seccion1_2?.seguro_decremen || ""}
                         onChange={handleChange}
                         />
@@ -453,7 +456,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="c_dec">Carga decrementales</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
-                        name="cargaDecre"
+                        name="carga_decremen"
                         value={formData.seccion1_2?.carga_decremen || ""}
                         onChange={handleChange}/>
                     </div>
@@ -461,14 +464,14 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <label className="mb-2" for="d_dec">Descarga decrementales</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
                         name="descarga_decremen"
-                        value={formData.seccion1?.descargaDecre || ""}
+                        value={formData.seccion1_2?.desc_decremen || ""}
                         onChange={handleChange}
                         />
                     </div>
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="o_dec">Otros decrementales</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
-                        name="otrosDecre"
+                        name="otros_decremen"
                         value={formData.seccion1_2?.otros_decremen || ""}
                         onChange={handleChange}
                         />
@@ -484,7 +487,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="c_barras">Codigo de barras</label>
                         <input type="text" className="w-full border border-gray-300 rounded p-2"
-                        name="codigoBarras"
+                        name="codigo_barra"
                         value={formData.seccion1_2?.codigo_barra || ""}
                         onChange={handleChange}
                         />
@@ -492,7 +495,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="c_adua_des">Clave de la sección aduanera de despacho.</label>
                         <input type="text" className="w-full border border-gray-300 rounded p-2"
-                        name="claveSecAdu"
+                        name="clv_sec_edu_despacho"
                         value={formData.seccion1_2?.clv_sec_edu_despacho|| ""}
                         onChange={handleChange}
                         />
@@ -500,24 +503,24 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="ma_nu_t">Marcas, números y total de bultos.</label>
                         <input type="text" className="w-full border border-gray-300 rounded p-2"
-                        name="marcas"
+                        name="total_bultos"
                         value={formData.seccion1_2?.total_bultos || ""}
                         onChange={handleChange}
                         />
                     </div>
         
                     <div className="flex flex-col items-center text-center">
-                        <h3 class="fechas_letra">Fechas</h3>
+                        <h3 className="fechas_letra">Fechas</h3>
                         <label className="mb-2" for="fec_entr">Entrada</label>
                         <input type="date"  className="w-60 border border-gray-300 rounded p-2"
-                        name="fechaEntrada"
+                        name="fecha_en"
                         value={formData.seccion1_2?.fecha_en ? formData.seccion1_2.fecha_en.split('T')[0] : ""}
                         onChange={handleChange}
                         />
                         <label className="mb-2" for="fec_sal">Pago/Salida</label>
                         <input type="date" className="w-60 border border-gray-300 rounded p-2"
-                        name="fechaSalida"
-                        value={formData.seccion1_2?.feca_sal ? formData.seccion1_2.fecha_en.split('T')[0] : ""}
+                        name="fecha_sal"
+                        value={formData.seccion1_2?.fecha_sal ? formData.seccion1_2.fecha_sal.split('T')[0] : ""}
                         onChange={handleChange}
                         />
                     </div>
