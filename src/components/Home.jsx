@@ -24,6 +24,7 @@ import CrearActivo  from "../components/CrearActivo"
 import SalidaMercancias from '../components/SalidaMercancia';
 import EntradaMercancia from "../components/EntradaMercancia";
 import MaterialesUtilizados from '../components/MaterialesUtilizados';
+import MaterialesUtilizadosCP from '../components/MaterialUtilizadoCP';
 import Saldos from '../components/Saldos';
 //DashBoard y footer
 import Sidebar from "./DashBoard2";
@@ -191,7 +192,7 @@ function Home({ userData }) {
             <Route path="/salida-mercancias" element={<SalidaMercancias/>} />
             <Route path="/saldos" element={<Saldos/>} />
             <Route path="/materiales-utilizados" element={<MaterialesUtilizados/>} />
-
+            <Route path="/materiales-utilizados/cargaproducto" element={<MaterialesUtilizadosCP/>} />          
 
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
