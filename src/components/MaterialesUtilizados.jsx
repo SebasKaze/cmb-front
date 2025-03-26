@@ -36,7 +36,7 @@ function MaterialesUtilizados() {
         <div>
             <div className="w-full mb-4">
                 <button 
-                    className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 shadow-md transition-all duration-300 hover:bg-green-600 hover:scale-105" 
+                    className="btn-crud" 
                     onClick={handleNuevoMaterial}>
                     Carga de Productos <FaPlus />
                 </button>

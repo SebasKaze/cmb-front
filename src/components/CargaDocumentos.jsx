@@ -13,7 +13,6 @@ function CargarDocumentos() {
         if (id_empresa && id_domicilio) {
             axios.get(`http://localhost:4000/api/pedimento/verpedi?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
                 .then((response) => {
-                    console.log("Datos recibidos:", response.data); // Debug
                     setPedimentos(response.data);
                 })
                 .catch((error) => console.error("Error al obtener los datos:", error));
@@ -50,7 +49,7 @@ function CargarDocumentos() {
         formData.append("id_empresa", id_empresa);
     
         documentos.forEach((doc, index) => {
-            formData.append("documentos", doc.file); // Agregar archivo real
+            formData.append("documentos", doc.file);
         });
     
         try {
@@ -78,7 +77,6 @@ function CargarDocumentos() {
                     className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
                     value={selectedPedimento}
                     onChange={(e) => {
-                        console.log("Seleccionado:", e.target.value);
                         setSelectedPedimento(e.target.value);
                     }}
                 >
@@ -115,7 +113,7 @@ function CargarDocumentos() {
 
             {/* Botón de envío */}
             <button 
-                className="w-full bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600 transition-all"
+                className="btn-crud"
                 onClick={handleSubmit}
             >
                 Enviar documentos

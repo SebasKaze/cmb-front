@@ -378,7 +378,7 @@ const handleRemoveSection = (id_partida) => {
                                     </div>
                                     <div className="col-span-5 text-right">
                                         <button
-                                            className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                                            className="btn-eliminar"
                                             onClick={() => handleRemoveContribution(section.id_partida, contribution.id_contri)}>
                                             Eliminar Contribución
                                         </button>
@@ -387,14 +387,14 @@ const handleRemoveSection = (id_partida) => {
                             ))}
                             <div className="mb-4 text-center">
                                 <button
-                                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                                    className="btn-agregar"
                                     onClick={() => handleAddContribution(section.id_partida)}>
                                     Agregar Contribución
                                 </button>
                             </div>
                             <div className="text-right">
                                 <button
-                                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                                    className="btn-eliminar"
                                     onClick={() => handleRemoveSection(section.id_partida)}>
                                     Eliminar Partida
                                 </button>
@@ -403,7 +403,7 @@ const handleRemoveSection = (id_partida) => {
                     ))}
                     <div className="mb-4 text-center">
                         <button
-                            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                            className="btn-agregar"
                             onClick={handleAddSection}>
                             Agregar Partida
                         </button>

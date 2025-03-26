@@ -21,17 +21,23 @@ function Seccion2({ formData, setFormData }) {
                 {/* Número de pedimento */}
                 <div className="flex flex-col items-center text-center">
                     <label className="mb-2">Número de pedimento</label>
-                    <span className="block w-full border border-gray-300 rounded p-2"></span>
+                    <span className="block w-full border border-gray-300 rounded p-2">
+                    {formData.seccion1?.noPedimento || "No hay datos"}
+                    </span>
                 </div>
                 {/* Tipo de operación */}
                 <div className="flex flex-col items-center text-center">
                     <label className="mb-2">Tipo de operación</label>
-                    <span className="block w-full border border-gray-300 rounded p-2"></span>
+                    <span className="block w-full border border-gray-300 rounded p-2">
+                    {formData.seccion1?.tipoOperacion || "No hay datos"}
+                    </span>
                 </div>
                 {/* Clave de pedimento */}
                 <div className="flex flex-col items-center text-center">
                     <label className="mb-2">Clave de pedimento</label>
-                    <span className="block w-full border border-gray-300 rounded p-2"></span>
+                    <span className="block w-full border border-gray-300 rounded p-2">
+                    {formData.seccion1?.clavePedi || "No hay datos"}
+                    </span>
                 </div>
                 {/* RFC del importador/exportador */}
                 <div className="flex flex-col items-center text-center">

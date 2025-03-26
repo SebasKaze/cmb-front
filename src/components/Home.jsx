@@ -27,7 +27,6 @@ import MaterialesUtilizados from '../components/MaterialesUtilizados';
 import MaterialesUtilizadosCP from '../components/MaterialUtilizadoCP';
 import Saldos from '../components/Saldos';
 //DashBoard y footer
-import Sidebar from "./DashBoard2";
 import Dashboard from "../components/Dashboard";
 import Footer from "../components/Footer";
 
@@ -107,60 +106,64 @@ function Home({ userData }) {
         </div>
         {/* Menú lateral */}
         <ul className="pt-6">
-          {menus.map((menu, index) => (
-            <li key={index} className="mb-4">
-              {menu.route ? (
-                <Link
-                  to={menu.route}
-                  className="flex items-center justify-between cursor-pointer text-gray-300 p-2 hover:bg-blue-800 rounded-lg transition-all duration-200"
-                >
-                  <div className="flex items-center">
-                    <span className="mr-2">{menu.icon}</span>
-                    <span className={`${!open && "hidden"} duration-300`}>
-                      {menu.title}
-                    </span>
-                  </div>
-                </Link>
+        {menus.map((menu, index) => (
+          <li key={index} className="mb-4">
+            {menu.route ? (
+              <Link
+                to={menu.route}
+                className="flex items-center justify-between cursor-pointer text-gray-300 p-2 hover:bg-blue-800 rounded-lg transition-all duration-200"
+              >
+          <div className="flex items-center">
+            <span className={`mr-2 ${!open ? "hidden" : "block"}`}>
+              {menu.icon}
+            </span>
+            <span className={`${!open && "hidden"} duration-300`}>
+              {menu.title}
+            </span>
+          </div>
+        </Link>
+      ) : (
+        <div>
+          <div
+            className="flex items-center justify-between cursor-pointer text-gray-300 p-2 hover:bg-blue-800 rounded-lg transition-all duration-200"
+            onClick={() => toggleSubMenu(menu.title)}
+          >
+            <div className="flex items-center">
+              <span className={`mr-2 ${!open ? "hidden" : "block"}`}>
+                {menu.icon}
+              </span>
+              <span className={`${!open && "hidden"} duration-300`}>
+                {menu.title}
+              </span>
+            </div>
+            <span className={`text-sm ${!open ? "hidden" : "block"}`}>
+              {subMenuOpen[menu.title] ? (
+                <FaArrowCircleDown />
               ) : (
-                <div>
-                  <div
-                    className="flex items-center justify-between cursor-pointer text-gray-300 p-2 hover:bg-blue-800 rounded-lg transition-all duration-200"
-                    onClick={() => toggleSubMenu(menu.title)}
-                  >
-                    <div className="flex items-center">
-                      <span className="mr-2">{menu.icon}</span>
-                      <span className={`${!open && "hidden"} duration-300`}>
-                        {menu.title}
-                      </span>
-                    </div>
-                    <span className="text-sm">
-                      {subMenuOpen[menu.title] ? (
-                        <FaArrowCircleDown />
-                      ) : (
-                        <FaArrowCircleLeft />
-                      )}
-                    </span>
-                  </div>
-                  {menu.items && subMenuOpen[menu.title] && (
-                    <ul className="pl-4 mt-2">
-                      {menu.items.map((item, idx) => (
-                        <li key={idx}>
-                          <Link
-                            to={item.route}
-                            className="text-sm text-gray-300 mb-2 block hover:underline hover:text-white transition-all duration-200"
-                          >
-                            • {item.name}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </div>
+                <FaArrowCircleLeft />
               )}
-            </li>
-          ))}
-        </ul>
-      </div>
+            </span>
+          </div>
+          {menu.items && subMenuOpen[menu.title] && (
+            <ul className={`pl-4 mt-2 ${!open ? "hidden" : "block"}`}>
+              {menu.items.map((item, idx) => (
+                <li key={idx}>
+                  <Link
+                    to={item.route}
+                    className="text-sm text-gray-300 mb-2 block hover:underline hover:text-white transition-all duration-200"
+                  >
+                    • {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+            )}
+        </li>
+      ))}
+    </ul>
+    </div>
 
       {/* Contenido principal + Footer */}
       <div className="flex flex-col flex-1 h-screen">
@@ -177,7 +180,6 @@ function Home({ userData }) {
             <Route path="/pedimentos/ver/:no_pedimento" element={<PedimentoVer />} />
             
             <Route path="/carga-manual" element={<CargarManual />} />
-            <Route path="/carga-masiva" element={<Sidebar />} />
             <Route path="/cargadocumentos" element={<CargaDocumentos />} />
 
             <Route path="/activo-fijo" element={<ActivoFijo />} />

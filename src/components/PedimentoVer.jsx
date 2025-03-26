@@ -14,7 +14,7 @@ function PedimentoVer() {
     const [activeTab, setActiveTab] = useState("section1");
     const userData = JSON.parse(localStorage.getItem("userData"));
     const [originalData, setOriginalData] = useState(null);
-    const [formattedOriginalData, setFormattedOriginalData] = useState(null);  // Nuevo estado para los datos formateados
+    const [formattedOriginalData, setFormattedOriginalData] = useState(null);
     const [formData, setFormData] = useState({
         seccion1: {},
         seccion1_2: {},
@@ -61,14 +61,11 @@ function PedimentoVer() {
                     contribuciones: completeData.contribuciones || []
                 };
     
-                setSections(completeData.contribuciones); // Actualizamos el estado de tasas
-                setSections2(completeData.cuadroLiquidacion); // Actualizamos el estado de cuadro de liquidación
+                setSections(completeData.contribuciones);
+                setSections2(completeData.cuadroLiquidacion);
+                setFormattedOriginalData(formattedData);
+                setFormData(formattedData);
     
-                setFormattedOriginalData(formattedData); // Guardamos los datos formateados
-                setFormData(formattedData); // Establecemos los datos formateados en el formulario
-    
-                console.log("Datos recibidos del backend (formateados):", JSON.stringify(formattedData, null, 2));
-
             } catch (error) {
                 console.error("Error al cargar el pedimento:", error);
             }
@@ -87,17 +84,25 @@ function PedimentoVer() {
     return (
         <div className="pestanas">
             <div className="tabs flex space-x-4 border-b-2 pb-2">
-                {["section1", "section2", "section3", "section4", "section5", "section6", "section7"].map((section) => (
+                {[
+                    { key: "section1", label: "Encabezado P.P" },
+                    { key: "section2", label: "Encabezado S.P" },
+                    { key: "section3", label: "Datos P. o C." },
+                    { key: "section4", label: "Datos D." },
+                    { key: "section5", label: "Datos T. y T." },
+                    { key: "section6", label: "Candados" },
+                    { key: "section7", label: "Partidas" }
+                ].map((section) => (
                     <div
-                        key={section}
-                        className={`tab cursor-pointer px-4 py-2 ${activeTab === section ? "text-blue-500 border-b-2 border-blue-500" : "text-gray-500"}`}
-                        onClick={() => handleTabClick(section)}
+                        key={section.key}
+                        className={`tab cursor-pointer px-4 py-2 ${activeTab === section.key ? "text-blue-500 border-b-2 border-blue-500" : "text-gray-500"}`}
+                        onClick={() => handleTabClick(section.key)}
                     >
-                        {section.toUpperCase()}
+                        {section.label}  {/* Nombre personalizado */}
                     </div>
                 ))}
             </div>
-
+    
             <div className="tab-content mt-4" style={{ display: "block" }}>
                 {activeTab === "section1" && (
                     <Section1 
@@ -118,6 +123,7 @@ function PedimentoVer() {
             </div>
         </div>
     );
+    
 }
 
 export default PedimentoVer;

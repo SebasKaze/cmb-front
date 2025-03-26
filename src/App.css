@@ -3,3 +3,32 @@ body{
     margin: 0;
     padding: 0;
 }
+/* Estilos generales para todos los botones */
+.btn-crud, .btn-agregar, .btn-eliminar,.btn-busqueda {
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-crud {
+    background-color: #007bff; /* Azul */
+}
+
+.btn-agregar {
+    background-color: #09f86c; /* Verde */
+}
+
+.btn-eliminar {
+    background-color: #cc2f08; /* Rojo */
+}
+
+.btn-busqueda {
+    background-color: #d6d6d5; /* Rojo */
+}
+
+.btn-crud:hover{
+    background-color: #0056b3; /* Azul más oscuro */
+}

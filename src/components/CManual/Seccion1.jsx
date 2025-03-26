@@ -568,7 +568,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                             </div>
                             <div className="col-span-3 text-right">
                                 <button
-                                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                                    className="btn-eliminar"
                                     onClick={() => handleRemoveSection(section.id)}
                                 >
                                     Eliminar Contribución
@@ -578,7 +578,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     ))}
                     <div className="mb-4 text-center">
                         <button
-                            className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                            className="btn-agregar"
                             onClick={handleAddSection}
                         >
                             Agregar Contribución
@@ -599,7 +599,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     {/*Boton para agregar contribuciones*/}
                     <div className="mb-4 text-center">
                         <button
-                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                        className="btn-agregar"
                         onClick={handleAddSection2}>
                             Agregar CuaLi
                         </button>

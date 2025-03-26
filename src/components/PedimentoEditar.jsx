@@ -14,7 +14,7 @@ function PedimentoEditar() {
     const [activeTab, setActiveTab] = useState("section1");
     const userData = JSON.parse(localStorage.getItem("userData"));
     const [originalData, setOriginalData] = useState(null);
-    const [formattedOriginalData, setFormattedOriginalData] = useState(null);  // Nuevo estado para los datos formateados
+    const [formattedOriginalData, setFormattedOriginalData] = useState(null);
     const [formData, setFormData] = useState({
         seccion1: {},
         seccion1_2: {},
@@ -61,13 +61,10 @@ function PedimentoEditar() {
                     contribuciones: completeData.contribuciones || []
                 };
     
-                setSections(completeData.contribuciones); // Actualizamos el estado de tasas
-                setSections2(completeData.cuadroLiquidacion); // Actualizamos el estado de cuadro de liquidación
-    
-                setFormattedOriginalData(formattedData); // Guardamos los datos formateados
-                setFormData(formattedData); // Establecemos los datos formateados en el formulario
-    
-                console.log("Datos recibidos del backend (formateados):", JSON.stringify(formattedData, null, 2));
+                setSections(completeData.contribuciones);
+                setSections2(completeData.cuadroLiquidacion);
+                setFormattedOriginalData(formattedData);
+                setFormData(formattedData);
 
             } catch (error) {
                 console.error("Error al cargar el pedimento:", error);
@@ -84,13 +81,12 @@ function PedimentoEditar() {
         setActiveTab(tab);
     };
 
+    //Funcion para obtener 
     const getDifferences = (original, updated) => {
         let changes = {};
     
-        // Comparar campos simples
         Object.keys(updated).forEach((key) => {
             if (Array.isArray(updated[key])) {
-                // Si es un array, comparamos cada elemento según su id.
                 if (key === "seccion7") {
                     const originalArray = original[key] || [];
                     const updatedArray = updated[key] || [];
@@ -108,13 +104,11 @@ function PedimentoEditar() {
                         .filter(
                             (oldItem) => !updatedArray.some((newItem) => newItem.id_partida === oldItem.id_partida)
                         )
-                        .map((item) => item.id_partida);  // Solo devolver el id de los elementos eliminados
+                        .map((item) => item.id_partida);
     
                     if (added.length || modified.length || removed.length) {
                         changes[key] = { added, modified, removed };
                     }
-    
-                    // Detectar cambios en las contribuciones dentro de las partidas
                     updatedArray.forEach((updatedPartida) => {
                         const originalPartida = originalArray.find(
                             (partida) => partida.id_partida === updatedPartida.id_partida
@@ -141,7 +135,7 @@ function PedimentoEditar() {
                                     (oldContrib) =>
                                         !updatedContribuciones.some((newContrib) => newContrib.id_tasa === oldContrib.id_tasa)
                                 )
-                                .map((item) => item.id_tasa);  // Solo devolver el id de los elementos eliminados
+                                .map((item) => item.id_tasa);
     
                             if (contribucionesAdded.length || contribucionesModified.length || contribucionesRemoved.length) {
                                 if (!changes[key]) {
@@ -176,8 +170,7 @@ function PedimentoEditar() {
                         .filter(
                             (oldItem) => !updatedArray.some((newItem) => newItem.id_tasa === oldItem.id_tasa)
                         )
-                        .map((item) => item.id_tasa);  // Solo devolver el id de los elementos eliminados
-    
+                        .map((item) => item.id_tasa);
                     if (added.length || modified.length || removed.length) {
                         changes[key] = { added, modified, removed };
                     }
@@ -200,14 +193,12 @@ function PedimentoEditar() {
                         .filter(
                             (oldItem) => !updatedArray.some((newItem) => newItem.id_cua === oldItem.id_cua)
                         )
-                        .map((item) => item.id_cua);  // Solo devolver el id de los elementos eliminados
-    
+                        .map((item) => item.id_cua);
                     if (added.length || modified.length || removed.length) {
                         changes[key] = { added, modified, removed };
                     }
                 }
             } else {
-                // Si no es un array, comparamos el valor directo
                 if (!original.hasOwnProperty(key) || JSON.stringify(original[key]) !== JSON.stringify(updated[key])) {
                     changes[key] = updated[key];
                 }
@@ -250,8 +241,6 @@ function PedimentoEditar() {
             ...changes,
         };
 
-        console.log("Datos a enviar:", JSON.stringify(payload, null, 2));
-
         try {
             const response = await fetch("http://localhost:4000/api/edicionPedimento", {
                 method: "POST",
@@ -277,13 +266,22 @@ function PedimentoEditar() {
     return (
         <div className="pestanas">
             <div className="tabs flex space-x-4 border-b-2 pb-2">
-                {["section1", "section2", "section3", "section4", "section5", "section6", "section7"].map((section) => (
+                {[
+                    { id: "section1", name: "Encabezado P.P" },
+                    { id: "section2", name: "Encabezado S.P" },
+                    { id: "section3", name: "Datos P. o C." },
+                    { id: "section4", name: "Datos D." },
+                    { id: "section5", name: "Datos T. y T." },
+                    { id: "section6", name: "Candados" },
+                    { id: "section7", name: "Partidas" }
+                ].map(({ id, name }) => (
                     <div
-                        key={section}
-                        className={`tab cursor-pointer px-4 py-2 ${activeTab === section ? "text-blue-500 border-b-2 border-blue-500" : "text-gray-500"}`}
-                        onClick={() => handleTabClick(section)}
-                    >
-                        {section.toUpperCase()}
+                        key={id}
+                        className={`tab cursor-pointer px-4 py-2 ${
+                            activeTab === id ? "text-blue-500 border-b-2 border-blue-500" : "text-gray-500"
+                        }`}
+                        onClick={() => handleTabClick(id)}>
+                        {name}
                     </div>
                 ))}
             </div>
@@ -299,15 +297,17 @@ function PedimentoEditar() {
                         setSections2={setSections2}
                     />
                 )}
-                {activeTab === "section2" && <Section2 formData={formData} setFormData={setFormData} />}
-                {activeTab === "section3" && <Section3 formData={formData} setFormData={setFormData} />}
-                {activeTab === "section4" && <Section4 formData={formData} setFormData={setFormData} />}
-                {activeTab === "section5" && <Section5 formData={formData} setFormData={setFormData} />}
-                {activeTab === "section6" && <Section6 formData={formData} setFormData={setFormData} />}
-                {activeTab === "section7" && <Section7 formData={formData} setFormData={setFormData} />}
+                {activeTab === "section2" && <Section2 formData={formData} setFormData={setFormData}/>}
+                {activeTab === "section3" && <Section3 formData={formData} setFormData={setFormData}/>}
+                {activeTab === "section4" && <Section4 formData={formData} setFormData={setFormData}/>}
+                {activeTab === "section5" && <Section5 formData={formData} setFormData={setFormData}/>}
+                {activeTab === "section6" && <Section6 formData={formData} setFormData={setFormData}/>}
+                {activeTab === "section7" && <Section7 formData={formData} setFormData={setFormData}/>}
             </div>
-            <button onClick={handleSubmit} className="mt-4 px-6 py-2 bg-blue-500 text-white rounded">
-                Guardar Cambios
+            <button
+                onClick={handleSubmit}
+                className="btn-crud">
+                Enviar Datos
             </button>
         </div>
     );

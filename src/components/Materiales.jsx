@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Importa useNavigate
+import { useNavigate } from "react-router-dom";
 
 //Imports de iconos
 import { CiEdit } from "react-icons/ci";
@@ -8,13 +8,13 @@ import { FaTrash } from "react-icons/fa";
 
 function Materiales() {
 
-    const userData = JSON.parse(localStorage.getItem("userData")) || {};	//puedes cambiar id_domicilio por otro atributo
-    const { id_empresa, id_domicilio } = userData; // Extraer los IDs necesarios
+    const userData = JSON.parse(localStorage.getItem("userData")) || {};
+    const { id_empresa, id_domicilio } = userData;
 
     const [data, setData] = useState([]);
-    const navigate = useNavigate(); // Inicializa useNavigate
-    const [editingRowId, setEditingRowId] = useState(null); // ID de la fila en edición
-    const [editedData, setEditedData] = useState({}); // Datos editados temporalmente
+    const navigate = useNavigate();
+    const [editingRowId, setEditingRowId] = useState(null);
+    const [editedData, setEditedData] = useState({});
 
     useEffect(() => {
         if (id_empresa && id_domicilio) {
@@ -26,21 +26,19 @@ function Materiales() {
     }, [id_empresa, id_domicilio]);
 
     const handleNuevoMaterial = () => {
-        navigate("/materiales/nuevomaterial"); // Navega a la ruta /nuevo-material
+        navigate("/materiales/nuevomaterial");
     }
 
     const handleEditClick = (row) => {
         setEditingRowId(row.id_material_interno);
-        setEditedData(row); // Cargar los datos actuales de la fila en el estado
+        setEditedData(row);
     };
 
     const handleSaveClick = (id) => {
-        const { id_domicilio } = userData; // Obtener id_domicilio
+        const { id_domicilio } = userData;
     
-        // Agregar id_domicilio a los datos que se enviarán al backend
         const updatedData = { ...editedData, id_domicilio };
     
-        // Enviar los datos actualizados al backend
         fetch(`http://localhost:4000/api/editarMaterial/${id}`, {
             method: "PUT",
             headers: {
@@ -72,8 +70,8 @@ function Materiales() {
     };
 
     const handleCancelClick = () => {
-        setEditingRowId(null); // Cancela la edición y vuelve a los botones originales
-        setEditedData({}); // Limpia los datos editados para evitar cambios no deseados
+        setEditingRowId(null);
+        setEditedData({});
     };
     
     
@@ -86,7 +84,7 @@ function Materiales() {
 
     const handleDeleteClick = (id) => {
         const { id_domicilio } = userData; 
-        const deleteData = { id_material_interno: id, id_domicilio }; // Asegurar que se envían ambos datos
+        const deleteData = { id_material_interno: id, id_domicilio };
 
         if (window.confirm("¿Seguro que deseas eliminar este material?")) {
             fetch(`http://localhost:4000/api/eliminarmaterial/${id}`, {
@@ -108,31 +106,28 @@ function Materiales() {
                     alert("Material eliminado exitosamente.");
                 })
                 .then((data) => {
-                    alert(data.message); // Mostrará "Material eliminado exitosamente."
+                    alert(data.message);
                     setData((prevData) => prevData.filter((row) => row.id_material_interno !== id));
                 })
                 .catch((error) => {
                     console.error("Error al eliminar el material:", error);
 
                     if (error.message.includes("No se encontró el Material")) {
-                        alert("❌ Error: No se encontró el material en la base de datos.");
+                        alert("Error: No se encontró el material en la base de datos.");
                     } else if (error.message.includes("No es posible eliminar")) {
                         alert("⚠️ No es posible eliminar este material, ya está registrado en Productos.");
                     } else if (error.message.includes("Error interno del servidor")) {
-                        alert("❌ Error interno del servidor. Intenta más tarde.");
+                        alert("Error interno del servidor. Intenta más tarde.");
                     } 
                 });
         }
     };
 
-
-
-
     return (
         <div>
             <div className="w-full">
                 <button 
-                className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 shadow-md transition-all duration-300 hover:bg-green-600 hover:scale-105"
+                className="btn-crud"
                 onClick={handleNuevoMaterial}
                 >
                 Nuevo material <FaPlus />

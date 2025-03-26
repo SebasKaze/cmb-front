@@ -18,8 +18,6 @@ function App() {
         try {
             const decoded = jwtDecode(token);
             const now = Date.now() / 1000;
-            console.log(" Token sin decodificar:", token);
-            console.log(" Token decodificado:", decoded)
             if (decoded.exp < now) {
                 localStorage.removeItem("token");
                 localStorage.removeItem("userData");
@@ -72,7 +70,7 @@ function App() {
         }
     };
 
-    // 🔹 Maneja el cierre de sesión
+    //Maneja el cierre de sesión
     const handleLogout = () => {
         localStorage.removeItem("token");
         localStorage.removeItem("userData");
@@ -83,10 +81,12 @@ function App() {
     return (
         <Router>
             {isAuthenticated && <NavBar userData={userData} onLogout={handleLogout} />}
-            <Routes>
-                <Route path="/login" element={!isAuthenticated ? <Login onLogin={handleLogin} /> : <Navigate to="/" />} />
-                <Route path="/*" element={isAuthenticated ? <Home /> : <Navigate to="/login" />} />
-            </Routes>
+            <div style={{ paddingTop: "60px" }}>
+                <Routes>
+                    <Route path="/login" element={!isAuthenticated ? <Login onLogin={handleLogin} /> : <Navigate to="/" />} />
+                    <Route path="/*" element={isAuthenticated ? <Home /> : <Navigate to="/login" />} />
+                </Routes>
+            </div>
         </Router>
     );
 }

@@ -1,14 +1,13 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom"; // Importa useNavigate
-
+import { useNavigate } from "react-router-dom";
 import { FaPlus } from "react-icons/fa";
 function ActivoFijo() {
     const [activos, setActivos] = useState([]);
 
 
-    const navigate = useNavigate(); // Inicializa useNavigate
+    const navigate = useNavigate();
     const cambioCrearActivo = () => {
-        navigate("/activo-fijo/crearActivo"); // Navega a la ruta /nuevo-material
+        navigate("/activo-fijo/crearActivo");
     }
     const userData = JSON.parse(localStorage.getItem("userData")) || {};
     const { id_empresa, id_domicilio } = userData; 
@@ -17,7 +16,7 @@ function ActivoFijo() {
         if (id_empresa && id_domicilio) {
             fetch(`http://localhost:4000/api/activofijo?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
                 .then((response) => response.json())
-                .then((data) => setActivos(data)) // Aquí estaba el error, ahora se usa setActivos correctamente
+                .then((data) => setActivos(data))
                 .catch((error) => console.error("Error al obtener los datos:", error));
         }
     }, [id_empresa, id_domicilio]);
@@ -28,7 +27,7 @@ function ActivoFijo() {
             <h2 className="text-2xl font-bold mb-4">Activo Fijo</h2>
                 <div className="w-full p-6">
                     <button 
-                    className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 shadow-md transition-all duration-300 hover:bg-green-600 hover:scale-105"
+                    className="btn-crud"
                     onClick={cambioCrearActivo}
                     >
                     Agregar Activo Fijo <FaPlus />

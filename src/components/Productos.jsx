@@ -84,7 +84,7 @@ function Productos() {
     return (
         <div>
             <div className="w-full">
-                <button className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 shadow-md transition-all duration-300 hover:bg-green-600 hover:scale-105" onClick={handleNuevoMaterial}>
+                <button className="btn-crud" onClick={handleNuevoMaterial}>
                     Nuevo Producto <FaPlus />
                 </button>
             </div>
@@ -157,7 +157,7 @@ function Productos() {
                             </tbody>
                         </table>
                         <button 
-                            className="mt-3 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600" 
+                            className="btn-crud" 
                             onClick={() => setShowPopup(false)}
                         >
                             Cerrar
