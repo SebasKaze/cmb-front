@@ -77,7 +77,7 @@ function MaterialesUtilizadosCP() {
     };
 
     return (
-        <div className="p-6">
+        <div className="main-container">
             <button 
                 className="btn-crud"
                 onClick={() => navigate("/materiales-utilizados")}

@@ -33,7 +33,7 @@ function MaterialesUtilizados() {
     };
 
     return (
-        <div>
+        <div className="main-container">
             <div className="w-full mb-4">
                 <button 
                     className="btn-crud" 

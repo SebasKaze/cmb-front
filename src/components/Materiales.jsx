@@ -124,7 +124,7 @@ function Materiales() {
     };
 
     return (
-        <div>
+        <div className="main-container">
             <div className="w-full">
                 <button 
                 className="btn-crud"

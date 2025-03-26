@@ -12,7 +12,7 @@ function cambioCrearActivo() {
             navigate("/activo-fijo"); // Navega a la ruta /nuevo-material
         }
     return (
-        <div>
+        <div className="main-container">
             <button className="btn-crud" onClick={Regresar}>
             <IoMdArrowRoundBack />Regresar
             </button>

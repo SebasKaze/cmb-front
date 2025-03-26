@@ -1,3 +1,11 @@
+.main-container {
+    min-height: 100vh;
+    background-color: #f9fafb;
+    display: flex;
+    flex-direction: column;
+    padding: 30px;     
+  }
+
 body{
     box-sizing: border-box;
     margin: 0;

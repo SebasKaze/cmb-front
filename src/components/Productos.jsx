@@ -82,7 +82,7 @@ function Productos() {
     };
 
     return (
-        <div>
+        <div className="main-container">
             <div className="w-full">
                 <button className="btn-crud" onClick={handleNuevoMaterial}>
                     Nuevo Producto <FaPlus />

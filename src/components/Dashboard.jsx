@@ -24,9 +24,9 @@ export default function Dashboard() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
 
     return (
-        <div className="min-h-screen bg-gray-50">
+        <div className="main-container">
         {/* Contenido principal */}
-            <div className="p-6">
+            <div className="p-7">
                 <h1 className="text-3xl font-bold text-gray-900 mb-6">Dashboard</h1>
                 
                 {/* Gráfico */}

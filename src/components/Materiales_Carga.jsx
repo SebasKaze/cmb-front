@@ -98,7 +98,7 @@ export default function CargaMateriales() {
         navigate("/materiales");
     }
     return (
-        <div>
+        <div className="main-container">
         {mensaje && (
             <div
             className={`fixed top-4 right-4 p-4 rounded-md shadow-md ${

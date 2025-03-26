@@ -264,7 +264,7 @@ function PedimentoEditar() {
     };
 
     return (
-        <div className="pestanas">
+        <div className="main-container">
             <div className="tabs flex space-x-4 border-b-2 pb-2">
                 {[
                     { id: "section1", name: "Encabezado P.P" },
