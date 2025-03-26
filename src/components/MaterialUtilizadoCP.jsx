@@ -73,6 +73,12 @@ function MaterialesUtilizadosCP() {
 
             await axios.post("http://localhost:4000/api/procesos/mateutili/guardar", datos);
             alert("Información enviada correctamente");
+            // Restablecer los estados después de enviar la información
+            setProductoSeleccionado("");
+            setCantidadProducto("");
+            setFechaCreacion("");
+            setMateriales([]);
+            setCantidades({});
         } catch (error) {
             console.error("Error al enviar datos:", error);
         }
@@ -81,7 +87,7 @@ function MaterialesUtilizadosCP() {
     return (
         <div className="p-6">
             <button 
-                className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 shadow-md transition-all duration-300 hover:bg-green-600 hover:scale-105"
+                className="btn-crud"
                 onClick={() => navigate("/materiales-utilizados")}
             >
                 <IoMdArrowRoundBack /> Regresar

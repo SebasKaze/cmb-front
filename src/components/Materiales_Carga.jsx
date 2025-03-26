@@ -1,7 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-
-import { useNavigate } from "react-router-dom"; //Necesario Para regresar
+import { useNavigate } from "react-router-dom";
 
 //Import iconos
 import { IoMdArrowRoundBack } from "react-icons/io";
@@ -9,13 +8,13 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 
 export default function CargaMateriales() {
     
-    const userData = JSON.parse(localStorage.getItem("userData")) || {};	//puedes cambiar id_domicilio por otro atributo
+    const userData = JSON.parse(localStorage.getItem("userData")) || {};
     
     const [query, setQuery] = useState("");
     const [resultados, setResultados] = useState([]);
-    const [mostrarBusqueda, setMostrarBusqueda] = useState(false); // Estado para controlar la visibilidad
-    const navigate = useNavigate();//Navegar
-    const [mensaje, setMensaje] = useState(""); // Estado para el mensaje
+    const [mostrarBusqueda, setMostrarBusqueda] = useState(false);
+    const navigate = useNavigate();
+    const [mensaje, setMensaje] = useState("");
 
     const [formData, setFormData] = useState({
         idInterno: "",
@@ -67,7 +66,7 @@ export default function CargaMateriales() {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(dataToSend), // Convierte los datos del formulario a JSON
+            body: JSON.stringify(dataToSend),
         });
 
         if (!response.ok) {
@@ -75,10 +74,9 @@ export default function CargaMateriales() {
         }
 
         const data = await response.json();
-        console.log("Respuesta del servidor:", data);
         // Mostrar mensaje de éxito
         setMensaje("Datos enviados correctamente");
-        setTimeout(() => setMensaje(""), 3000); // Ocultar el mensaje después de 3 segundos
+        setTimeout(() => setMensaje(""), 3000);
 
         // Limpiar el formulario después de enviar los datos
         setFormData({
@@ -97,7 +95,7 @@ export default function CargaMateriales() {
 
     //Regresar
     const Regresar = () => {
-        navigate("/materiales"); // Navega a la ruta /nuevo-material
+        navigate("/materiales");
     }
     return (
         <div>
@@ -115,7 +113,7 @@ export default function CargaMateriales() {
 
         <div className="w-full">
             <button 
-            className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 shadow-md transition-all duration-300 hover:bg-green-600 hover:scale-105"
+            className="btn-crud"
             onClick={Regresar}
             >
             <IoMdArrowRoundBack />Regresar
@@ -180,7 +178,7 @@ export default function CargaMateriales() {
                         <button
                         type="submit"
                         onClick={handleSubmit}
-                        className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
+                        className="btn-agregar"
                         >
                         Agregar
                         </button>
@@ -191,7 +189,7 @@ export default function CargaMateriales() {
         <div className="text-center mt-4">
             <button
             onClick={toggleBusqueda}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
+            className="btn-busqueda"
             >
             {mostrarBusqueda ? "Ocultar Búsqueda" : "Buscar Fracción"}
             </button>
@@ -211,7 +209,7 @@ export default function CargaMateriales() {
                     />
                     <button
                     onClick={buscar}
-                    className="bg-blue-500 text-white px-4 py-2 ml-2"
+                    className="btn-busqueda"
                     >
                     Buscar
                     </button>

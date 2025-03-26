@@ -56,9 +56,21 @@ function ProductosCarga() {
             id_empresa: userData.id_empresa,
             id_domicilio: userData.id_domicilio,
         };
-        console.log("Datos a enviar:", dataEnviar);
         axios.post("http://localhost:4000/api/cargaproducto", dataEnviar)
-            .then(response => console.log("Enviado con éxito:", response.data))
+            .then(response => {
+                console.log("Enviado con éxito:", response.data);
+                alert("Productos enviados correctamente");
+                // Restablecer los estados
+                setFormData({
+                    id: "",
+                    nombre: "",
+                    fraccion: "",
+                    descripcion: "",
+                    unidadMedida: "",
+                    cantidad: "",
+                });
+                setSeleccionados([]);
+            })
             .catch(error => console.error("Error al enviar:", error));
     };
 
@@ -76,7 +88,7 @@ function ProductosCarga() {
         <div>
             <div className="w-full">
                 <button 
-                    className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 shadow-md transition-all duration-300 hover:bg-green-600 hover:scale-105"
+                    className="btn-crud"
                     onClick={() => navigate("/productos")}
                 >
                     <IoMdArrowRoundBack /> Regresar
@@ -124,7 +136,7 @@ function ProductosCarga() {
                                 <span>{material.nombre_interno} | {material.descripcion_fraccion}</span>
                                 <button
                                     onClick={() => agregarMaterial(material)}
-                                    className="bg-blue-500 text-white p-2 rounded-md hover:bg-blue-600"
+                                    className="btn-agregar"
                                 >
                                     <FaPlus />
                                 </button>
@@ -161,7 +173,7 @@ function ProductosCarga() {
                                             <td className="border p-2">
                                                 <button
                                                     onClick={() => eliminarMaterial(material.id_material_interno)}
-                                                    className="bg-red-500 text-white p-2 rounded-md hover:bg-red-600"
+                                                    className="btn-eliminar"
                                                 >
                                                     <FaTrash />
                                                 </button>
@@ -174,7 +186,7 @@ function ProductosCarga() {
                     )}
 
                     <button
-                        className="mt-4 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 w-full"
+                        className="btn-agregar"
                         onClick={enviarProductos}
                     >
                         Enviar Productos

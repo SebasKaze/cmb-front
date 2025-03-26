@@ -32,21 +32,23 @@ function Login({ onLogin }) {
     };
 
     return (
-        <div className="flex items-center justify-center h-screen bg-gradient-to-br from-blue-100 to-orange-100">
+        <div className="flex items-center justify-center h-screen bg-gradient-to-br from-purple-50 to-pink-50">
             <form
                 onSubmit={handleSubmit}
-                className="p-8 bg-white rounded-2xl shadow-lg w-96 border border-gray-200"
+                className="p-8 bg-white rounded-3xl shadow-2xl w-96 border border-gray-100 transform transition-all duration-300 hover:scale-105"
             >
-                <h1 className="text-3xl font-bold mb-6 text-center text-blue-600">Iniciar Sesión</h1>
+                <h1 className="text-4xl font-bold mb-8 text-center text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600">
+                    Iniciar Sesión
+                </h1>
 
                 {error && (
-                    <div className="mb-4 text-red-600 text-sm text-center bg-red-100 p-2 rounded-md">
+                    <div className="mb-6 text-red-600 text-sm text-center bg-red-50 p-3 rounded-lg border border-red-100">
                         {error}
                     </div>
                 )}
 
-                <div className="mb-4">
-                    <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                <div className="mb-6">
+                    <label htmlFor="email" className="block text-sm font-medium text-gray-600 mb-2">
                         Correo Electrónico
                     </label>
                     <input
@@ -54,13 +56,13 @@ function Login({ onLogin }) {
                         id="email"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
-                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                        className="mt-1 block w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-purple-400 focus:outline-none transition-all duration-300"
                         required
                     />
                 </div>
 
-                <div className="mb-4">
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                <div className="mb-6">
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-600 mb-2">
                         Contraseña
                     </label>
                     <input
@@ -68,15 +70,15 @@ function Login({ onLogin }) {
                         id="password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        className="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-orange-400 focus:outline-none"
+                        className="mt-1 block w-full p-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-pink-400 focus:outline-none transition-all duration-300"
                         required
                     />
                 </div>
 
                 <button
                     type="submit"
-                    className={`w-full py-2 px-4 rounded-lg text-white font-semibold transition-all duration-300 ease-in-out ${
-                        isLoading ? "bg-gray-400" : "bg-blue-500 hover:bg-orange-500"
+                    className={`w-full py-3 px-4 rounded-xl text-white font-semibold transition-all duration-300 ease-in-out ${
+                        isLoading ? "bg-gray-400" : "bg-gradient-to-r from-purple-400 to-pink-600 hover:from-purple-500 hover:to-pink-700"
                     }`}
                     disabled={isLoading}
                 >

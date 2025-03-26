@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../app.css";
 import Section1 from "./CManual/Seccion1";
 import Section2 from "./CManual/Seccion2";
 import Section3 from "./CManual/Seccion3";
@@ -40,10 +41,6 @@ function CargaManual() {
                 contribuciones: sections,
                 CuadroLiquidacion: sections2,
             };
-            console.log("ID Usuario:", payload.id_usuario);
-            console.log("ID Empresa:", payload.id_empresa);
-            console.log("Nombre Usuario:", payload.nombre_usuario);
-            console.log("ID Domicilio:", payload.id_domicilio);
             const response = await fetch("http://localhost:4000/api/cmpedimento", {
                 method: "POST",
                 headers: {
@@ -63,14 +60,22 @@ function CargaManual() {
     return (
         <div className="pestanas">
             <div className="tabs flex space-x-4 border-b-2 pb-2">
-                {["section1", "section2", "section3", "section4", "section5", "section6", "section7"].map((section) => (
+                {[
+                    { id: "section1", name: "Encabezado P.P" },
+                    { id: "section2", name: "Encabezado S.P" },
+                    { id: "section3", name: "Datos P. o C." },
+                    { id: "section4", name: "Datos D." },
+                    { id: "section5", name: "Datos T. y T." },
+                    { id: "section6", name: "Candados" },
+                    { id: "section7", name: "Partidas" }
+                ].map(({ id, name }) => (
                     <div
-                        key={section}
+                        key={id}
                         className={`tab cursor-pointer px-4 py-2 ${
-                            activeTab === section ? "text-blue-500 border-b-2 border-blue-500" : "text-gray-500"
+                            activeTab === id ? "text-blue-500 border-b-2 border-blue-500" : "text-gray-500"
                         }`}
-                        onClick={() => handleTabClick(section)}>
-                        {section.toUpperCase()}
+                        onClick={() => handleTabClick(id)}>
+                        {name}
                     </div>
                 ))}
             </div>
@@ -95,7 +100,7 @@ function CargaManual() {
             </div>
             <button
                 onClick={handleSubmit}
-                className="mt-4 px-6 py-2 bg-blue-500 text-white rounded">
+                className="btn-crud">
                 Enviar Datos
             </button>
         </div>

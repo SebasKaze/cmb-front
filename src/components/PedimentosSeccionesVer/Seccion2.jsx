@@ -22,41 +22,39 @@ function Seccion2({ formData, setFormData }) {
                 <div className="flex flex-col items-center text-center">
                     <label className="mb-2">Número de pedimento</label>
                     <span className="block w-full border border-gray-300 rounded p-2">
-                    {formData.seccion1?.noPedimento || "No hay datos"}
+                    {formData.seccion1?.no_pedimento || "Sin número"}
                     </span>
                 </div>
                 {/* Tipo de operación */}
                 <div className="flex flex-col items-center text-center">
                     <label className="mb-2">Tipo de operación</label>
                     <span className="block w-full border border-gray-300 rounded p-2">
-                    {formData.seccion1?.tipoOperacion || "No hay datos"}
+                    {formData.seccion1?.tipo_oper || "Sin número"}
                     </span>
                 </div>
                 {/* Clave de pedimento */}
                 <div className="flex flex-col items-center text-center">
                     <label className="mb-2">Clave de pedimento</label>
                     <span className="block w-full border border-gray-300 rounded p-2">
-                    {formData.seccion1?.clavePedi || "No hay datos"}
+                    {formData.seccion1?.clave_ped || "Sin número"}    
                     </span>
                 </div>
-                {/* RFC del importador/exportador */}
                 <div className="flex flex-col items-center text-center">
                     <label className="mb-2">RFC del importador/exportador</label>
-                    <input
+                    <input disabled
                         type="text"
-                        name="rfcImportador"
-                        value={formData.seccion2?.rfcImportador || ""}
+                        name="rfc_import_export"
+                        value={formData.seccion2?.rfc_import_export || ""}
                         onChange={handleChange}
                         className="w-full border border-gray-300 rounded p-2"
                     />
                 </div>
-                {/* CURP del importador/exportador */}
                 <div className="flex flex-col items-center text-center">
                     <label className="mb-2">CURP del importador/exportador</label>
-                    <input
+                    <input disabled
                         type="text"
-                        name="curpImpo"
-                        value={formData.seccion2?.curpImpo || ""}
+                        name="curp_import_export"
+                        value={formData.seccion2?.curp_import_export || ""}
                         onChange={handleChange}
                         className="w-full border border-gray-300 rounded p-2"
                     />

@@ -13,7 +13,7 @@ function cambioCrearActivo() {
         }
     return (
         <div>
-            <button className="bg-green-500 text-white px-4 py-2 rounded-md flex items-center gap-2 shadow-md transition-all duration-300 hover:bg-green-600 hover:scale-105" onClick={Regresar}>
+            <button className="btn-crud" onClick={Regresar}>
             <IoMdArrowRoundBack />Regresar
             </button>
             <h1>Crear Activo FIjo</h1>

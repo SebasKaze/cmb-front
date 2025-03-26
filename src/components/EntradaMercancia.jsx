@@ -9,7 +9,7 @@ export default function Pedimento() {
         if (id_empresa && id_domicilio) {
             fetch(`http://localhost:4000/api/procesos/emercancias?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
                 .then((response) => response.json())
-                .then((data) => setActivos(data)) // Aquí estaba el error, ahora se usa setActivos correctamente
+                .then((data) => setActivos(data))
                 .catch((error) => console.error("Error al obtener los datos:", error));
         }
     }, [id_empresa, id_domicilio]);

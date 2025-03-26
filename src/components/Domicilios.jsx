@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 function Domicilios() {
     const userData = JSON.parse(localStorage.getItem("userData")); // Obtener datos de usuario desde localStorage
-    const [domicilios, setDomicilios] = useState([]); // Estado para almacenar domicilios
+    const [domicilios, setDomicilios] = useState([]);
 
     useEffect(() => {
         if (!userData || !userData.id_usuario || !userData.id_empresa) {

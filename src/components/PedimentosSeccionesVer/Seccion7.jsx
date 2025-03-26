@@ -119,7 +119,7 @@ const handleRemoveSection = (id_partida) => {
                             <div className="grid grid-cols-4 gap-4 bg-emerald-100 w-9/12 mx-auto p-4 rounded">
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">Sec</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="text"
                                         name="sec"
@@ -129,7 +129,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">Fraccion</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="text"
                                         value={section.fraccion}
@@ -138,7 +138,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">Vinc.</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="text"
                                         value={section.vinc}
@@ -147,7 +147,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">Subd.</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="text"
                                         value={section.Subd}
@@ -156,7 +156,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">Met. Val.</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="text"
                                         value={section.MetS7P}
@@ -165,7 +165,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">UMC</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="number"
                                         value={section.UMCS7P || 0}
@@ -174,7 +174,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">Cantidad UMC</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="number"
                                         value={section.CantiUMCS7P}
@@ -183,7 +183,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">UMT</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="number"
                                         value={section.UMTS7P}
@@ -192,7 +192,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">Cantidad UMT</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="number"
                                         value={section.CantiUMTS7P}
@@ -201,7 +201,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">P. V/C</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="text"
                                         value={section.PVCS7P}
@@ -210,7 +210,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">P. O/D</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="text"
                                         value={section.PODS7P}
@@ -219,7 +219,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">Descripcion</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="text"
                                         value={section.DescS7P}
@@ -228,7 +228,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">VAL. ADU/VAL. USD.</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="number"
                                         value={section.VALADUS7P}
@@ -237,7 +237,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">IMP. PRECIO PAG./VALOR COMERCIAL.</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="number"
                                         value={section.IMPOPRES7P}
@@ -246,7 +246,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">PRECIO UNIT.</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="number"
                                         value={section.PRECIOUNITS7P}
@@ -255,7 +255,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">VAL. AGREG.</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="number"
                                         value={section.VALAGRES7P}
@@ -264,7 +264,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">MARCA.</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="text"
                                         value={section.MarcaS7P}
@@ -273,7 +273,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">MODELO.</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="text"
                                         value={section.ModeloS7P}
@@ -282,7 +282,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">CÓDIGO PRODUCTO.</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="text"
                                         value={section.CodigoProS7P}
@@ -291,7 +291,7 @@ const handleRemoveSection = (id_partida) => {
                                 </div>
                                 <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">Observacion a nivel partida</label>
-                                    <input
+                                    <input disabled
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="text"
                                         value={section.ObserS7P}
@@ -304,7 +304,7 @@ const handleRemoveSection = (id_partida) => {
                                 <div key={contribution.id} className="grid grid-cols-5 gap-4 bg-emerald-200 w-7/12 mx-auto p-4 rounded mb-4">
                                     <div className="flex flex-col items-center text-center">
                                         <label className="mb-2">CON</label>
-                                        <select
+                                        <select disabled
                                             className="w-full border border-gray-300 rounded p-2 bg-white"
                                             value={contribution.con}
                                             onChange={(e) => handleContributionChange(section.id, contribution.id, "con", e.target.value)}>
@@ -342,7 +342,7 @@ const handleRemoveSection = (id_partida) => {
                                     </div>
                                     <div className="flex flex-col items-center text-center">
                                         <label className="mb-2">TASA</label>
-                                        <input
+                                        <input disabled
                                             className="w-full border border-gray-300 rounded p-2"
                                             type="text"
                                             value={contribution.tasa}
@@ -351,7 +351,7 @@ const handleRemoveSection = (id_partida) => {
                                     </div>
                                     <div className="flex flex-col items-center text-center">
                                         <label className="mb-2">T.T.</label>
-                                        <input
+                                        <input disabled
                                             className="w-full border border-gray-300 rounded p-2"
                                             type="text"
                                             value={contribution.tt}
@@ -360,7 +360,7 @@ const handleRemoveSection = (id_partida) => {
                                     </div>
                                     <div className="flex flex-col items-center text-center">
                                         <label className="mb-2">F.P.</label>
-                                        <input
+                                        <input disabled
                                             className="w-full border border-gray-300 rounded p-2"
                                             type="text"
                                             value={contribution.fp}
@@ -369,45 +369,17 @@ const handleRemoveSection = (id_partida) => {
                                     </div>
                                     <div className="flex flex-col items-center text-center">
                                         <label className="mb-2">IMPORTE</label>
-                                        <input
+                                        <input disabled
                                             className="w-full border border-gray-300 rounded p-2"
                                             type="text"
                                             value={contribution.importe}
                                             onChange={(e) => handleContributionChange(section.id, contribution.id, "importe", e.target.value)}
                                         />
                                     </div>
-                                    <div className="col-span-5 text-right">
-                                        <button
-                                            className="btn-eliminar"
-                                            onClick={() => handleRemoveContribution(section.id_partida, contribution.id_contri)}>
-                                            Eliminar Contribución
-                                        </button>
-                                    </div>
                                 </div>
                             ))}
-                            <div className="mb-4 text-center">
-                                <button
-                                    className="btn-agregar"
-                                    onClick={() => handleAddContribution(section.id_partida)}>
-                                    Agregar Contribución
-                                </button>
-                            </div>
-                            <div className="text-right">
-                                <button
-                                    className="btn-eliminar"
-                                    onClick={() => handleRemoveSection(section.id_partida)}>
-                                    Eliminar Partida
-                                </button>
-                            </div>
                         </div>
                     ))}
-                    <div className="mb-4 text-center">
-                        <button
-                            className="btn-agregar"
-                            onClick={handleAddSection}>
-                            Agregar Partida
-                        </button>
-                    </div>
                 </div>
             </section>
         </div>

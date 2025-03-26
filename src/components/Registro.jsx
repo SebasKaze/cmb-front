@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function Registro() {
-    const userData = JSON.parse(localStorage.getItem("userData"));//Datos de usuario TOKEN
-    const [mensaje, setMensaje] = useState(""); // Estado para el mensaje
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    const [mensaje, setMensaje] = useState("");
     const [domicilioSeleccionado, setDomicilioSeleccionado] = useState("");
     const [domicilios, setDomicilios] = useState([]);
     const [formData, setFormData] = useState({
@@ -17,18 +17,16 @@ function Registro() {
     const [empresaSeleccionada, setEmpresaSeleccionada] = useState("");
     const [formDataDomi, setFormDataDomi] = useState({
         domi: "",
-        tipo_domi: "", // Valor por defecto
+        tipo_domi: "",
     });
 
-    const [formDataUsuario, setFormDataUsuario] = useState({ //Formulario de usuarios
+    const [formDataUsuario, setFormDataUsuario] = useState({
         nombre: "",
         correo: "",
         telefono: "",
         contraseña: "",
         rol: "",
     });
-
-
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -37,9 +35,10 @@ function Registro() {
             [name]: value,
         }));
     };
+
     // Función para enviar los datos al backend
     const handleSubmit = async (e) => {
-        e.preventDefault(); // Evita el comportamiento predeterminado del formulario
+        e.preventDefault();
         try {
             const dataToSend = {
                 ...formData,
@@ -51,7 +50,7 @@ function Registro() {
                 headers: {
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify(dataToSend), // Convierte los datos del formulario a JSON
+                body: JSON.stringify(dataToSend),
             });
 
             if (!response.ok) {
@@ -59,8 +58,6 @@ function Registro() {
             }
 
             const data = await response.json();
-            console.log("Respuesta del servidor:", data);
-            // Mostrar mensaje de éxito
             setMensaje("Datos enviados correctamente");
             setTimeout(() => setMensaje(""), 3000); // Ocultar el mensaje después de 3 segundos
 
@@ -115,9 +112,8 @@ function Registro() {
         });
 
         const result = await response.json();
-        console.log("Registro exitoso:", result);
         } catch (error) {
-        console.error("Error al enviar los datos:", error);
+            console.error("Error al enviar los datos:", error);
         }
     };
 
@@ -133,13 +129,14 @@ function Registro() {
             console.error("Error al obtener domicilios:", error)
             );
         } else {
-        setDomicilios([]); // Limpiar domicilios si no hay empresa seleccionada
+        setDomicilios([]);
         }
     }, [empresaSeleccionada]);
 
     const handleDomicilioChange = (e) => {
         setDomicilioSeleccionado(e.target.value);
     };
+
     // Manejar cambios en los inputs de usuario
     const handleChangeUsuario = (e) => {
         setFormDataUsuario({ ...formDataUsuario, [e.target.name]: e.target.value });
@@ -167,7 +164,6 @@ function Registro() {
         });
     
         const result = await response.json();
-            console.log("Usuario registrado:", result);
         } catch (error) {
             console.error("Error al registrar usuario:", error);
         }
@@ -235,7 +231,7 @@ function Registro() {
                         <button
                         type="submit"
                         onClick={handleSubmit}
-                        className="bg-green-500 text-white px-6 py-3 rounded-md text-lg hover:bg-green-600"
+                        className="btn-agregar"
                         >
                         Agregar
                         </button>
@@ -308,7 +304,7 @@ function Registro() {
                     <button
                         type="submit"
                         onClick={handleSubmitDomi}
-                        className="bg-green-500 text-white px-6 py-3 rounded-md text-lg hover:bg-green-600"
+                        className="btn-agregar"
                         disabled={!empresaSeleccionada}
                     >
                         Agregar
@@ -421,7 +417,7 @@ function Registro() {
 
                     {/* Botón de envío */}
                     <div className="flex justify-center p-4">
-                    <button type="submit" className="bg-green-500 text-white px-6 py-3 rounded-md text-lg hover:bg-green-600" disabled={!domicilioSeleccionado}>
+                    <button type="submit" className="btn-agregar" disabled={!domicilioSeleccionado}>
                         Agregar
                     </button>
                     </div>

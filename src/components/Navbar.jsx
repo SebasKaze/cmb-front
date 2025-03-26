@@ -14,7 +14,7 @@ export default function NavBar({ userData }) {
 
     try {
       if (token) {
-        const payload = JSON.parse(atob(token.split(".")[1])); // Decodifica el payload del JWT
+        const payload = JSON.parse(atob(token.split(".")[1]));
         idEmpresa = payload.id_empresa;
       }
     } catch (error) {
@@ -27,21 +27,15 @@ export default function NavBar({ userData }) {
       fetch(url)
         .then((response) => response.json())
         .then((data) => {
-          console.log("Listado de domicilios:", data);
-
           setAddresses(data);
 
           if (data.length > 0) {
             const storedDomicilio = localStorage.getItem("selectedDomicilio");
             const firstDomicilio = storedDomicilio || data[0].id_domicilio;
             setSelectedAddress(firstDomicilio);
-
-            // Actualiza userData en localStorage
             const storedUserData = JSON.parse(localStorage.getItem("userData")) || {};
             storedUserData.id_domicilio = firstDomicilio;
             localStorage.setItem("userData", JSON.stringify(storedUserData));
-
-            console.log("Domicilio seleccionado:", firstDomicilio);
           }
         })
         .catch((error) => console.error("Error al cargar domicilios:", error));
@@ -54,26 +48,24 @@ export default function NavBar({ userData }) {
 
     // Guardar el id en localStorage
     localStorage.setItem("selectedDomicilio", selectedId);
-
-    // Recuperar y actualizar `userData`
     const storedUserData = JSON.parse(localStorage.getItem("userData")) || {};
     storedUserData.id_domicilio = selectedId;
     localStorage.setItem("userData", JSON.stringify(storedUserData));
 
-    console.log("ID del domicilio seleccionado:", selectedId);
-
     // Actualizar sin recargar la página
-    navigate(0, { replace: true }); // Fuerza una actualización sin perder el estado
+    navigate(0, { replace: true });
   };
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    console.log("Token después de logout:", localStorage.getItem("token"));
     window.location.href = "/login";
   };
 
   return (
-    <div className="navbar bg-base-100">
+    <div
+      className="navbar bg-base-100 fixed top-0 left-0 w-full z-10 shadow-md"
+      style={{ backgroundColor: "#ffffff", boxShadow: "0 4px 2px -2px gray" }}
+    >
       <div className="navbar-start">
         <div className="btn btn-ghost rounded-2xl">
           <img className="w-14" src="/src/assets/CMB.png" alt="Logo" />
@@ -125,9 +117,9 @@ export default function NavBar({ userData }) {
             tabIndex="0"
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow translate-y-8"
           >
-                        <li><a onClick={() => navigate("/datosgenerales")}>Datos generales</a></li>
-                        <li><a onClick={() => navigate("/domicilios")}>Domicilios</a></li>
-                        <li><a onClick={() => navigate("/registro")}>Registros</a></li>
+            <li><a onClick={() => navigate("/datosgenerales")}>Datos generales</a></li>
+            <li><a onClick={() => navigate("/domicilios")}>Domicilios</a></li>
+            <li><a onClick={() => navigate("/registro")}>Registros</a></li>
             <li>
               <button
                 onClick={handleLogout}

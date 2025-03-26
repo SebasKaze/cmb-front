@@ -94,7 +94,7 @@ function Modal({ data, onClose }) {
                     </tbody>
                 </table>
                 <button 
-                    className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-700"
+                    className="btn-crud"
                     onClick={onClose}
                 >
                     Cerrar

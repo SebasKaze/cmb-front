@@ -23,6 +23,10 @@ export default function Pedimento() {
   }, []);
 
   const handleEdit = (no_pedimento) => {
+    navigate(`/pedimentos/editar/${no_pedimento}`); // Redirige con el parámetro en la URL
+  };
+
+  const handleView = (no_pedimento) => {
     navigate(`/pedimentos/ver/${no_pedimento}`); // Redirige con el parámetro en la URL
   };
 
@@ -72,7 +76,10 @@ export default function Pedimento() {
                     >
                       <FaEdit />
                     </button>
-                    <button className="text-green-500 hover:text-green-800">
+                    <button 
+                      className="text-green-500 hover:text-green-800"
+                      onClick={() => handleView(row.no_pedimento)} // Redirige al ver el pedimento
+                    >
                       <FaEye />
                     </button>
                   </td>

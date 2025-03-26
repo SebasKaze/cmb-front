@@ -87,7 +87,7 @@ function CuadroLiquidacion({ section2, onChange, onRemove }) {
             {/* Botón de eliminar */}
             <div className="col-span-3 text-right">
                 <button
-                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                    className="btn-eliminar"
                     onClick={() => onRemove(section2.id_cua)}
                 >
                     Eliminar CuaLi
