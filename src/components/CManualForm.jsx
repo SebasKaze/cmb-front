@@ -23,14 +23,18 @@ function CargaManual() {
 
     const [sections, setSections] = useState([]);
     const [sections2, setSections2] = useState([]);
-    
+
     const handleTabClick = (tab) => {
-        if (["section1", "section2", "section3", "section4", "section5", "section6", "section7"].includes(tab)) {
+        if ([
+            "section1", "section2", "section3", "section4", 
+            "section5", "section6", "section7"
+        ].includes(tab)) {
             setActiveTab(tab);
         }
     };
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault(); // importante para prevenir el reload del form
         try {
             const payload = {
                 id_usuario: userData.id_usuario,
@@ -41,6 +45,9 @@ function CargaManual() {
                 contribuciones: sections,
                 CuadroLiquidacion: sections2,
             };
+
+            console.log(payload);
+
             const response = await fetch("http://localhost:4000/api/cmpedimento", {
                 method: "POST",
                 headers: {
@@ -80,7 +87,7 @@ function CargaManual() {
                 ))}
             </div>
 
-            <div className="tab-content mt-4" style={{ display: "block" }}>
+            <form onSubmit={handleSubmit} className="tab-content mt-4" style={{ display: "block" }}>
                 {activeTab === "section1" && (
                     <Section1 
                         formData={formData}
@@ -91,19 +98,19 @@ function CargaManual() {
                         setSections2={setSections2}
                     />
                 )}
-                {activeTab === "section2" && <Section2 formData={formData} setFormData={setFormData}/>}
-                {activeTab === "section3" && <Section3 formData={formData} setFormData={setFormData}/>}
-                {activeTab === "section4" && <Section4 formData={formData} setFormData={setFormData}/>}
-                {activeTab === "section5" && <Section5 formData={formData} setFormData={setFormData}/>}
-                {activeTab === "section6" && <Section6 formData={formData} setFormData={setFormData}/>}
-                {activeTab === "section7" && <Section7 formData={formData} setFormData={setFormData}/>}
-            </div>
-            <button
-                onClick={handleSubmit}
-                className="btn-crud">
-                Enviar Datos
-            </button>
+                {activeTab === "section2" && <Section2 formData={formData} setFormData={setFormData} />}
+                {activeTab === "section3" && <Section3 formData={formData} setFormData={setFormData} />}
+                {activeTab === "section4" && <Section4 formData={formData} setFormData={setFormData} />}
+                {activeTab === "section5" && <Section5 formData={formData} setFormData={setFormData} />}
+                {activeTab === "section6" && <Section6 formData={formData} setFormData={setFormData} />}
+                {activeTab === "section7" && <Section7 formData={formData} setFormData={setFormData} />}
+
+                <button type="submit" className="btn-crud mt-4">
+                    Enviar Datos
+                </button>
+            </form>
         </div>
     );
 }
+
 export default CargaManual;

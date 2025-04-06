@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Routes, Route, Link, Navigate } from "react-router-dom";
 import { FaHome, FaBox, FaUpload, FaCogs, FaWarehouse, FaChartLine, FaArrowCircleLeft, FaArrowCircleDown, FaBars } from "react-icons/fa";
 // Empresa
@@ -34,13 +34,15 @@ function Home({ userData }) {
   const [subMenuOpen, setSubMenuOpen] = useState({});
 
   const toggleSubMenu = (menu) => {
+
     setSubMenuOpen((prev) => ({ ...prev, [menu]: !prev[menu] }));
+  
   };
 
   const menus = [
-    { title: "DashBoard", route: "/", icon: <FaHome /> },
+    userData.tipo_de_cuenta !== 4 && { title: "DashBoard", route: "/", icon: <FaHome /> },
     { title: "Pedimentos", route: "/pedimentos", icon: <FaBox /> },
-    {
+    userData.tipo_de_cuenta !== 4 && {
       title: "Carga de datos",
       icon: <FaUpload />,
       items: [
@@ -60,7 +62,7 @@ function Home({ userData }) {
       ],
     },
     { title: "Activo Fijo", route: "/activo-fijo", icon: <FaWarehouse /> },
-    {
+    userData.tipo_de_cuenta !== 3 && {
       title: "Catálogos",
       icon: <FaChartLine />,
       items: [
@@ -69,6 +71,19 @@ function Home({ userData }) {
       ],
     },
   ];
+
+  // Filtrar los menús
+  const filteredMenus = menus.filter((menu) => menu); 
+  // Asegurar que si "Carga de datos" se oculta, su estado en subMenuOpen también se resetea
+  useEffect(() => {
+    if (userData.tipo_de_cuenta === 1) {
+      setSubMenuOpen(prev => {
+        const newState = { ...prev };
+        delete newState["Carga de datos"];
+        return newState;
+      });
+    }
+  }, [userData.tipo_de_cuenta]);
 
   return (
 <div className="flex flex-col h-screen">
@@ -96,7 +111,7 @@ function Home({ userData }) {
       </div>
       {/* Menú lateral */}
       <ul className="pt-6 overflow-y-auto h-[calc(100vh-130px)]">
-        {menus.map((menu, index) => (
+        {filteredMenus.map((menu, index) => (
           <li key={index} className="mb-4">
             {menu.route ? (
               <Link

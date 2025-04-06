@@ -5,9 +5,9 @@ import { FaEdit, FaTrash, FaEye } from "react-icons/fa";
 export default function Pedimento() {
   const [data, setData] = useState([]);
   const navigate = useNavigate(); // Inicializa navigate
+  const userData = JSON.parse(localStorage.getItem("userData"));
 
   useEffect(() => {
-    const userData = JSON.parse(localStorage.getItem("userData"));
     let idEmpresa = userData?.id_empresa;
     let idDomicilio = userData?.id_domicilio;
 
@@ -70,12 +70,14 @@ export default function Pedimento() {
                   <td className="border p-2">Sin documentos</td>
                   <td className={`border p-2 ${bgColor} font-bold`}>{estatus}</td>
                   <td className="border p-2 flex justify-center gap-2">
+                  {(userData.tipo_de_cuenta !== 3 && userData.tipo_de_cuenta !== 4) && (
                     <button 
-                      className="text-blue-500 hover:text-blue-800"
-                      onClick={() => handleEdit(row.no_pedimento)}
+                    className="text-blue-500 hover:text-blue-800"
+                    onClick={() => handleEdit(row.no_pedimento)}
                     >
                       <FaEdit />
                     </button>
+                  )}
                     <button 
                       className="text-green-500 hover:text-green-800"
                       onClick={() => handleView(row.no_pedimento)} // Redirige al ver el pedimento
