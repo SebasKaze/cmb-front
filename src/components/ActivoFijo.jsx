@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { FaPlus } from "react-icons/fa";
+import { FaPlus, FaEye } from "react-icons/fa";
 function ActivoFijo() {
     const [activos, setActivos] = useState([]);
 
@@ -22,7 +22,7 @@ function ActivoFijo() {
     }, [id_empresa, id_domicilio]);
 
     return (
-        <div>
+        <div className="main-container">
 
             <h2 className="text-2xl font-bold mb-4">Activo Fijo</h2>
                 <div className="w-full p-6">
@@ -42,6 +42,7 @@ function ActivoFijo() {
                             <th className="border px-4 py-2">Nombre</th>
                             <th className="border px-4 py-2">Ubicación</th>
                             <th className="border px-4 py-2">Descripción</th>
+                            <th className="border px-4 py-2">Pedimentos</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,6 +53,15 @@ function ActivoFijo() {
                                 <td className="border px-4 py-2">{activo.nombre_activofijo}</td>
                                 <td className="border px-4 py-2">{activo.ubicacion_interna}</td>
                                 <td className="border px-4 py-2">{activo.descripcion}</td>
+                                <td className="border px-4 py-2">
+                                <button 
+                                    className="text-green-500 hover:text-green-800"
+                                    >
+                                    <FaEye />
+                                </button>
+                                
+                                
+                                </td>
                             </tr>
                         ))}
                     </tbody>

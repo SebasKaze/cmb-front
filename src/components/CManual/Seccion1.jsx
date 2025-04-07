@@ -61,121 +61,138 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                 <div className="grid grid-cols-3 gap-4">
                     {/* Numero de pedimento */}
                     <div className="flex flex-col items-center text-center">
-                        <label className="mb-2" >Número de pedimento</label>
-                        <input type="text" className="w-full border border-gray-300 rounded p-2"
-                        name="noPedimento"
-                        value={formData.seccion1?.noPedimento || ""}
-                        onChange={handleChange}
-                        />
-                    </div>
-                    <div className="flex flex-col items-center text-center">
-                        <label className="mb-2" >Tipo de operacion</label>
-                        <select className="w-full border border-gray-300 rounded p-2 bg-white"
-                        name="tipoOperacion" // Identifica este campo en el estado
-                        onChange={handleChange} // Maneja los cambios en el valor seleccionado
-                        >
-                            <option value="" disabled selected>Seleccione una opción</option>
-                            <option value="IMP">IMP (Importación)</option>
-                            <option value="EXP">EXP (Exportacion)</option>
-                            <option value="TRA">TRA (Transito)</option>
-                        </select>
-                    </div>
-                    <div className="flex flex-col items-center text-center">
-                        <label className="mb-2">Clave de pedimento</label>
-                        <select className="w-full border border-gray-300 rounded p-2 bg-white"
-                        name="clavePedi"
-                        onChange={handleChange} 
-                        >
-                            <option disabled  selected>Seleccione una opción</option>
-                            <option disabled  >RÉGIMEN DEFINITIVO</option>
-                                <option value="A1">A1</option>
-                                <option value="A3">A3</option>
-                                <option value="C1">C1</option>
-                                <option value="D1">D1</option>
-                                <option value="GC">GC</option>
-                                <option value="K1">K1</option>
-                                <option value="L1">L1</option>
-                                <option value="P1">P1</option>
-                                <option value="S2">S2</option>
-                                <option value="T1">T1</option>
-                                <option value="VF">VF</option>
-                                <option value="VU">VU</option>
-                            <option disabled >OPERACIONES VIRUTALES</option>
-                                <option value="G9">G9</option>
-                                <option value="V1">V1</option>
-                                <option value="V2">V2</option>
-                                <option value="V5">V5</option>
-                                <option value="V6">V6</option>
-                                <option value="V7">V7</option>
-                                <option value="V9">V9</option>
-                                <option value="VD">VD</option>
-                            <option disabled >TEMPORALES</option>
-                                <option value="AD">AD</option>
-                                <option value="AJ">AJ</option>
-                                <option value="BA">BA</option>
-                                <option value="BB">BB</option>
-                                <option value="BC">BC</option>
-                                <option value="BD">BD</option>
-                                <option value="BE">BE</option>
-                                <option value="BF">BF</option>
-                                <option value="BH">BH</option>
-                                <option value="BI">BI</option>
-                                <option value="BM">BM</option>
-                                <option value="BP">BP</option>
-                                <option value="BR">BR</option>
-                                <option value="H1">H1</option>
-                                <option value="H8">H8</option>
-                                <option value="I1">I1</option>
-                                <option value="F4">F4</option>
-                                <option value="F5">F5</option>
-                            <option disabled >IMMEX</option>
-                                <option value="IN">IN</option>
-                                <option value="AF">AF</option>
-                                <option value="RT">RT</option>
-                            <option disabled >AGD</option>
-                                <option value="A4">A4</option>
-                                <option value="E1">E1</option>
-                                <option value="E2">E2</option>
-                                <option value="G1">G1</option>
-                                <option value="C3">C3</option>
-                                <option value="K2">K2</option>
-                            <option disabled >LOCALES AUTORIZADOS</option>
-                                <option value="A5">A5</option>
-                                <option value="E3">E3</option>
-                                <option value="E4">E4</option>
-                                <option value="G2">G2</option>
-                                <option value="K3">K3</option>
-                            <option disabled >IA</option>
-                                <option value="F2">F2</option>
-                                <option value="F3">F3</option>
-                                <option value="V3">V3</option>
-                                <option value="V4">V4</option>
-                            <option disabled >DUTY FREE</option>
-                                <option value="F8">F8</option>
-                                <option value="F9">F9</option>
-                                <option value="G6">G6</option>
-                                <option value="G7">G7</option>
-                                <option value="V8">V8</option>
-                            <option disabled >TRANSFORMACIÓN EN RECINTO FISCALIZADO</option>
-                                <option value="">M1</option>
-                                <option value="">M2</option>
-                                <option value="">J3</option>
-                            <option disabled >RFE</option>
-                                <option value="">G8</option>
-                                <option value="">M3</option>
-                                <option value="">M4</option>
-                                <option value="">M5</option>
-                                <option value="">J4</option>
-                            <option disabled >TRÁNSITOS</option>
-                                <option value="">T3</option>
-                                <option value="">T6</option>
-                                <option value="">T7</option>
-                                <option value="">T9</option>
-                            <option disabled >OTROS</option>
-                                <option value="">R1</option>
-                                <option value="">CT</option>
-                        </select>
-                    </div>
+                    <label className="mb-2">Número de pedimento</label>
+                    <input 
+                    type="text" 
+                    className="w-full border border-gray-300 rounded p-2"
+                    name="noPedimento"
+                    value={formData.seccion1?.noPedimento || ""}
+                    onChange={handleChange}
+                    pattern="[0-9]{15}"
+                    minLength={15}
+                    maxLength={15}
+                    required
+                    onInvalid={(e) =>
+                        e.target.setCustomValidity("Este campo es obligatorio y debe contener exactamente 15 dígitos numéricos.")
+                    }
+                    onInput={(e) => e.target.setCustomValidity("")}
+                    />
+                </div>
+
+                <div className="flex flex-col items-center text-center">
+                <label className="mb-2">Tipo de operación</label>
+                <select 
+                    className="w-full border border-gray-300 rounded p-2 bg-white"
+                    name="tipoOperacion"
+                    onChange={handleChange}
+                    required
+                >
+                    <option value="" disabled selected>Seleccione una opción</option>
+                    <option value="IMP">IMP (Importación)</option>
+                    <option value="EXP">EXP (Exportación)</option>
+                    <option value="TRA">TRA (Tránsito)</option>
+                </select>
+            </div>
+
+            <div className="flex flex-col items-center text-center">
+                <label className="mb-2">Clave de pedimento</label>
+                <select 
+                    className="w-full border border-gray-300 rounded p-2 bg-white"
+                    name="clavePedi"
+                    onChange={handleChange}
+                    required
+                >
+                    <option value="" disabled selected>Seleccione una opción</option>
+                    <option disabled>RÉGIMEN DEFINITIVO</option>
+                    <option value="A1">A1</option>
+                    <option value="A3">A3</option>
+                    <option value="C1">C1</option>
+                    <option value="D1">D1</option>
+                    <option value="GC">GC</option>
+                    <option value="K1">K1</option>
+                    <option value="L1">L1</option>
+                    <option value="P1">P1</option>
+                    <option value="S2">S2</option>
+                    <option value="T1">T1</option>
+                    <option value="VF">VF</option>
+                    <option value="VU">VU</option>
+                    <option disabled>OPERACIONES VIRTUALES</option>
+                    <option value="G9">G9</option>
+                    <option value="V1">V1</option>
+                    <option value="V2">V2</option>
+                    <option value="V5">V5</option>
+                    <option value="V6">V6</option>
+                    <option value="V7">V7</option>
+                    <option value="V9">V9</option>
+                    <option value="VD">VD</option>
+                    <option disabled>TEMPORALES</option>
+                    <option value="AD">AD</option>
+                    <option value="AJ">AJ</option>
+                    <option value="BA">BA</option>
+                    <option value="BB">BB</option>
+                    <option value="BC">BC</option>
+                    <option value="BD">BD</option>
+                    <option value="BE">BE</option>
+                    <option value="BF">BF</option>
+                    <option value="BH">BH</option>
+                    <option value="BI">BI</option>
+                    <option value="BM">BM</option>
+                    <option value="BP">BP</option>
+                    <option value="BR">BR</option>
+                    <option value="H1">H1</option>
+                    <option value="H8">H8</option>
+                    <option value="I1">I1</option>
+                    <option value="F4">F4</option>
+                    <option value="F5">F5</option>
+                    <option disabled>IMMEX</option>
+                    <option value="IN">IN</option>
+                    <option value="AF">AF</option>
+                    <option value="RT">RT</option>
+                    <option disabled>AGD</option>
+                    <option value="A4">A4</option>
+                    <option value="E1">E1</option>
+                    <option value="E2">E2</option>
+                    <option value="G1">G1</option>
+                    <option value="C3">C3</option>
+                    <option value="K2">K2</option>
+                    <option disabled>LOCALES AUTORIZADOS</option>
+                    <option value="A5">A5</option>
+                    <option value="E3">E3</option>
+                    <option value="E4">E4</option>
+                    <option value="G2">G2</option>
+                    <option value="K3">K3</option>
+                    <option disabled>IA</option>
+                    <option value="F2">F2</option>
+                    <option value="F3">F3</option>
+                    <option value="V3">V3</option>
+                    <option value="V4">V4</option>
+                    <option disabled>DUTY FREE</option>
+                    <option value="F8">F8</option>
+                    <option value="F9">F9</option>
+                    <option value="G6">G6</option>
+                    <option value="G7">G7</option>
+                    <option value="V8">V8</option>
+                    <option disabled>TRANSFORMACIÓN EN RECINTO FISCALIZADO</option>
+                    <option value="M1">M1</option>
+                    <option value="M2">M2</option>
+                    <option value="J3">J3</option>
+                    <option disabled>RFE</option>
+                    <option value="G8">G8</option>
+                    <option value="M3">M3</option>
+                    <option value="M4">M4</option>
+                    <option value="M5">M5</option>
+                    <option value="J4">J4</option>
+                    <option disabled>TRÁNSITOS</option>
+                    <option value="T3">T3</option>
+                    <option value="T6">T6</option>
+                    <option value="T7">T7</option>
+                    <option value="T9">T9</option>
+                    <option disabled>OTROS</option>
+                    <option value="R1">R1</option>
+                    <option value="CT">CT</option>
+                </select>
+            </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2">Regimen</label>
                         <select className="w-full border border-gray-300 rounded p-2 bg-white"
@@ -485,12 +502,14 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         name="fechaEntrada"
                         value={formData.seccion1?.fechaEntrada || ""}
                         onChange={handleChange}
+                        required
                         />
                         <label className="mb-2" for="fec_sal">Pago/Salida</label>
                         <input type="date" className="w-60 border border-gray-300 rounded p-2"
                         name="fechaSalida"
                         value={formData.seccion1?.fechaSalida || ""}
                         onChange={handleChange}
+                        required
                         />
                     </div>
                 </div>

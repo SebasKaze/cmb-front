@@ -85,7 +85,7 @@ function ProductosCarga() {
     );
 
     return (
-        <div>
+        <div className="main-container">
             <div className="w-full">
                 <button 
                     className="btn-crud"
@@ -164,7 +164,7 @@ function ProductosCarga() {
                                             <td className="border p-2">{material.nombre_interno}</td>
                                             <td className="border p-2">
                                                 <input
-                                                    type="number"
+                                                    type="text"
                                                     value={material.cantidad}
                                                     onChange={(e) => cambiarCantidad(material.id_material_interno, e.target.value)}
                                                     className="w-16 border rounded-md p-1 text-center"

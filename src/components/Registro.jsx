@@ -170,7 +170,7 @@ function Registro() {
     };
 
     return (
-        <div>
+        <div className="main-container">
             <h1 className="text-3xl font-bold mb-4 text-center">Registros</h1>
                 
             <div className="p-6"> {/*Carga de empresa */}

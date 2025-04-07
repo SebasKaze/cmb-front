@@ -83,13 +83,13 @@ function Productos() {
     };
 
     return (
-        <div>
+        <div className="main-container">
             <div className="w-full">
                 <button className="btn-crud" onClick={handleNuevoMaterial}>
                     Nuevo Producto <FaPlus />
                 </button>
             </div>
-            <div className="w-full max-w-5xl p-4">
+            <div className="w-full p-4">
                 <table className="w-full border border-gray-300 shadow-lg bg-white">
                     <thead className="bg-gray-200">
                         <tr>

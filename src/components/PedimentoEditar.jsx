@@ -265,7 +265,7 @@ function PedimentoEditar() {
 
     return (
         <div className="pestanas">
-            <div className="tabs flex space-x-4 border-b-2 pb-2">
+            <div className="tabs flex justify-center space-x-4 border-b-2 pb-2 pt-8">
                 {[
                     { id: "section1", name: "Encabezado P.P" },
                     { id: "section2", name: "Encabezado S.P" },

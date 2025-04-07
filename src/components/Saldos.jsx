@@ -8,6 +8,10 @@ function Saldos() {
     const userData = JSON.parse(localStorage.getItem("userData")) || {};
     const { id_empresa, id_domicilio } = userData;
 
+    const [modalReporte, setIsModalReporte] = useState(false);
+    const [fechaInicio, setFechaInicio] = useState("");
+    const [fechaFin, setFechaFin] = useState("");
+
     useEffect(() => {
         if (id_empresa && id_domicilio) {
             fetch(`http://localhost:4000/api/procesos/saldoMuestra?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
@@ -25,9 +29,26 @@ function Saldos() {
     const totalPages = Math.ceil(filteredData.length / itemsPerPage);
     const paginatedData = filteredData.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
+    const descargarExcel = () => {
+        if (!fechaInicio || !fechaFin) {
+            alert("Por favor, selecciona un rango de fechas.");
+            return;
+        }
+        window.open(`http://localhost:4000/api/procesos/reporte/saldoE?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`, "_blank");
+    };
+
     return (
-        <div>
+        <div className="main-container">
             <h2 className="text-3xl font-bold text-gray-900 mb-6 p-6">Saldo</h2>
+            {/* Botón para abrir el modal */}
+            <div className="flex gap-4 mb-4">
+                <button 
+                    onClick={() => setIsModalReporte(true)} 
+                    className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700 transition"
+                >
+                    Generar Reporte
+                </button>
+            </div>
             <input 
                 type="text" 
                 placeholder="Buscar por fracción..." 
@@ -68,6 +89,49 @@ function Saldos() {
                     </button>
                 ))}
             </div>
+
+            {/* MODAL */}
+            {modalReporte && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+                    <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                        <h2 className="text-xl font-semibold mb-4">Generar Reporte</h2>
+
+                        {/* Filtro de rango de fechas */}
+                        <label className="block text-gray-700">Fecha Inicio:</label>
+                        <input 
+                            type="date" 
+                            className="border p-2 w-full mt-2 rounded" 
+                            value={fechaInicio}
+                            onChange={(e) => setFechaInicio(e.target.value)}
+                        />
+
+                        <label className="block text-gray-700 mt-3">Fecha Fin:</label>
+                        <input 
+                            type="date" 
+                            className="border p-2 w-full mt-2 rounded" 
+                            value={fechaFin}
+                            onChange={(e) => setFechaFin(e.target.value)}
+                        />
+
+                        {/* Botones de exportación */}
+                        <div className="flex gap-4 mt-4">
+                            <button 
+                                onClick={descargarExcel} 
+                                className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-700 transition">
+                                Exportar Excel
+                            </button>
+                        </div>
+
+                        {/* Botón para cerrar */}
+                        <button 
+                            onClick={() => setIsModalReporte(false)} 
+                            className="mt-4 px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-700 transition w-full"
+                        >
+                            Cerrar
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

@@ -30,7 +30,7 @@ function Domicilios() {
     }, []);
 
     return (
-        <div>
+        <div className="main-container">
             <h2 className="text-2xl font-bold mb-4">Domicilios</h2>
 
             {/* Tabla de Domicilios */}

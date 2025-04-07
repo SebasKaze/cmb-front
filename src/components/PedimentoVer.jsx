@@ -83,7 +83,7 @@ function PedimentoVer() {
 
     return (
         <div className="pestanas">
-            <div className="tabs flex space-x-4 border-b-2 pb-2">
+            <div className="tabs flex justify-center space-x-4 border-b-2 pb-2 pt-8">
                 {[
                     { key: "section1", label: "Encabezado P.P" },
                     { key: "section2", label: "Encabezado S.P" },

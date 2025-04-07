@@ -124,7 +124,7 @@ function Materiales() {
     };
 
     return (
-        <div>
+        <div className="main-container">
             <div className="w-full">
                 <button 
                 className="btn-crud"
@@ -133,100 +133,100 @@ function Materiales() {
                 Nuevo material <FaPlus />
                 </button>
             </div>
-            <div className="w-full max-w-5xl p-4">
+            <div className="w-full p-4">
                 <table className="w-full border border-gray-300 shadow-lg bg-white">
-                <thead className="bg-gray-200">
-                    <tr>
-                    <th className="border p-2">ID</th>
-                    <th className="border p-2">Nombre</th>
-                    <th className="border p-2">Fraccion</th>
-                    <th className="border p-2">Descripcion</th>
-                    <th className="border p-2">Unidad de medida</th>
-                    <th className="border p-2"> </th>
-                    </tr>
-                </thead>
-                <tbody>
-                {data.map((row) => (
-                            <tr key={row.id_material_interno} className="text-center">
-                                <td className="border p-2">{row.id_material_interno}</td>
-                                <td className="border p-2">
-                                    {editingRowId === row.id_material_interno ? (
-                                        <input
-                                            type="text"
-                                            value={editedData.nombre_interno || ""}
-                                            onChange={(e) => handleChange(e, "nombre_interno")}
-                                            className="border p-1"
-                                        />
-                                    ) : (
-                                        row.nombre_interno
-                                    )}
-                                </td>
-                                <td className="border p-2">
-                                    {editingRowId === row.id_material_interno ? (
-                                        <input
-                                            type="text"
-                                            value={editedData.fraccion_arancelaria || ""}
-                                            onChange={(e) => handleChange(e, "fraccion_arancelaria")}
-                                            className="border p-1"
-                                        />
-                                    ) : (
-                                        row.fraccion_arancelaria
-                                    )}
-                                </td>
-                                <td className="border p-2">
-                                    {editingRowId === row.id_material_interno ? (
-                                        <input
-                                            type="text"
-                                            value={editedData.descripcion_fraccion || ""}
-                                            onChange={(e) => handleChange(e, "descripcion_fraccion")}
-                                            className="border p-1"
-                                        />
-                                    ) : (
-                                        row.descripcion_fraccion
-                                    )}
-                                </td>
-                                <td className="border p-2">
-                                    {editingRowId === row.id_material_interno ? (
-                                        <input
-                                            type="text"
-                                            value={editedData.unidad_medida || ""}
-                                            onChange={(e) => handleChange(e, "unidad_medida")}
-                                            className="border p-1"
-                                        />
-                                    ) : (
-                                        row.unidad_medida
-                                    )}
-                                </td>
-                                <td className="border p-2 flex justify-center gap-2">
-                                    {editingRowId === row.id_material_interno ? (
-                                        <>
-                                            <button
-                                                className="text-green-500 hover:text-green-800"
-                                                onClick={() => handleSaveClick(row.id_material_interno)}
-                                            >
-                                                ✔️
-                                            </button>
-                                            <button className="text-red-500 hover:text-red-800" onClick={handleCancelClick}>
-                                                ❌
-                                            </button>
-                                        </>
-                                        
-                                        
-                                    ) : (
-                                        <>
-                                            <button className="text-blue-500 hover:text-blue-800" onClick={() => handleEditClick(row)}>
-                                                <CiEdit />
-                                            </button>
-                                            <button className="text-red-500 hover:text-red-800" onClick={() => handleDeleteClick(row.id_material_interno)}>
-                                                <FaTrash />
-                                            </button>
-                                        </>
-                                        
-                                    )}
-                                </td>
-                            </tr>
-                        ))}
-                </tbody>
+                    <thead className="bg-gray-200">
+                        <tr>
+                        <th className="border p-2">ID</th>
+                        <th className="border p-2">Nombre</th>
+                        <th className="border p-2">Fraccion</th>
+                        <th className="border p-2">Descripcion</th>
+                        <th className="border p-2">Unidad de medida</th>
+                        <th className="border p-2"> </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {data.map((row) => (
+                                <tr key={row.id_material_interno} className="text-center">
+                                    <td className="border p-2">{row.id_material_interno}</td>
+                                    <td className="border p-2">
+                                        {editingRowId === row.id_material_interno ? (
+                                            <input
+                                                type="text"
+                                                value={editedData.nombre_interno || ""}
+                                                onChange={(e) => handleChange(e, "nombre_interno")}
+                                                className="border p-1"
+                                            />
+                                        ) : (
+                                            row.nombre_interno
+                                        )}
+                                    </td>
+                                    <td className="border p-2">
+                                        {editingRowId === row.id_material_interno ? (
+                                            <input
+                                                type="text"
+                                                value={editedData.fraccion_arancelaria || ""}
+                                                onChange={(e) => handleChange(e, "fraccion_arancelaria")}
+                                                className="border p-1"
+                                            />
+                                        ) : (
+                                            row.fraccion_arancelaria
+                                        )}
+                                    </td>
+                                    <td className="border p-2">
+                                        {editingRowId === row.id_material_interno ? (
+                                            <input
+                                                type="text"
+                                                value={editedData.descripcion_fraccion || ""}
+                                                onChange={(e) => handleChange(e, "descripcion_fraccion")}
+                                                className="border p-1"
+                                            />
+                                        ) : (
+                                            row.descripcion_fraccion
+                                        )}
+                                    </td>
+                                    <td className="border p-2">
+                                        {editingRowId === row.id_material_interno ? (
+                                            <input
+                                                type="text"
+                                                value={editedData.unidad_medida || ""}
+                                                onChange={(e) => handleChange(e, "unidad_medida")}
+                                                className="border p-1"
+                                            />
+                                        ) : (
+                                            row.unidad_medida
+                                        )}
+                                    </td>
+                                    <td className="border p-2 flex justify-center gap-2">
+                                        {editingRowId === row.id_material_interno ? (
+                                            <>
+                                                <button
+                                                    className="text-green-500 hover:text-green-800"
+                                                    onClick={() => handleSaveClick(row.id_material_interno)}
+                                                >
+                                                    ✔️
+                                                </button>
+                                                <button className="text-red-500 hover:text-red-800" onClick={handleCancelClick}>
+                                                    ❌
+                                                </button>
+                                            </>
+                                            
+                                            
+                                        ) : (
+                                            <>
+                                                <button className="text-blue-500 hover:text-blue-800" onClick={() => handleEditClick(row)}>
+                                                    <CiEdit />
+                                                </button>
+                                                <button className="text-red-500 hover:text-red-800" onClick={() => handleDeleteClick(row.id_material_interno)}>
+                                                    <FaTrash />
+                                                </button>
+                                            </>
+                                            
+                                        )}
+                                    </td>
+                                </tr>
+                            ))}
+                    </tbody>
                 </table>
             </div>
 
