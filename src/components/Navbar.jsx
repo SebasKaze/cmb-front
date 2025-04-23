@@ -80,13 +80,13 @@ export default function NavBar({ userData }) {
   };
 
   return (
-    <div className="navbar fixed top-0 left-0 w-full z-10 shadow-md bg-gradient-to-r from-green-50 to-green-100">
+    <div className="navbar fixed top-0 left-0 w-full z-10 shadow-md bg-gradient-to-r from-blue-200 to-slate-300">
       <div className="navbar-start">
         <div className="flex items-center gap-2">
-          <img className="w-14" src="/src/assets/SLDGLogo.png" alt="Logo" />
+          <img className="w-14" src="/src/assets/LMLogo.png" alt="Logo" />
           <div className="flex flex-col">
-            <span className="text-2xl font-bold text-green-800">SLDGTack</span>
-            <span className="text-xs text-green-600">Stock & Logistics Data Global Tracking</span>
+            <span className="text-2xl font-bold text-yellow-800">SMController</span>
+            <span className="text-2xs text-yellow-600">Supply Management Controller</span>
           </div>
         </div>
       </div>
@@ -95,7 +95,7 @@ export default function NavBar({ userData }) {
         {(userData.tipo_de_cuenta === 1 || userData.tipo_de_cuenta === 4) && companies.length > 0 && (
           <div className="relative">
             <select 
-              className="select-custom bg-green-700 text-white"
+              className="select-custom bg-yellow-700 text-white"
               value={selectedCompany} 
               onChange={handleCompanyChange}
             >
@@ -114,7 +114,7 @@ export default function NavBar({ userData }) {
           addresses.length > 0 ? (
             <div className="relative">
               <select
-                className="select-custom bg-green-700 text-white"
+                className="select-custom bg-yellow-700 text-white"
                 value={selectedAddress}
                 onChange={handleAddressChange}
               >
@@ -134,13 +134,13 @@ export default function NavBar({ userData }) {
         )}
 
         <div className="text-right mr-2">
-          <h2 className="font-bold text-green-900">{userData?.nombre_empresa || "Empresa no disponible"}</h2>
-          <h3 className="text-sm text-green-700">{userData?.nombre_usuario || "Usuario no disponible"}</h3>
+          <h2 className="font-bold text-yellow-900">{userData?.nombre_empresa || "Empresa no disponible"}</h2>
+          <h3 className="text-m text-yellow-700">{userData?.nombre_usuario || "Usuario no disponible"}</h3>
         </div>
 
         <div className="dropdown dropdown-left">
           <div tabIndex="0" role="button" className="avatar px-2 btn btn-ghost btn-circle hover:bg-green-200">
-            <div className="w-10 rounded-full ring-2 ring-green-600">
+            <div className="w-10 rounded-full ring-2 ring-red-700">
               <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="Usuario" />
             </div>
           </div>
@@ -148,7 +148,7 @@ export default function NavBar({ userData }) {
             <li>
               <a 
                 onClick={() => navigate("/datosgenerales")} 
-                className="hover:bg-green-100 text-green-800"
+                className="hover:bg-red-700 text-red-800"
               >
                 Datos generales
               </a>

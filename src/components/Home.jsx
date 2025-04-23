@@ -101,7 +101,7 @@ function Home({ userData }) {
   }, [userData.tipo_de_cuenta]);
 
   return (
-    <div className="flex flex-col h-screen bg-gray-50">
+    <div className="flex flex-col h-screen">
       <div className="flex flex-1">
         {/* Barra lateral */}
         <motion.div 

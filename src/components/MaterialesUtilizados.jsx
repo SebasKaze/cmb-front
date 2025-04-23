@@ -10,8 +10,8 @@ function MaterialesUtilizados() {
     const itemsPerPage = 10;
     const userData = JSON.parse(localStorage.getItem("userData")) || {};
     const { id_empresa, id_domicilio } = userData; 
-
-    
+    const [modalOjo, setIsModalOjo] = useState(false);
+    const [modalData, setModalData] = useState(null);
     const [modalReporte, setIsModalReporte] = useState(false);
     const [fechaInicio, setFechaInicio] = useState("");
     const [fechaFin, setFechaFin] = useState("");
@@ -30,6 +30,16 @@ function MaterialesUtilizados() {
                 .catch((error) => console.error("Error al obtener los datos:", error));
         }
     }, [id_empresa, id_domicilio]);
+    const materialUtilizadoVer = async (id_transformacion) => {
+        try {
+            const response = await fetch(`http://localhost:4000/api/procesos/mateutili/vermateuti?id_transformacion=${id_transformacion}`);
+            const data = await response.json();
+            setModalData(data);
+            setIsModalOjo(true);
+        } catch (error) {
+            console.error("Error al obtener las fracciones:", error);
+        }
+    };
 
     const handleNuevoMaterial = () => {
         navigate("/materiales-utilizados/cargaproducto");
@@ -85,17 +95,16 @@ function MaterialesUtilizados() {
                                 <td className="border p-2">{row.cantidad}</td>
                                 <td className="border p-2">{row.fecha_transformacion}</td>
                                 <td className="border p-2 flex justify-center gap-2">
-                                    <button className="text-blue-500 hover:text-blue-800">
+                                    <button className="text-blue-500 hover:text-blue-800"
+                                    onClick={() => materialUtilizadoVer(row.id_transformacion)}>
                                         <FaEye />
-                                    </button>
-                                    <button className="text-yellow-500 hover:text-yellow-800" onClick={() => handleEdit(row.id)}>
-                                        <CiEdit />
                                     </button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                {modalOjo && <Modal data={modalData} onClose={() => setIsModalOjo(false)} />}
             </div>
             <div className="flex justify-center mt-4 gap-2">
                 {Array.from({ length: totalPages }, (_, index) => (
@@ -153,5 +162,43 @@ function MaterialesUtilizados() {
         </div>
     );
 }
+function Modal({ data, onClose }) {
+    return (
+        <div className="fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center">
+            <div className="bg-white p-6 rounded-lg shadow-lg w-96">
+                <h2 className="text-xl font-bold mb-4">Materiales</h2>
+                <table className="w-full border border-gray-300">
+                    <thead className="bg-gray-200">
+                        <tr>
+                            <th className="border p-2">Material</th>
+                            <th className="border p-2">Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {data.length > 0 ? (
+                            data.map((item, index) => (
+                                <tr key={index} className="text-center">
+                                    <td className="border p-2">{item.nombre_interno}</td>
+                                    <td className="border p-2">{item.cantidad}</td>
+                                </tr>
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="2" className="border p-2 text-center">No hay materiales</td>
+                            </tr>
+                        )}
+                    </tbody>
+                </table>
+                <button 
+                    className="btn-crud"
+                    onClick={onClose}
+                >
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    );
+}
 
 export default MaterialesUtilizados;
+

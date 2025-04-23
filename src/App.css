@@ -42,9 +42,6 @@ body{
     background-color: #0056b3; /* Azul más oscuro */
 }
 
-.bg-navbar-prin{
-    background-color: #19614F;
-}
 .bg-navbar-sec{
     background-color: #83E171;
 }
@@ -54,3 +51,46 @@ body{
 .bg-select-02{
     background-color: #96ECED;
 }
+
+
+/* navbar-colors.css */
+
+.bg-navbar-prin {
+    background-color: #093144; /* Ejemplo de color base del navbar */
+  }
+  
+  .bg-green-600 {
+    background-color: #b37013 !important;
+  }
+  
+  .bg-green-700 {
+    background-color: #962b11 !important;
+  }
+  
+  .bg-green-800 {
+    background-color: #166534 !important;
+  }
+  
+  .text-white {
+    color: #ffffff !important;
+  }
+  
+  .text-gray-300 {
+    color: #adb0b5 !important;
+  }
+  
+  .hover\:bg-gray-700:hover {
+    background-color: #514f37 !important;
+  }
+  
+  .hover\:bg-green-700:hover {
+    background-color: #b13d20 !important;
+  }
+  
+  .hover\:bg-green-800:hover {
+    background-color: #8b311b !important;
+  }
+  
+  .hover\:text-white:hover {
+    color: #ffffff !important;
+  }
