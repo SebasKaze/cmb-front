@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../libs/app.css";
+import "../App.css";
 import Section1 from "./CManual/Seccion1";
 import Section2 from "./CManual/Seccion2";
 import Section3 from "./CManual/Seccion3";
