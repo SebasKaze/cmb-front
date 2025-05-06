@@ -9,7 +9,7 @@ import Section6 from "./CManual/Seccion6";
 import Section7 from "./CManual/Seccion7";
 
 function CargaManual() {
-    const backConection = import.meta.env.back_url;
+    const backConection = import.meta.env.VITE_BACK_URL;
     const [activeTab, setActiveTab] = useState("section1");
     const userData = JSON.parse(localStorage.getItem("userData"));
     const [formData, setFormData] = useState({

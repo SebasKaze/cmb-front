@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { FaEye } from "react-icons/fa6";
 
 function SalidaMercancia() {
-    const backConection = import.meta.env.back_url;
+    const backConection = import.meta.env.VITE_BACK_URL;
     const [data, setActivos] = useState([]);
     const [modalData, setModalData] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);

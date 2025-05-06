@@ -10,7 +10,7 @@ import Section7 from "./PedimentosSeccionesVer/Seccion7";
 import { useNavigate } from "react-router-dom";
 
 function PedimentoVer() {
-    const backConection = import.meta.env.back_url;
+    const backConection = import.meta.env.VITE_BACK_URL;
     const { no_pedimento } = useParams();
     const [activeTab, setActiveTab] = useState("section1");
     const userData = JSON.parse(localStorage.getItem("userData"));

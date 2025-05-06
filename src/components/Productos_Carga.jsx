@@ -5,7 +5,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { FaPlus, FaTrash } from 'react-icons/fa'; 
 
 function ProductosCarga() {
-    const backConection = import.meta.env.back_url;
+    const backConection = import.meta.env.VITE_BACK_URL;
     const navigate = useNavigate();
 
     const [materiales, setMateriales] = useState([]); 

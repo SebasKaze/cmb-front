@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 function Domicilios() {
-    const backConection = import.meta.env.back_url;
+    const backConection = import.meta.env.VITE_BACK_URL;
     const userData = JSON.parse(localStorage.getItem("userData")); // Obtener datos de usuario desde localStorage
     const [domicilios, setDomicilios] = useState([]);
 

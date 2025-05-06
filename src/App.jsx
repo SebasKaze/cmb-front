@@ -5,7 +5,7 @@ import axios from "axios";
 import NavBar from "./components/Navbar";
 import Login from "./components/Login";
 import Home from "./components/Home";
-const backConection = import.meta.env.back_url;
+const backConection = import.meta.env.VITE_BACK_URL;
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);

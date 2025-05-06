@@ -4,7 +4,7 @@ import { CiEdit } from 'react-icons/ci';
 import { FaPlus, FaEye } from 'react-icons/fa';
 
 function MaterialesUtilizados() {
-    const backConection = import.meta.env.back_url;
+    const backConection = import.meta.env.VITE_BACK_URL;
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);

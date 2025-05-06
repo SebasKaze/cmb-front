@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash, FaEye } from "react-icons/fa";
 
 export default function Pedimento() {
-  const backConection = import.meta.env.back_url;
+  const backConection = import.meta.env.VITE_BACK_URL;
   const [data, setData] = useState([]);
   const navigate = useNavigate(); // Inicializa navigate
   const userData = JSON.parse(localStorage.getItem("userData"));

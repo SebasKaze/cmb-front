@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
 
 function MaterialesUtilizadosCP() {
-    const backConection = import.meta.env.back_url;
+    const backConection = import.meta.env.VITE_BACK_URL;
     const navigate = useNavigate();
     const userData = JSON.parse(localStorage.getItem("userData")) || {};
 

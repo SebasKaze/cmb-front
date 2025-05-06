@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 
 function Saldos() {
-    const backConection = import.meta.env.back_url;
+    const backConection = import.meta.env.VITE_BACK_URL;
     const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);

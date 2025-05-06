@@ -5,7 +5,7 @@ import { CiEdit } from 'react-icons/ci';
 import { FaPlus, FaEye } from 'react-icons/fa';
 
 function Productos() {
-    const backConection = import.meta.env.back_url;
+    const backConection = import.meta.env.VITE_BACK_URL;
     const [data, setData] = useState([]);
     const [popupData, setPopupData] = useState(null);
     const [showPopup, setShowPopup] = useState(false);

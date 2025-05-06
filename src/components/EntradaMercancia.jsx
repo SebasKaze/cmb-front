@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { FaEye } from "react-icons/fa6";
 
 export default function Pedimento() {
-    const backConection = import.meta.env.back_url;
+    const backConection = import.meta.env.VITE_BACK_URL;
     const [data, setActivos] = useState([]);
     const [isModalOpen, setModalOpen] = useState(false);
     const [modalOjo, setIsModalOjo] = useState(false);

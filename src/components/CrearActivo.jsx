@@ -5,7 +5,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 
 function CambioCrearActivo() {
     const navigate = useNavigate();
-    const backConection = import.meta.env.back_url;
+    const backConection = import.meta.env.VITE_BACK_URL;
 
     const Regresar = () => {
         navigate("/activo-fijo");

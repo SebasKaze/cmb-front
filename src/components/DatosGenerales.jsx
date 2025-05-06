@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 
 function DatosGe() {
-    const backConection = import.meta.env.back_url;
+    const backConection = import.meta.env.VITE_BACK_URL;
     const userData = JSON.parse(localStorage.getItem("userData")); // Obtener datos de usuario desde localStorage
     const [userInfo, setUserInfo] = useState(null);
     const [empresaInfo, setEmpresaInfo] = useState(null);

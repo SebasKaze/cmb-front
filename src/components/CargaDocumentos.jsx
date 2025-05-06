@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function CargarDocumentos() {
-    const backConection = import.meta.env.back_url;
+    const backConection = import.meta.env.VITE_BACK_URL;
     const userData = JSON.parse(localStorage.getItem("userData")) || {};
     const { id_empresa, id_domicilio } = userData;
 

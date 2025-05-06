@@ -4,7 +4,7 @@ import { FaPlus, FaEye } from "react-icons/fa";
 
 function ActivoFijo() {
     const [activos, setActivos] = useState([]);
-    const backConection = import.meta.env.back_url;
+    const backConection = import.meta.env.VITE_BACK_URL;
 
     const navigate = useNavigate();
     const cambioCrearActivo = () => {

@@ -7,7 +7,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 
 
 export default function CargaMateriales() {
-    const backConection = import.meta.env.back_url;
+    const backConection = import.meta.env.VITE_BACK_URL;
         
     const userData = JSON.parse(localStorage.getItem("userData")) || {};
     

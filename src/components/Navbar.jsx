@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function NavBar({ userData }) {
-  const backConection = import.meta.env.back_url;
+  const backConection = import.meta.env.VITE_BACK_URL;
   const navigate = useNavigate();
   const [companies, setCompanies] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState(

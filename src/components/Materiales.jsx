@@ -7,7 +7,7 @@ import { FaPlus } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 
 function Materiales() {
-    const backConection = import.meta.env.back_url;
+    const backConection = import.meta.env.VITE_BACK_URL;
     const userData = JSON.parse(localStorage.getItem("userData")) || {};
     const { id_empresa, id_domicilio } = userData;
 
