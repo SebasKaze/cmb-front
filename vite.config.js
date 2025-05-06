@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vite.dev/config/
+// https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
   const isDevelopment = mode === 'development';
 
@@ -12,12 +12,16 @@ export default defineConfig(({ mode }) => {
           host: true,
           proxy: {
             '/api': {
-              target: 'http://localhost:4000', // tu backend local
+              target: 'http://localhost:4000', // solo para desarrollo
               changeOrigin: true,
               secure: false
             }
           }
         }
-      : undefined // No usar configuración del servidor en producción
+      : undefined, // No configuración de servidor en producción
+    build: {
+      outDir: 'dist',
+      emptyOutDir: true
+    }
   };
 });
