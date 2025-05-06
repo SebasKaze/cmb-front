@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { FaEdit, FaTrash, FaEye } from "react-icons/fa";
 
 export default function Pedimento() {
+  const backConection = import.meta.env.back_url;
   const [data, setData] = useState([]);
   const navigate = useNavigate(); // Inicializa navigate
   const userData = JSON.parse(localStorage.getItem("userData"));
@@ -11,7 +12,7 @@ export default function Pedimento() {
     let idEmpresa = userData?.id_empresa;
     let idDomicilio = userData?.id_domicilio;
 
-    let url = "http://localhost:4000/api/verpedimento";
+    let url = `${backConection}/api/verpedimento`;
     if (idEmpresa && idDomicilio) {
       url += `?id_empresa=${idEmpresa}&id_domicilio=${idDomicilio}`;
     }

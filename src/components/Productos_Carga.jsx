@@ -5,6 +5,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { FaPlus, FaTrash } from 'react-icons/fa'; 
 
 function ProductosCarga() {
+    const backConection = import.meta.env.back_url;
     const navigate = useNavigate();
 
     const [materiales, setMateriales] = useState([]); 
@@ -25,7 +26,7 @@ function ProductosCarga() {
 
     useEffect(() => {
         if (id_empresa && id_domicilio) {
-            fetch(`http://localhost:4000/api/verMateriales?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
+            fetch(`${backConection}/api/verMateriales?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
                 .then((response) => response.json())
                 .then((data) => setMateriales(data)) // Corrección aquí
                 .catch((error) => console.error("Error al obtener los datos:", error));
@@ -56,7 +57,7 @@ function ProductosCarga() {
             id_empresa: userData.id_empresa,
             id_domicilio: userData.id_domicilio,
         };
-        axios.post("http://localhost:4000/api/cargaproducto", dataEnviar)
+        axios.post(`${backConection}/api/cargaproducto`, dataEnviar)
             .then(response => {
                 console.log("Enviado con éxito:", response.data);
                 alert("Productos enviados correctamente");

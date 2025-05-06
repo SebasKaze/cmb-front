@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 function Saldos() {
+    const backConection = import.meta.env.back_url;
     const [data, setData] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
@@ -14,7 +15,7 @@ function Saldos() {
 
     useEffect(() => {
         if (id_empresa && id_domicilio) {
-            fetch(`http://localhost:4000/api/procesos/saldoMuestra?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
+            fetch(`${backConection}/api/procesos/saldoMuestra?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
                 .then((response) => response.json())
                 .then((data) => setData(data))
                 .catch((error) => console.error("Error al obtener los datos:", error));
@@ -34,7 +35,7 @@ function Saldos() {
             alert("Por favor, selecciona un rango de fechas.");
             return;
         }
-        window.open(`http://localhost:4000/api/procesos/reporte/saldoE?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`, "_blank");
+        window.open(`${backConection}/api/procesos/reporte/saldoE?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`, "_blank");
     };
 
     return (

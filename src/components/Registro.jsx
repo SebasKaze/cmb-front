@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function Registro() {
+    const backConection = import.meta.env.back_url;
     const userData = JSON.parse(localStorage.getItem("userData"));
     const [mensaje, setMensaje] = useState("");
     const [domicilioSeleccionado, setDomicilioSeleccionado] = useState("");
@@ -45,7 +46,7 @@ function Registro() {
                 id_usuario: userData.id_usuario,
                 id_empresa: userData.id_empresa,
             }
-            const response = await fetch("http://localhost:4000/api/registros", {
+            const response = await fetch(`${backConection}/api/registros`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -80,7 +81,7 @@ function Registro() {
 
     // Obtener visualizacion de las empresas 
     useEffect(() => {
-        fetch("http://localhost:4000/api/infoempre")
+        fetch(`${backConection}/api/infoempre`)
         .then((response) => response.json())
         .then((data) => setEmpresas(data))
         .catch((error) => console.error("Error al obtener empresas:", error));
@@ -105,7 +106,7 @@ function Registro() {
         };
 
         try {
-        const response = await fetch("http://localhost:4000/api/registrosdomi", {
+        const response = await fetch(`${backConection}/api/registrosdomi`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(datosEnviar),
@@ -122,7 +123,7 @@ function Registro() {
       // Cargar domicilios cuando cambia la empresa seleccionada
     useEffect(() => {
         if (empresaSeleccionada) {
-        fetch(`http://localhost:4000/api/infodomi/${empresaSeleccionada}`)
+        fetch(`${backConection}/api/infodomi/${empresaSeleccionada}`)
             .then((res) => res.json())
             .then((data) => setDomicilios(data))
             .catch((error) =>
@@ -157,7 +158,7 @@ function Registro() {
         };
     
         try {
-        const response = await fetch("http://localhost:4000/api/registrousuario", {
+        const response = await fetch(`${backConection}/api/registrousuario`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(datosEnviar),

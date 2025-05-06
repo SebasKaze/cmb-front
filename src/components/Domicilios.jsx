@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 
 function Domicilios() {
+    const backConection = import.meta.env.back_url;
     const userData = JSON.parse(localStorage.getItem("userData")); // Obtener datos de usuario desde localStorage
     const [domicilios, setDomicilios] = useState([]);
 
@@ -10,7 +11,7 @@ function Domicilios() {
             return;
         }
 
-        fetch("http://localhost:4000/api/domicilios/verdomi", {
+        fetch(`${backConection}/api/domicilios/verdomi`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

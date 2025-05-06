@@ -7,7 +7,8 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 
 
 export default function CargaMateriales() {
-    
+    const backConection = import.meta.env.back_url;
+        
     const userData = JSON.parse(localStorage.getItem("userData")) || {};
     
     const [query, setQuery] = useState("");
@@ -37,7 +38,7 @@ export default function CargaMateriales() {
         if (!query) return;
         try {
         const { data } = await axios.get(
-            `http://localhost:4000/api/cargamateriales/fracciones?query=${query}`
+            `${backConection}/api/cargamateriales/fracciones?query=${query}`
         );
         setResultados(data);
         } catch (error) {
@@ -61,7 +62,7 @@ export default function CargaMateriales() {
             id_empresa: userData.id_empresa,
             id_domicilio: userData.id_domicilio,
         }
-        const response = await fetch("http://localhost:4000/api/cargamateriales", {
+        const response = await fetch(`${backConection}/api/cargamateriales`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -196,7 +197,7 @@ export default function CargaMateriales() {
         </div>
 
         {/* Div de búsqueda (se muestra/oculta según el estado) */}
-        {mostrarBusqueda && (
+        {/*{mostrarBusqueda && (
             <div className="p-4 max-w-xl mx-auto">
                 <h2 className="text-xl font-bold mb-2">Buscar Fracción TIGIE</h2>
                 <div className="flex">
@@ -228,7 +229,8 @@ export default function CargaMateriales() {
                     )}
                 </ul>
             </div>
-        )}
+        )} */}
+        
 
         </div>
     );

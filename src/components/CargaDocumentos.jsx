@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 function CargarDocumentos() {
+    const backConection = import.meta.env.back_url;
     const userData = JSON.parse(localStorage.getItem("userData")) || {};
     const { id_empresa, id_domicilio } = userData;
 
@@ -13,7 +14,7 @@ function CargarDocumentos() {
 
     useEffect(() => {
         if (id_empresa && id_domicilio) {
-            axios.get(`http://localhost:4000/api/pedimento/verpedi?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
+            axios.get(`${backConection}/api/pedimento/verpedi?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
                 .then((response) => {
                     setPedimentos(response.data);
                 })
@@ -69,7 +70,7 @@ function CargarDocumentos() {
             });
 
             const response = await axios.post(
-                "http://localhost:4000/api/pedimentos/subirarc/subir", 
+                `${backConection}/api/pedimentos/subirarc/subir`, 
                 formData, 
                 {
                     headers: {

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 
 function DatosGe() {
+    const backConection = import.meta.env.back_url;
     const userData = JSON.parse(localStorage.getItem("userData")); // Obtener datos de usuario desde localStorage
     const [userInfo, setUserInfo] = useState(null);
     const [empresaInfo, setEmpresaInfo] = useState(null);
@@ -12,7 +13,7 @@ function DatosGe() {
             return;
         }
 
-        fetch("http://localhost:4000/api/datosGenerales", {
+        fetch(`${backConection}/api/datosGenerales`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -5,6 +5,7 @@ import { CiEdit } from 'react-icons/ci';
 import { FaPlus, FaEye } from 'react-icons/fa';
 
 function Productos() {
+    const backConection = import.meta.env.back_url;
     const [data, setData] = useState([]);
     const [popupData, setPopupData] = useState(null);
     const [showPopup, setShowPopup] = useState(false);
@@ -17,7 +18,7 @@ function Productos() {
 
     useEffect(() => {
         if (id_empresa && id_domicilio) {
-            fetch(`http://localhost:4000/api/verProductos?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
+            fetch(`${backConection}/api/verProductos?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
                 .then((response) => response.json())
                 .then((data) => setData(data))
                 .catch((error) => console.error("Error al obtener los datos:", error));
@@ -42,7 +43,7 @@ function Productos() {
         const { id_domicilio } = userData;
         const updatedData = { ...editedData, id_domicilio };
     
-        fetch(`http://localhost:4000/api/editarproducto/${id}`, {
+        fetch(`${backConection}/api/editarproducto/${id}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(updatedData),
@@ -73,7 +74,7 @@ function Productos() {
     };
 
     const handleViewClick = (id) => {
-        fetch(`http://localhost:4000/api/billete/${id}`)
+        fetch(`${backConection}/api/billete/${id}`)
             .then((response) => response.json())
             .then((data) => {
                 setPopupData(data);

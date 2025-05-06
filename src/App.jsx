@@ -5,6 +5,7 @@ import axios from "axios";
 import NavBar from "./components/Navbar";
 import Login from "./components/Login";
 import Home from "./components/Home";
+const backConection = import.meta.env.back_url;
 
 function App() {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -52,7 +53,7 @@ function App() {
     //  Maneja el inicio de sesión
     const handleLogin = async (credentials) => {
         try {
-            const response = await axios.post("http://localhost:4000/login", credentials);
+            const response = await axios.post(`${backConection}/login`, credentials);
 
             if (response.status === 200 && response.data.token) {
                 localStorage.setItem("token", response.data.token);

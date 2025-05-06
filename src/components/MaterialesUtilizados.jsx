@@ -4,6 +4,7 @@ import { CiEdit } from 'react-icons/ci';
 import { FaPlus, FaEye } from 'react-icons/fa';
 
 function MaterialesUtilizados() {
+    const backConection = import.meta.env.back_url;
     const navigate = useNavigate();
     const [data, setData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
@@ -18,7 +19,7 @@ function MaterialesUtilizados() {
 
     useEffect(() => {
         if (id_empresa && id_domicilio) {
-            fetch(`http://localhost:4000/api/procesos/mateutili?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
+            fetch(`${backConection}/api/procesos/mateutili?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
                 .then((response) => response.json())
                 .then((data) => {
                     const formattedData = data.map(row => ({
@@ -32,7 +33,7 @@ function MaterialesUtilizados() {
     }, [id_empresa, id_domicilio]);
     const materialUtilizadoVer = async (id_transformacion) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/procesos/mateutili/vermateuti?id_transformacion=${id_transformacion}`);
+            const response = await fetch(`${backConection}/api/procesos/mateutili/vermateuti?id_transformacion=${id_transformacion}`);
             const data = await response.json();
             setModalData(data);
             setIsModalOjo(true);
@@ -59,7 +60,7 @@ function MaterialesUtilizados() {
             alert("Por favor, selecciona un rango de fechas.");
             return;
         }
-        window.open(`http://localhost:4000/api/procesos/reporte/materialUE?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`, "_blank");
+        window.open(`${backConection}/api/procesos/reporte/materialUE?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`, "_blank");
     };
 
 

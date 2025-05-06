@@ -7,7 +7,7 @@ import { FaPlus } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 
 function Materiales() {
-
+    const backConection = import.meta.env.back_url;
     const userData = JSON.parse(localStorage.getItem("userData")) || {};
     const { id_empresa, id_domicilio } = userData;
 
@@ -18,7 +18,7 @@ function Materiales() {
 
     useEffect(() => {
         if (id_empresa && id_domicilio) {
-            fetch(`http://localhost:4000/api/verMateriales?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
+            fetch(`${backConection}/api/verMateriales?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
                 .then((response) => response.json())
                 .then((data) => setData(data))
                 .catch((error) => console.error("Error al obtener los datos:", error));
@@ -39,7 +39,7 @@ function Materiales() {
     
         const updatedData = { ...editedData, id_domicilio };
     
-        fetch(`http://localhost:4000/api/editarMaterial/${id}`, {
+        fetch(`${backConection}/api/editarMaterial/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",
@@ -87,7 +87,7 @@ function Materiales() {
         const deleteData = { id_material_interno: id, id_domicilio };
 
         if (window.confirm("¿Seguro que deseas eliminar este material?")) {
-            fetch(`http://localhost:4000/api/eliminarmaterial/${id}`, {
+            fetch(`${backConection}/api/eliminarmaterial/${id}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

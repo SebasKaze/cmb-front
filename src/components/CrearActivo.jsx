@@ -5,6 +5,7 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 
 function CambioCrearActivo() {
     const navigate = useNavigate();
+    const backConection = import.meta.env.back_url;
 
     const Regresar = () => {
         navigate("/activo-fijo");
@@ -54,7 +55,7 @@ function CambioCrearActivo() {
     useEffect(() => {
         const fetchPedimentos = async () => {
             try {
-                const response = await axios.get(`http://localhost:4000/api/pedimentos/activofijo?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`);
+                const response = await axios.get(`${backConection}/api/pedimentos/activofijo?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`);
                 setPedimentos(response.data);
             } catch (error) {
                 console.error("Error al obtener pedimentos:", error);
@@ -76,7 +77,7 @@ function CambioCrearActivo() {
                 id_domicilio: userData.id_domicilio,
             };
 
-            const response = await fetch("http://localhost:4000/api/crearaf", {
+            const response = await fetch(`${backConection}/api/crearaf`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

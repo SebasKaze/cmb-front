@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { FaEye } from "react-icons/fa6";
 
 export default function Pedimento() {
+    const backConection = import.meta.env.back_url;
     const [data, setActivos] = useState([]);
     const [isModalOpen, setModalOpen] = useState(false);
     const [modalOjo, setIsModalOjo] = useState(false);
@@ -13,7 +14,7 @@ export default function Pedimento() {
 
     useEffect(() => {
         if (id_empresa && id_domicilio) {
-            fetch(`http://localhost:4000/api/procesos/emercancias?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
+            fetch(`${backConection}/api/procesos/emercancias?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
                 .then((response) => response.json())
                 .then((data) => setActivos(data))
                 .catch((error) => console.error("Error al obtener los datos:", error));
@@ -26,7 +27,7 @@ export default function Pedimento() {
             alert("Por favor, selecciona un rango de fechas.");
             return;
         }
-        window.open(`http://localhost:4000/api/procesos/reporte/emercanciasE?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`, "_blank");
+        window.open(`${backConection}/api/procesos/reporte/emercanciasE?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`, "_blank");
     };
 
     const descargarPDF = () => {
@@ -34,12 +35,12 @@ export default function Pedimento() {
             alert("Por favor, selecciona un rango de fechas.");
             return;
         }
-        window.open(`http://localhost:4000/api/procesos/reporte/emercanciasP?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`, "_blank");
+        window.open(`${backConection}/api/procesos/reporte/emercanciasP?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}&fechaInicio=${fechaInicio}&fechaFin=${fechaFin}`, "_blank");
     };
 
     const fetchFracciones = async (pedimento) => {
         try {
-            const response = await fetch(`http://localhost:4000/api/procesos/emercancias/fracciones?no_pedimento=${pedimento}`);
+            const response = await fetch(`${backConection}/api/procesos/emercancias/fracciones?no_pedimento=${pedimento}`);
             const data = await response.json();
             setModalData(data);
             setIsModalOjo(true);

@@ -9,6 +9,7 @@ import Section6 from "./CManual/Seccion6";
 import Section7 from "./CManual/Seccion7";
 
 function CargaManual() {
+    const backConection = import.meta.env.back_url;
     const [activeTab, setActiveTab] = useState("section1");
     const userData = JSON.parse(localStorage.getItem("userData"));
     const [formData, setFormData] = useState({
@@ -41,7 +42,7 @@ function CargaManual() {
                 contribuciones: sections,
                 CuadroLiquidacion: sections2,
             };
-            const response = await fetch("http://localhost:4000/api/cmpedimento", {
+            const response = await fetch(`${backConection}/api/cmpedimento`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function NavBar({ userData }) {
+  const backConection = import.meta.env.back_url;
   const navigate = useNavigate();
   const [companies, setCompanies] = useState([]);
   const [selectedCompany, setSelectedCompany] = useState(
@@ -13,7 +14,7 @@ export default function NavBar({ userData }) {
   );
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/infoempre")
+    fetch(`${backConection}/api/infoempre`)
       .then((response) => response.json())
       .then((data) => {
         setCompanies(data);
@@ -33,7 +34,7 @@ export default function NavBar({ userData }) {
   }, [selectedCompany]);
 
   const fetchAddresses = (idEmpresa) => {
-    fetch(`http://localhost:4000/api/verDomicilios?id_empresa=${idEmpresa}`)
+    fetch(`${backConection}/api/verDomicilios?id_empresa=${idEmpresa}`)
       .then((response) => response.json())
       .then((data) => {
         setAddresses(data);

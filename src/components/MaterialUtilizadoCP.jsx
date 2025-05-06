@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
 
 function MaterialesUtilizadosCP() {
+    const backConection = import.meta.env.back_url;
     const navigate = useNavigate();
     const userData = JSON.parse(localStorage.getItem("userData")) || {};
 
@@ -18,7 +19,7 @@ function MaterialesUtilizadosCP() {
     // Cargar productos disponibles
     useEffect(() => {
         if (id_empresa && id_domicilio) {
-            axios.get(`http://localhost:4000/api/procesos/mateutili/cargaproducto?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
+            axios.get(`${backConection}/api/procesos/mateutili/cargaproducto?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
                 .then(response => setProductos(response.data))
                 .catch(error => console.error("Error al obtener productos:", error));
         }
@@ -29,7 +30,7 @@ function MaterialesUtilizadosCP() {
         if (!productoSeleccionado) return;
 
         try {
-            const response = await axios.get(`http://localhost:4000/api/procesos/mateutili/cargamateriales?producto=${productoSeleccionado}`);
+            const response = await axios.get(`${backConection}/api/procesos/mateutili/cargamateriales?producto=${productoSeleccionado}`);
             setMateriales(response.data);
             setCantidades({});
         } catch (error) {
@@ -71,7 +72,7 @@ function MaterialesUtilizadosCP() {
                 }))
             };
 
-            await axios.post("http://localhost:4000/api/procesos/mateutili/guardar", datos);
+            await axios.post(`${backConection}/api/procesos/mateutili/guardar`, datos);
             alert("Información enviada correctamente");
             // Restablecer los estados después de enviar la información
             setProductoSeleccionado("");

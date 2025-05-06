@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { FaPlus, FaEye } from "react-icons/fa";
+
 function ActivoFijo() {
     const [activos, setActivos] = useState([]);
-
+    const backConection = import.meta.env.back_url;
 
     const navigate = useNavigate();
     const cambioCrearActivo = () => {
@@ -14,7 +15,7 @@ function ActivoFijo() {
 
     useEffect(() => {
         if (id_empresa && id_domicilio) {
-            fetch(`http://localhost:4000/api/activofijo?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
+            fetch(`${backConection}/api/activofijo?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
                 .then((response) => response.json())
                 .then((data) => setActivos(data))
                 .catch((error) => console.error("Error al obtener los datos:", error));

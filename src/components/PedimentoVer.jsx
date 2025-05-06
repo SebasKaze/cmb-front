@@ -10,6 +10,7 @@ import Section7 from "./PedimentosSeccionesVer/Seccion7";
 import { useNavigate } from "react-router-dom";
 
 function PedimentoVer() {
+    const backConection = import.meta.env.back_url;
     const { no_pedimento } = useParams();
     const [activeTab, setActiveTab] = useState("section1");
     const userData = JSON.parse(localStorage.getItem("userData"));
@@ -32,7 +33,7 @@ function PedimentoVer() {
     useEffect(() => {
         const fetchPedimento = async () => {
             try {
-                const response = await fetch(`http://localhost:4000/api/consultaPedimento/${no_pedimento}`);
+                const response = await fetch(`${backConection}/api/consultaPedimento/${no_pedimento}`);
                 if (!response.ok) {
                     throw new Error("Error al obtener el pedimento");
                 }
