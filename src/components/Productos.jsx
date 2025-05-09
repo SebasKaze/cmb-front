@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import { CiEdit } from 'react-icons/ci';
@@ -88,7 +89,7 @@ function Productos() {
                     Nuevo Producto <FaPlus />
                 </button>
             </div>
-            <div className="w-full max-w-5xl p-4">
+            <div className="w-full p-4">
                 <table className="w-full border border-gray-300 shadow-lg bg-white">
                     <thead className="bg-gray-200">
                         <tr>

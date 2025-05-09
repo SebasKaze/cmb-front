@@ -31,7 +31,7 @@ export default function Pedimento() {
   };
 
   return (
-    <div className="main-container">
+    <div className="flex justify-center items-center min-h-screen bg-gray-100">
       <div className="w-full max-w-5xl p-4">
         <table className="w-full border border-gray-300 shadow-lg bg-white">
           <thead className="bg-gray-200">

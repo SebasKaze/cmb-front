@@ -1,6 +1,6 @@
 export default function Footer() {
     return (
-        <footer className="bg-neutral text-neutral-content p-10">
+        <footer className="bg-neutral text-neutral-content p-10 mt-auto">
             <div className="container mx-auto max-w-7xl">
                 <div className="flex flex-col md:flex-row justify-between gap-8">
                     {/* Sección de la empresa */}

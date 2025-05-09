@@ -121,7 +121,7 @@ export default function CargaMateriales() {
         </div>
 
         {/* Formulario para agregar nuevo material */}
-            <div className="p-6">
+            <div className="main-container">
                 <h2 className="text-lg font-bold mb-4">Nuevo Material</h2>
                 <form className="grid grid-cols-5 gap-4">
                     <div className="flex flex-col items-center text-center">

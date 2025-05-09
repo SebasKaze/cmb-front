@@ -3,13 +3,14 @@
     background-color: #f9fafb;
     display: flex;
     flex-direction: column;
-    padding: 30px;     
-  }
+    padding: 4rem;     
+}
 
 body{
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+    font-family: system-ui;
 }
 /* Estilos generales para todos los botones */
 .btn-crud, .btn-agregar, .btn-eliminar,.btn-busqueda {
@@ -39,4 +40,17 @@ body{
 
 .btn-crud:hover{
     background-color: #0056b3; /* Azul más oscuro */
+}
+
+.bg-navbar-prin{
+    background-color: #19614F;
+}
+.bg-navbar-sec{
+    background-color: #83E171;
+}
+.bg-select-01{
+    background-color: #4BC789;
+}
+.bg-select-02{
+    background-color: #96ECED;
 }

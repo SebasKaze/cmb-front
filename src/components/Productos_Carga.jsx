@@ -57,7 +57,20 @@ function ProductosCarga() {
             id_domicilio: userData.id_domicilio,
         };
         axios.post("http://localhost:4000/api/cargaproducto", dataEnviar)
-            .then(response => console.log("Enviado con éxito:", response.data))
+            .then(response => {
+                console.log("Enviado con éxito:", response.data);
+                alert("Productos enviados correctamente");
+                // Restablecer los estados
+                setFormData({
+                    id: "",
+                    nombre: "",
+                    fraccion: "",
+                    descripcion: "",
+                    unidadMedida: "",
+                    cantidad: "",
+                });
+                setSeleccionados([]);
+            })
             .catch(error => console.error("Error al enviar:", error));
     };
 
@@ -151,7 +164,7 @@ function ProductosCarga() {
                                             <td className="border p-2">{material.nombre_interno}</td>
                                             <td className="border p-2">
                                                 <input
-                                                    type="number"
+                                                    type="text"
                                                     value={material.cantidad}
                                                     onChange={(e) => cambiarCantidad(material.id_material_interno, e.target.value)}
                                                     className="w-16 border rounded-md p-1 text-center"
@@ -173,7 +186,7 @@ function ProductosCarga() {
                     )}
 
                     <button
-                        className="btn-crud"
+                        className="btn-agregar"
                         onClick={enviarProductos}
                     >
                         Enviar Productos

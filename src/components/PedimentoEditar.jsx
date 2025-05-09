@@ -7,7 +7,8 @@ import Section4 from "./PedimentosSecciones/Seccion4";
 import Section5 from "./PedimentosSecciones/Seccion5";
 import Section6 from "./PedimentosSecciones/Seccion6";
 import Section7 from "./PedimentosSecciones/Seccion7";
-import { useNavigate } from "react-router-dom";
+
+const token = localStorage.getItem("token");
 
 function PedimentoEditar() {
     const { no_pedimento } = useParams();
@@ -246,6 +247,7 @@ function PedimentoEditar() {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
                 },
                 body: JSON.stringify(payload),
             });
@@ -264,8 +266,8 @@ function PedimentoEditar() {
     };
 
     return (
-        <div className="main-container">
-            <div className="tabs flex space-x-4 border-b-2 pb-2">
+        <div className="pestanas">
+            <div className="tabs flex justify-center space-x-4 border-b-2 pb-2 pt-8">
                 {[
                     { id: "section1", name: "Encabezado P.P" },
                     { id: "section2", name: "Encabezado S.P" },

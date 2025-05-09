@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { IoMdArrowRoundBack } from "react-icons/io";
 
@@ -10,11 +10,12 @@ function MaterialesUtilizadosCP() {
     const { id_usuario, id_empresa, id_domicilio } = userData; 
     const [productos, setProductos] = useState([]);
     const [productoSeleccionado, setProductoSeleccionado] = useState("");
-    const [cantidadProducto, setCantidadProducto] = useState("");
+    const [cantidadProducto, setCantidadProducto] = useState(""); // Nuevo estado
     const [materiales, setMateriales] = useState([]);
     const [cantidades, setCantidades] = useState({});
-    const [fechaCreacion, setFechaCreacion] = useState("");
+    const [fechaCreacion, setFechaCreacion] = useState(""); // Nuevo estado
 
+    // Cargar productos disponibles
     useEffect(() => {
         if (id_empresa && id_domicilio) {
             axios.get(`http://localhost:4000/api/procesos/mateutili/cargaproducto?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
@@ -23,7 +24,7 @@ function MaterialesUtilizadosCP() {
         }
     }, [id_empresa, id_domicilio]);
 
-    // Funcion para obtener materiales asociados al producto seleccionado
+    // Obtener materiales asociados al producto seleccionado
     const buscarMateriales = async () => {
         if (!productoSeleccionado) return;
 
@@ -52,15 +53,16 @@ function MaterialesUtilizadosCP() {
         const segundos = String(ahora.getSeconds()).padStart(2, '0');
         return `${año}-${mes}-${dia} ${horas}:${minutos}:${segundos}`;
     };
+    // Enviar datos al backend con id_usuario, id_producto, cantidad_producto y fecha_creacion
     const enviarInformacion = async () => {
-        const fechaRegistro = obtenerFechaActual();
+        const fechaRegistro = obtenerFechaActual(); // Generamos la fecha al momento de enviar
         try {
             const datos = {
                 id_usuario, 
                 id_domicilio,
                 id_empresa,
                 id_producto: productoSeleccionado,
-                cantidad_producto: cantidadProducto,
+                cantidad_producto: cantidadProducto, // Se añade cantidad de producto
                 fecha_creacion: fechaCreacion,
                 fecha_reg: fechaRegistro,
                 materiales: materiales.map(mat => ({
@@ -71,6 +73,12 @@ function MaterialesUtilizadosCP() {
 
             await axios.post("http://localhost:4000/api/procesos/mateutili/guardar", datos);
             alert("Información enviada correctamente");
+            // Restablecer los estados después de enviar la información
+            setProductoSeleccionado("");
+            setCantidadProducto("");
+            setFechaCreacion("");
+            setMateriales([]);
+            setCantidades({});
         } catch (error) {
             console.error("Error al enviar datos:", error);
         }
@@ -121,7 +129,7 @@ function MaterialesUtilizadosCP() {
                     />
 
                     <button 
-                        className="btn-busqueda"
+                        className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 w-full"
                         onClick={buscarMateriales}
                     >
                         Buscar
@@ -164,7 +172,7 @@ function MaterialesUtilizadosCP() {
             {/* Botón de enviar información */}
             {materiales.length > 0 && (
                 <button
-                    className="btn-crud"
+                    className="mt-4 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 w-full"
                     onClick={enviarInformacion}
                 >
                     Enviar Información
