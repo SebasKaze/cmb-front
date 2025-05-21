@@ -10,13 +10,14 @@ function MaterialesUtilizados() {
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
     const userData = JSON.parse(localStorage.getItem("userData")) || {};
-    const { id_empresa, id_domicilio } = userData; 
+    const { id_empresa, id_domicilio, tipo_de_cuenta } = userData; 
     const [modalOjo, setIsModalOjo] = useState(false);
     const [modalData, setModalData] = useState(null);
     const [modalReporte, setIsModalReporte] = useState(false);
     const [fechaInicio, setFechaInicio] = useState("");
     const [fechaFin, setFechaFin] = useState("");
 
+    const LimitadorBoton = tipo_de_cuenta === 1 || tipo_de_cuenta === 2 ;
     useEffect(() => {
         if (id_empresa && id_domicilio) {
             fetch(`${backConection}/api/procesos/mateutili?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
@@ -67,11 +68,14 @@ function MaterialesUtilizados() {
     return (
         <div className="main-container">
             <div className="w-full mb-4">
-                <button 
-                    className="btn-crud mr-4" 
-                    onClick={handleNuevoMaterial}>
-                    Carga de Productos <FaPlus />
-                </button>
+                {LimitadorBoton &&(
+                    <button 
+                        className="btn-crud mr-4" 
+                        onClick={handleNuevoMaterial}>
+                        Carga de Productos <FaPlus />
+                    </button>
+                )}
+
                 <button
                     onClick={() => setIsModalReporte(true)} 
                     className="px-4 py-4 bg-blue-500 text-white rounded hover:bg-blue-700 transition">

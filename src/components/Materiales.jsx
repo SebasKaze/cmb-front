@@ -9,13 +9,13 @@ import { FaTrash } from "react-icons/fa";
 function Materiales() {
     const backConection = import.meta.env.VITE_BACK_URL;
     const userData = JSON.parse(localStorage.getItem("userData")) || {};
-    const { id_empresa, id_domicilio } = userData;
+    const { id_empresa, id_domicilio, tipo_de_cuenta } = userData;
 
     const [data, setData] = useState([]);
     const navigate = useNavigate();
     const [editingRowId, setEditingRowId] = useState(null);
     const [editedData, setEditedData] = useState({});
-
+    const LimitadorBoton = tipo_de_cuenta === 1 || tipo_de_cuenta === 2 ;
     useEffect(() => {
         if (id_empresa && id_domicilio) {
             fetch(`${backConection}/api/verMateriales?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
@@ -126,12 +126,14 @@ function Materiales() {
     return (
         <div className="main-container">
             <div className="w-full">
-                <button 
-                className="btn-crud"
-                onClick={handleNuevoMaterial}
-                >
-                Nuevo material <FaPlus />
-                </button>
+                {LimitadorBoton && (
+                    <button 
+                        className="btn-crud"
+                        onClick={handleNuevoMaterial}
+                    >
+                        Nuevo material <FaPlus />
+                    </button>
+                )}
             </div>
             <div className="w-full p-4">
                 <table className="w-full border border-gray-300 shadow-lg bg-white">

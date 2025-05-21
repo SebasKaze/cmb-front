@@ -14,8 +14,9 @@ function Productos() {
     const [editedData, setEditedData] = useState({});
 
     const userData = JSON.parse(localStorage.getItem("userData")) || {};	//puedes cambiar id_domicilio por otro atributo
-    const { id_empresa, id_domicilio } = userData; // Extraer los IDs necesarios
+    const { id_empresa, id_domicilio, tipo_de_cuenta } = userData; // Extraer los IDs necesarios
 
+    const LimitadorBoton = tipo_de_cuenta === 1 || tipo_de_cuenta === 2 ;
     useEffect(() => {
         if (id_empresa && id_domicilio) {
             fetch(`${backConection}/api/verProductos?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
@@ -86,9 +87,12 @@ function Productos() {
     return (
         <div className="main-container">
             <div className="w-full">
-                <button className="btn-crud" onClick={handleNuevoMaterial}>
-                    Nuevo Producto <FaPlus />
-                </button>
+                {LimitadorBoton && (
+                    <button className="btn-crud" onClick={handleNuevoMaterial}>
+                        Nuevo Producto <FaPlus />
+                    </button>
+                )}
+
             </div>
             <div className="w-full p-4">
                 <table className="w-full border border-gray-300 shadow-lg bg-white">

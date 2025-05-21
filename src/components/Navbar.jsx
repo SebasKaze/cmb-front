@@ -84,7 +84,7 @@ export default function NavBar({ userData }) {
     <div className="navbar fixed top-0 left-0 w-full z-10 shadow-md bg-gradient-to-r from-blue-200 to-slate-300">
       <div className="navbar-start">
         <div className="flex items-center gap-2">
-          <img className="w-14" src="/src/assets/LMLogo.png" alt="Logo" />
+          <img className="w-14" src="https://imgur.com/Ir9JUQq.png" alt="Logo" />
           <div className="flex flex-col">
             <span className="text-2xl font-bold text-yellow-800">SMController</span>
             <span className="text-2xs text-yellow-600">Supply Management Controller</span>

@@ -17,7 +17,22 @@ function Saldos() {
         if (id_empresa && id_domicilio) {
             fetch(`${backConection}/api/procesos/saldoMuestra?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
                 .then((response) => response.json())
-                .then((data) => setData(data))
+                .then((responseData) => {
+                    // Si es un array (caso exitoso), actualiza el estado
+                    if (Array.isArray(responseData)) {
+                        setData(responseData);
+                    } 
+                    // Si es un objeto con mensaje (caso sin datos), muestra un array vacío
+                    else if (responseData.mensaje) {
+                        console.log(responseData.mensaje); // Opcional: muestra el mensaje en consola
+                        setData([]);
+                    }
+                    // Otros casos (error inesperado)
+                    else {
+                        console.error("Respuesta inesperada:", responseData);
+                        setData([]);
+                    }
+                })
                 .catch((error) => console.error("Error al obtener los datos:", error));
         }
     }, [id_empresa, id_domicilio]);

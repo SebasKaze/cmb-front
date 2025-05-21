@@ -50,7 +50,7 @@ function Seccion5({ formData, setFormData }) {
                     />
                 </div>
                 <div className="flex flex-col items-center text-center">
-                    <label className="mb-2">CRUP</label>
+                    <label className="mb-2">CURP</label>
                     <input className="w-full border border-gray-300 rounded p-2" type="text"
                     name="curpSec5"
                     value={formData.seccion5?.curpSec5 || ""}

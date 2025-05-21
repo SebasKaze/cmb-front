@@ -11,8 +11,8 @@ function ActivoFijo() {
         navigate("/activo-fijo/crearActivo");
     }
     const userData = JSON.parse(localStorage.getItem("userData")) || {};
-    const { id_empresa, id_domicilio } = userData; 
-
+    const { id_empresa, id_domicilio, tipo_de_cuenta } = userData; 
+    const LimitadorBoton = tipo_de_cuenta === 1 || tipo_de_cuenta === 2 ;
     useEffect(() => {
         if (id_empresa && id_domicilio) {
             fetch(`${backConection}/api/activofijo?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`)
@@ -27,12 +27,14 @@ function ActivoFijo() {
 
             <h2 className="text-2xl font-bold mb-4">Activo Fijo</h2>
                 <div className="w-full p-6">
-                    <button 
-                    className="btn-crud"
-                    onClick={cambioCrearActivo}
-                    >
-                    Agregar Activo Fijo <FaPlus />
-                    </button>
+                    {LimitadorBoton && (
+                        <button 
+                        className="btn-crud"
+                        onClick={cambioCrearActivo}>
+                            Agregar Activo Fijo <FaPlus />
+                        </button>
+                    )}
+  
                 </div>
             {activos.length > 0 ? (
                 <table className="table-auto border-collapse border border-gray-400 w-full">
