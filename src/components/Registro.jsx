@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 
-function Registro() {
+const token = localStorage.getItem("token");
+
+function Registro() {   
     const backConection = import.meta.env.VITE_BACK_URL;
-    const userData = JSON.parse(localStorage.getItem("userData"));
     const [mensaje, setMensaje] = useState("");
     const [domicilioSeleccionado, setDomicilioSeleccionado] = useState("");
     const [domicilios, setDomicilios] = useState([]);
@@ -40,43 +40,43 @@ function Registro() {
     // Función para enviar los datos al backend
     const handleSubmit = async (e) => {
         e.preventDefault();
+    
         try {
             const dataToSend = {
                 ...formData,
-                id_usuario: userData.id_usuario,
-                id_empresa: userData.id_empresa,
-            }
+            };
+    
             const response = await fetch(`${backConection}/api/registros`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
                 },
                 body: JSON.stringify(dataToSend),
             });
-
+    
+            const result = await response.json();
+    
             if (!response.ok) {
-                throw new Error(`Error: ${response.status}`);
+                alert(result.message || "Ocurrió un error al enviar los datos");
+            } else {
+                alert(result.message || "Datos enviados correctamente");
+
+                setFormData({
+                    nombre: "",
+                    razonSocial: "",
+                    no_immex: "",
+                    rfc: "",
+                });
             }
-
-            const data = await response.json();
-            setMensaje("Datos enviados correctamente");
-            setTimeout(() => setMensaje(""), 3000); // Ocultar el mensaje después de 3 segundos
-
-            // Limpiar el formulario después de enviar los datos
-            setFormData({
-                nombre: "",
-                razonSocial: "",
-                no_immex: "",
-                rfc: "",
-            });
+            // Limpiar mensaje después de 3 segundos
+            setTimeout(() => setMensaje(""), 3000);
         } catch (error) {
             console.error("Error al enviar los datos:", error);
-            setMensaje("Ocurrió un error al enviar los datos");
-            setTimeout(() => setMensaje(""), 3000); // Ocultar el mensaje después de 3 segundos
+            setMensaje("Error de conexión con el servidor");
+            setTimeout(() => setMensaje(""), 3000);
         }
     };
-
-
 
 
     // Obtener visualizacion de las empresas 
@@ -98,28 +98,37 @@ function Registro() {
 
     const handleSubmitDomi = async (e) => {
         e.preventDefault();
-
+    
         const datosEnviar = {
             empresaId: empresaSeleccionada,
             domicilio: formDataDomi.domi,
             tipo_domi: formDataDomi.tipo_domi,
         };
-
+    
         try {
-        const response = await fetch(`${backConection}/api/registrosdomi`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(datosEnviar),
-        });
-
-        const result = await response.json();
+            const response = await fetch(`${backConection}/api/registrosdomi`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`,
+                },
+                body: JSON.stringify(datosEnviar),
+            });
+    
+            const result = await response.json();
+    
+            if (response.ok) {
+                alert(result.message || "Domicilio registrado correctamente.");
+                // Opcional: limpia el formulario
+                setFormDataDomi({ domi: "", tipo_domi: "" });
+            } else {
+                alert(result.message || "Error al registrar el domicilio.");
+            }
         } catch (error) {
             console.error("Error al enviar los datos:", error);
+            alert("Ocurrió un error en la conexión con el servidor.");
         }
     };
-
-
-
       // Cargar domicilios cuando cambia la empresa seleccionada
     useEffect(() => {
         if (empresaSeleccionada) {
@@ -145,7 +154,7 @@ function Registro() {
 
     const handleSubmitUsuario = async (e) => {
         e.preventDefault();
-        
+    
         if (!empresaSeleccionada || !domicilioSeleccionado) {
             alert("Debe seleccionar una empresa y un domicilio.");
             return;
@@ -158,17 +167,36 @@ function Registro() {
         };
     
         try {
-        const response = await fetch(`${backConection}/api/registrousuario`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(datosEnviar),
-        });
+            const response = await fetch(`${backConection}/api/registrousuario`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`, },
+                body: JSON.stringify(datosEnviar),
+            });
     
-        const result = await response.json();
+            const result = await response.json();
+    
+            if (response.ok) {
+                alert("Usuario registrado exitosamente");
+                setFormDataUsuario({
+                    nombre: "",
+                    correo: "",
+                    telefono: "",
+                    contraseña: "",
+                    rol: "",
+                });
+                setTimeout(() => setMensaje(""), 3000);
+            } else {
+                alert(result.error || "Error al registrar usuario");
+                setTimeout(() => setMensaje(""), 3000);
+            }
         } catch (error) {
             console.error("Error al registrar usuario:", error);
+            alert("Error de conexión con el servidor");
+            setTimeout(() => setMensaje(""), 3000);
         }
     };
+    
 
     return (
         <div className="main-container">
@@ -187,7 +215,7 @@ function Registro() {
                 </div>
                 )}
                 <h2 className="text-lg font-bold mb-4">Nueva Empresa</h2>
-                <form className="grid grid-cols-5 gap-4">
+                <form onSubmit={handleSubmit} className="grid grid-cols-5 gap-4">
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2">Nombre</label>
                         <input
@@ -195,6 +223,7 @@ function Registro() {
                         name="nombre"
                         value={formData.nombre}
                         onChange={handleChange}
+                        required
                         className="w-full border rounded-md p-2 focus:outline-none focus:ring focus:ring-green-300"
                         />
                     </div>
@@ -205,6 +234,7 @@ function Registro() {
                         name="razonSocial"
                         value={formData.razonSocial}
                         onChange={handleChange}
+                        required
                         className="w-full border rounded-md p-2 focus:outline-none focus:ring focus:ring-green-300"
                         />
                     </div>
@@ -214,6 +244,8 @@ function Registro() {
                         type="text"
                         name="no_immex"
                         value={formData.no_immex}
+                        pattern="^\d{4}\d{4,5}$"
+                        required
                         onChange={handleChange}
                         className="w-full border rounded-md p-2 focus:outline-none focus:ring focus:ring-green-300"
                         />
@@ -223,6 +255,11 @@ function Registro() {
                         <input
                         type="text"
                         name="rfc"
+                        pattern="^[A-ZÑ&]{3,4}\d{6}[A-Z0-9]{3}$"
+                        required
+                        placeholder="Ej: ABCD000000ABC"
+                        minLength={12}
+                        maxLength={13}
                         value={formData.rfc}
                         onChange={handleChange}
                         className="w-full border rounded-md p-2 focus:outline-none focus:ring focus:ring-green-300"
@@ -231,7 +268,6 @@ function Registro() {
                     <div className="flex flex-col items-center text-center p-8">
                         <button
                         type="submit"
-                        onClick={handleSubmit}
                         className="btn-agregar"
                         >
                         Agregar
@@ -241,13 +277,14 @@ function Registro() {
             </div>
             <div className="w-full h-screen p-0 m-0 flex flex-col">
                 <h1 className="text-2xl font-bold mb-4 text-center">Domicilios</h1>
-                <form className="flex flex-col flex-grow gap-4 px-4">
+                <form onSubmit={handleSubmitDomi} className="flex flex-col flex-grow gap-4 px-4">
                     {/* Selección de empresa */}
                     <div className="flex flex-col items-center text-center w-full">
                     <label className="mb-2 text-lg">Selecciona una empresa</label>
                     <select
                         value={empresaSeleccionada}
                         onChange={handleEmpresaChange}
+                        required
                         className="w-full border rounded-md p-3 focus:outline-none focus:ring focus:ring-green-300"
                     >
                         <option value="">-- Seleccionar Empresa --</option>
@@ -265,6 +302,7 @@ function Registro() {
                     <textarea
                         name="domi"
                         value={formDataDomi.domi}
+                        required
                         onChange={handleChangeDomi}
                         className="w-full flex-grow border rounded-md p-4 focus:outline-none focus:ring focus:ring-green-300 resize-none"
                         disabled={!empresaSeleccionada}
@@ -304,7 +342,6 @@ function Registro() {
                     <div className="flex justify-center p-4">
                     <button
                         type="submit"
-                        onClick={handleSubmitDomi}
                         className="btn-agregar"
                         disabled={!empresaSeleccionada}
                     >
@@ -321,6 +358,7 @@ function Registro() {
                     <label className="mb-2">Selecciona una empresa</label>
                     <select
                         value={empresaSeleccionada}
+                        required
                         onChange={handleEmpresaChange}
                         className="w-full border rounded-md p-2"
                     >
@@ -338,6 +376,7 @@ function Registro() {
                     <label className="mb-2">Selecciona un domicilio</label>
                     <select
                         value={domicilioSeleccionado}
+                        required
                         onChange={handleDomicilioChange}
                         className="w-full border rounded-md p-2"
                         disabled={!empresaSeleccionada}
@@ -353,10 +392,11 @@ function Registro() {
 
                     {/* Campos del usuario */}
                     <div className="flex flex-col items-center text-center">
-                    <label className="mb-2">Nombre</label>
+                    <label className="mb-2">Nombre completo</label>
                     <input
                         type="text"
                         name="nombre"
+                        required
                         value={formDataUsuario.nombre}
                         onChange={handleChangeUsuario}
                         className="w-full border rounded-md p-2"
@@ -367,6 +407,8 @@ function Registro() {
                     <div className="flex flex-col items-center text-center">
                     <label className="mb-2">Correo</label>
                     <input
+                        required
+                        pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
                         type="email"
                         name="correo"
                         value={formDataUsuario.correo}
@@ -381,6 +423,7 @@ function Registro() {
                     <input
                         type="text"
                         name="telefono"
+                        required
                         value={formDataUsuario.telefono}
                         onChange={handleChangeUsuario}
                         className="w-full border rounded-md p-2"
@@ -393,6 +436,7 @@ function Registro() {
                     <input
                         type="password"
                         name="contraseña"
+                        required
                         value={formDataUsuario.contraseña}
                         onChange={handleChangeUsuario}
                         className="w-full border rounded-md p-2"
@@ -408,11 +452,11 @@ function Registro() {
                         onChange={handleChangeUsuario}
                         className="w-full border rounded-md p-2"
                         disabled={!domicilioSeleccionado}
+                        required
                     >
                         <option value="1">Administrador CMB</option>
                         <option value="2">Administrador Empresa</option>
                         <option value="3">Usuario Empresa</option>
-                        <option value="4">SAT</option>
                     </select>
                     </div>
 

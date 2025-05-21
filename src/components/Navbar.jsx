@@ -149,7 +149,7 @@ export default function NavBar({ userData }) {
             <li>
               <a 
                 onClick={() => navigate("/datosgenerales")} 
-                className="hover:bg-red-700 text-red-800"
+                className="hover:bg-yellow-600 text-gray-800"
               >
                 Datos generales
               </a>
@@ -157,18 +157,18 @@ export default function NavBar({ userData }) {
             <li>
               <a 
                 onClick={() => navigate("/domicilios")} 
-                className="hover:bg-green-100 text-green-800"
+                className="hover:bg-yellow-600 text-gray-800"
               >
                 Domicilios
               </a>
             </li>
             <li>
-              <a 
+            {(userData.tipo_de_cuenta == 1) && (<a 
                 onClick={() => navigate("/registro")} 
-                className="hover:bg-green-100 text-green-800"
+                className="hover:bg-yellow-600 text-gray-800"
               >
                 Registros
-              </a>
+              </a>)}
             </li>
             <li className="mt-2">
               <button 

@@ -82,7 +82,7 @@ function CuadroLiquidacion ({ section2, onChange, onRemove }) {
                 <button
                 className="btn-eliminar"
                 onClick={onRemove}>
-                    Eliminar CuaLi
+                    Eliminar
                 </button>
             </div>
         </div>

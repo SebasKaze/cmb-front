@@ -1,16 +1,16 @@
 .main-container {
-    min-height: 100vh;
-    background-color: #f9fafb;
-    display: flex;
-    flex-direction: column;
-    padding: 4rem;     
+  min-height: 100vh;
+  background-color: #f9fafb;
+  display: flex;
+  flex-direction: column;
+  padding: 4rem;     
 }
 
 body{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: system-ui;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: system-ui;
 }
 /* Estilos generales para todos los botones */
 .btn-crud, .btn-agregar, .btn-eliminar,.btn-busqueda {
@@ -27,11 +27,35 @@ body{
 }
 
 .btn-agregar {
-    background-color: #09f86c; /* Verde */
+    background-color: #d5a60d; /* Naranja oscuro */
+    color: #ffffff; /* Texto blanco */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: bold;
+}
+
+.btn-agregar:hover {
+    background-color: #c1850f; /* Más oscuro al pasar el mouse */
+    transform: scale(1.05); /* Pequeño aumento de tamaño */
 }
 
 .btn-eliminar {
-    background-color: #cc2f08; /* Rojo */
+    background-color: #e0350a; /* Rojo */
+    color: #ffffff; /* Texto blanco */
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-weight: bold;
+}
+
+.btn-eliminar:hover {
+    background-color: #991f05; /* Más oscuro al pasar el mouse */
+    transform: scale(1.05); /* Pequeño aumento de tamaño */
 }
 
 .btn-busqueda {

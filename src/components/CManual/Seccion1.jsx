@@ -59,139 +59,152 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
             </h2>
             <section>
                 <div className="grid grid-cols-3 gap-4">
-                    {/* Numero de pedimento */}
                     <div className="flex flex-col items-center text-center">
-                    <label className="mb-2">Número de pedimento</label>
-                    <input 
-                    type="text" 
-                    className="w-full border border-gray-300 rounded p-2"
-                    name="noPedimento"
-                    value={formData.seccion1?.noPedimento || ""}
-                    onChange={handleChange}
-                    pattern="[0-9]{15}"
-                    minLength={15}
-                    maxLength={15}
-                    required
-                    onInvalid={(e) =>
-                        e.target.setCustomValidity("Este campo es obligatorio y debe contener exactamente 15 dígitos numéricos.")
-                    }
-                    onInput={(e) => e.target.setCustomValidity("")}
-                    />
-                </div>
+                        <label className="mb-2">Número de pedimento <span className="text-red-600">(*)</span></label>
+                        <input 
+                            type="text" 
+                            className="w-full border border-gray-300 rounded p-2"
+                            name="noPedimento"
+                            value={formData.seccion1?.noPedimento || ""}
+                            onChange={handleChange}
+                            pattern="[0-9]{15}"
+                            minLength={15}
+                            maxLength={15}
+                            required
+                            placeholder="Ej: 123456789012345"
+                            onInvalid={(e) =>
+                                e.target.setCustomValidity("Este campo es obligatorio y debe contener exactamente 15 dígitos numéricos.")
+                            }
+                            //Funcion para marcarte que ciertas cosas son necesarias
+                            onInput={(e) => {
+                                e.target.setCustomValidity("");
+                                // Mostrar advertencia si se excede la longitud
+                                if (e.target.value.length > 15) {
+                                    e.target.nextElementSibling?.classList.remove("hidden");
+                                } else {
+                                    e.target.nextElementSibling?.classList.add("hidden");
+                                }
+                            }}
+                        />
+                        <div className="hidden text-red-500 text-sm mt-1">
+                            Máximo 15 caracteres permitidos
+                        </div>
+                    </div>
 
-                <div className="flex flex-col items-center text-center">
-                <label className="mb-2">Tipo de operación</label>
-                <select 
-                    className="w-full border border-gray-300 rounded p-2 bg-white"
-                    name="tipoOperacion"
-                    onChange={handleChange}
-                    required
-                >
-                    <option value="" disabled selected>Seleccione una opción</option>
-                    <option value="IMP">IMP (Importación)</option>
-                    <option value="EXP">EXP (Exportación)</option>
-                    <option value="TRA">TRA (Tránsito)</option>
-                </select>
-            </div>
 
-            <div className="flex flex-col items-center text-center">
-                <label className="mb-2">Clave de pedimento</label>
-                <select 
-                    className="w-full border border-gray-300 rounded p-2 bg-white"
-                    name="clavePedi"
-                    onChange={handleChange}
-                    required
-                >
-                    <option value="" disabled selected>Seleccione una opción</option>
-                    <option disabled>RÉGIMEN DEFINITIVO</option>
-                    <option value="A1">A1</option>
-                    <option value="A3">A3</option>
-                    <option value="C1">C1</option>
-                    <option value="D1">D1</option>
-                    <option value="GC">GC</option>
-                    <option value="K1">K1</option>
-                    <option value="L1">L1</option>
-                    <option value="P1">P1</option>
-                    <option value="S2">S2</option>
-                    <option value="T1">T1</option>
-                    <option value="VF">VF</option>
-                    <option value="VU">VU</option>
-                    <option disabled>OPERACIONES VIRTUALES</option>
-                    <option value="G9">G9</option>
-                    <option value="V1">V1</option>
-                    <option value="V2">V2</option>
-                    <option value="V5">V5</option>
-                    <option value="V6">V6</option>
-                    <option value="V7">V7</option>
-                    <option value="V9">V9</option>
-                    <option value="VD">VD</option>
-                    <option disabled>TEMPORALES</option>
-                    <option value="AD">AD</option>
-                    <option value="AJ">AJ</option>
-                    <option value="BA">BA</option>
-                    <option value="BB">BB</option>
-                    <option value="BC">BC</option>
-                    <option value="BD">BD</option>
-                    <option value="BE">BE</option>
-                    <option value="BF">BF</option>
-                    <option value="BH">BH</option>
-                    <option value="BI">BI</option>
-                    <option value="BM">BM</option>
-                    <option value="BP">BP</option>
-                    <option value="BR">BR</option>
-                    <option value="H1">H1</option>
-                    <option value="H8">H8</option>
-                    <option value="I1">I1</option>
-                    <option value="F4">F4</option>
-                    <option value="F5">F5</option>
-                    <option disabled>IMMEX</option>
-                    <option value="IN">IN</option>
-                    <option value="AF">AF</option>
-                    <option value="RT">RT</option>
-                    <option disabled>AGD</option>
-                    <option value="A4">A4</option>
-                    <option value="E1">E1</option>
-                    <option value="E2">E2</option>
-                    <option value="G1">G1</option>
-                    <option value="C3">C3</option>
-                    <option value="K2">K2</option>
-                    <option disabled>LOCALES AUTORIZADOS</option>
-                    <option value="A5">A5</option>
-                    <option value="E3">E3</option>
-                    <option value="E4">E4</option>
-                    <option value="G2">G2</option>
-                    <option value="K3">K3</option>
-                    <option disabled>IA</option>
-                    <option value="F2">F2</option>
-                    <option value="F3">F3</option>
-                    <option value="V3">V3</option>
-                    <option value="V4">V4</option>
-                    <option disabled>DUTY FREE</option>
-                    <option value="F8">F8</option>
-                    <option value="F9">F9</option>
-                    <option value="G6">G6</option>
-                    <option value="G7">G7</option>
-                    <option value="V8">V8</option>
-                    <option disabled>TRANSFORMACIÓN EN RECINTO FISCALIZADO</option>
-                    <option value="M1">M1</option>
-                    <option value="M2">M2</option>
-                    <option value="J3">J3</option>
-                    <option disabled>RFE</option>
-                    <option value="G8">G8</option>
-                    <option value="M3">M3</option>
-                    <option value="M4">M4</option>
-                    <option value="M5">M5</option>
-                    <option value="J4">J4</option>
-                    <option disabled>TRÁNSITOS</option>
-                    <option value="T3">T3</option>
-                    <option value="T6">T6</option>
-                    <option value="T7">T7</option>
-                    <option value="T9">T9</option>
-                    <option disabled>OTROS</option>
-                    <option value="R1">R1</option>
-                    <option value="CT">CT</option>
-                </select>
-            </div>
+                    <div className="flex flex-col items-center text-center">
+                    <label className="mb-2">Tipo de operación <span className="text-red-600">(*)</span></label>
+                    <select 
+                        className="w-full border border-gray-300 rounded p-2 bg-white"
+                        name="tipoOperacion"
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="" disabled selected>Seleccione una opción</option>
+                        <option value="IMP">IMP (Importación)</option>
+                        <option value="EXP">EXP (Exportación)</option>
+                        <option value="TRA">TRA (Tránsito)</option>
+                    </select>
+                    </div>
+
+                    <div className="flex flex-col items-center text-center">
+                        <label className="mb-2">Clave de pedimento <span className="text-red-600">(*)</span></label>
+                        <select 
+                            className="w-full border border-gray-300 rounded p-2 bg-white"
+                            name="clavePedi"
+                            onChange={handleChange}
+                            required
+                        >
+                            <option value="" disabled selected>Seleccione una opción </option>
+                            <option disabled>RÉGIMEN DEFINITIVO</option>
+                            <option value="A1">A1</option>
+                            <option value="A3">A3</option>
+                            <option value="C1">C1</option>
+                            <option value="D1">D1</option>
+                            <option value="GC">GC</option>
+                            <option value="K1">K1</option>
+                            <option value="L1">L1</option>
+                            <option value="P1">P1</option>
+                            <option value="S2">S2</option>
+                            <option value="T1">T1</option>
+                            <option value="VF">VF</option>
+                            <option value="VU">VU</option>
+                            <option disabled>OPERACIONES VIRTUALES</option>
+                            <option value="G9">G9</option>
+                            <option value="V1">V1</option>
+                            <option value="V2">V2</option>
+                            <option value="V5">V5</option>
+                            <option value="V6">V6</option>
+                            <option value="V7">V7</option>
+                            <option value="V9">V9</option>
+                            <option value="VD">VD</option>
+                            <option disabled>TEMPORALES</option>
+                            <option value="AD">AD</option>
+                            <option value="AJ">AJ</option>
+                            <option value="BA">BA</option>
+                            <option value="BB">BB</option>
+                            <option value="BC">BC</option>
+                            <option value="BD">BD</option>
+                            <option value="BE">BE</option>
+                            <option value="BF">BF</option>
+                            <option value="BH">BH</option>
+                            <option value="BI">BI</option>
+                            <option value="BM">BM</option>
+                            <option value="BP">BP</option>
+                            <option value="BR">BR</option>
+                            <option value="H1">H1</option>
+                            <option value="H8">H8</option>
+                            <option value="I1">I1</option>
+                            <option value="F4">F4</option>
+                            <option value="F5">F5</option>
+                            <option disabled>IMMEX</option>
+                            <option value="IN">IN</option>
+                            <option value="AF">AF</option>
+                            <option value="RT">RT</option>
+                            <option disabled>AGD</option>
+                            <option value="A4">A4</option>
+                            <option value="E1">E1</option>
+                            <option value="E2">E2</option>
+                            <option value="G1">G1</option>
+                            <option value="C3">C3</option>
+                            <option value="K2">K2</option>
+                            <option disabled>LOCALES AUTORIZADOS</option>
+                            <option value="A5">A5</option>
+                            <option value="E3">E3</option>
+                            <option value="E4">E4</option>
+                            <option value="G2">G2</option>
+                            <option value="K3">K3</option>
+                            <option disabled>IA</option>
+                            <option value="F2">F2</option>
+                            <option value="F3">F3</option>
+                            <option value="V3">V3</option>
+                            <option value="V4">V4</option>
+                            <option disabled>DUTY FREE</option>
+                            <option value="F8">F8</option>
+                            <option value="F9">F9</option>
+                            <option value="G6">G6</option>
+                            <option value="G7">G7</option>
+                            <option value="V8">V8</option>
+                            <option disabled>TRANSFORMACIÓN EN RECINTO FISCALIZADO</option>
+                            <option value="M1">M1</option>
+                            <option value="M2">M2</option>
+                            <option value="J3">J3</option>
+                            <option disabled>RFE</option>
+                            <option value="G8">G8</option>
+                            <option value="M3">M3</option>
+                            <option value="M4">M4</option>
+                            <option value="M5">M5</option>
+                            <option value="J4">J4</option>
+                            <option disabled>TRÁNSITOS</option>
+                            <option value="T3">T3</option>
+                            <option value="T6">T6</option>
+                            <option value="T7">T7</option>
+                            <option value="T9">T9</option>
+                            <option disabled>OTROS</option>
+                            <option value="R1">R1</option>
+                            <option value="CT">CT</option>
+                        </select>
+                    </div>
 
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2">Regimen</label>
@@ -212,6 +225,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                             <option value="RFS">RFS</option>
                         </select>
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="dest_ori">Destino/Origen</label>
                         <select  className="w-full border border-gray-300 rounded p-2 bg-white" 
@@ -232,30 +246,37 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                             <option value="11">11</option>
                         </select>
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="t_cambio">Tipo de cambio</label>
                         <input type="number" step="0.000001" className="w-full border border-gray-300 rounded p-2"
                         name="tipoCambio"
                         value={formData.seccion1?.tipoCambio || ""}
+                        placeholder="Ej: 11.11"
                         onChange={handleChange}
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="peso_br">Peso bruto (kg)</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
                         name="pesoBruto"
                         value={formData.seccion1?.pesoBruto || ""}
                         onChange={handleChange}
+                        placeholder="Ej: 1234.120"
                         />
                     </div>
+                
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="aduana_es">Aduana E/S</label>
                         <input type="text" pattern="\d*"  className="w-full border border-gray-300 rounded p-2"
                         name="aduanaES"
                         value={formData.seccion1?.aduanaES || ""}
                         onChange={handleChange}
+                        placeholder="Ej: 110"
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="m_trans">Medio de transporte</label>
                         <select className="w-full border border-gray-300 rounded p-2 bg-white"
@@ -278,6 +299,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                             <option value="99">99</option>
                         </select>
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="m_trans_arr">Medio de transporte arribo</label>
                         <select className="w-full border border-gray-300 rounded p-2 bg-white"
@@ -300,6 +322,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                             <option value="99">99</option>
                         </select>
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="m_trans_sa">Medio de transporte salida</label>
                         <select className="w-full border border-gray-300 rounded p-2 bg-white"
@@ -322,47 +345,74 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                             <option value="99">99</option>
                         </select>
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="v_dol">Valor en dolares</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
                         name="valorDolares"
                         value={formData.seccion1?.valorDolares || ""}
                         onChange={handleChange}
+                        placeholder="Ej: 101010.10"
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="v_adu">Valor aduana</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
                         name="valorAduana"
                         value={formData.seccion1?.valorAduana || ""}
                         onChange={handleChange}
+                        placeholder="Ej: 101010.10"
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="p_pag_valor">Precio pagado/valor comercial</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
                         name="precioPagado"
                         value={formData.seccion1?.precioPagado || ""}
                         onChange={handleChange}
+                        placeholder="Ej: 101010"
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="RFC_im_ex">RFC del importador/exportador</label>
                         <input type="text" className="w-full border border-gray-300 rounded p-2"
                         name="rfc_impo_expo"
                         value={formData.seccion1?.rfc_impo_expo || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                            handleChange({
+                                target: {
+                                    name: "rfc_impo_expo",
+                                    value: e.target.value.toUpperCase(),
+                                    },
+                                })
+                            }
+                        placeholder="Ej: AAAA000000AAA"
+                        minLength={12}
+                        maxLength={13}
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="CURP_im_ex">CURP del importador/exportador</label>
                         <input type="text" className="w-full border border-gray-300 rounded p-2"
                         name="curp_impo_expo"
                         value={formData.seccion1?.curp_impo_expo || ""}
-                        onChange={handleChange}
+                        onChange={(e) =>
+                            handleChange({
+                                target: {
+                                    name: "curp_impo_expo",
+                                    value: e.target.value.toUpperCase(),
+                                    },
+                                })
+                            }
+                        placeholder="Ej: MOCA990728MCMRVN09"
+                        maxLength={18}
                         />
                     </div>
-                    {/*Text area estilo */}
+
                     <div className="col-span-3 flex flex-col items-center text-center">
                             <label className="mb-2">Nombre, denominación o razón social del importador/exportador.</label>
                             <textarea
@@ -373,6 +423,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                             >
                             </textarea>
                     </div>
+
                     <div className="col-span-3 flex flex-col items-center text-center">
                             <label className="mb-2">Domicilio importador/exportador</label>
                             <textarea 
@@ -383,14 +434,17 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                             >
                             </textarea>
                     </div>
+
                     <div className="flex flex-col items-center text-center">
-                        <label className="mb-2" for="val_seguros">Val seguros</label>
+                        <label className="mb-2" for="val_seguros">Val. seguros</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
                         name="valSeguros"
                         value={formData.seccion1?.valSeguros || ""}
                         onChange={handleChange}
+
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="seguros">Seguros</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
@@ -399,6 +453,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         onChange={handleChange}
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="fletes">Fletes</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
@@ -407,6 +462,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         onChange={handleChange}
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="embalajes">Embalajes</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
@@ -415,6 +471,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         onChange={handleChange}
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="o_inc">Otros Incrementales</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
@@ -423,6 +480,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         onChange={handleChange}
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="t_dec">Transporte decrementales</label>
                         <input type="number"  className="w-full border border-gray-300 rounded p-2"
@@ -431,6 +489,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         onChange={handleChange}
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="s_dec">Seguros decrementales</label>
                         <input type="number"  className="w-full border border-gray-300 rounded p-2"
@@ -439,6 +498,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         onChange={handleChange}
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="c_dec">Carga decrementales</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
@@ -446,6 +506,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         value={formData.seccion1?.cargaDecre || ""}
                         onChange={handleChange}/>
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="d_dec">Descarga decrementales</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
@@ -454,6 +515,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         onChange={handleChange}
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="o_dec">Otros decrementales</label>
                         <input type="number" className="w-full border border-gray-300 rounded p-2"
@@ -462,14 +524,17 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         onChange={handleChange}
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="acu_ele">Acuse electrónico de validación/Codigo de aceptacion.</label>
                         <input type="text"  className="w-full border border-gray-300 rounded p-2"
                         name="acuseEle"
                         value={formData.seccion1?.acuseEle || ""}
                         onChange={handleChange}
+                        placeholder="Ej: 4DH2SBBB8"
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="c_barras">Codigo de barras</label>
                         <input type="text" className="w-full border border-gray-300 rounded p-2"
@@ -478,14 +543,17 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         onChange={handleChange}
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="c_adua_des">Clave de la sección aduanera de despacho.</label>
                         <input type="text" className="w-full border border-gray-300 rounded p-2"
                         name="claveSecAdu"
                         value={formData.seccion1?.claveSecAdu || ""}
                         onChange={handleChange}
+                        placeholder="Ej: 750 PUEBLA"
                         />
                     </div>
+
                     <div className="flex flex-col items-center text-center">
                         <label className="mb-2" for="ma_nu_t">Marcas, números y total de bultos.</label>
                         <input type="text" className="w-full border border-gray-300 rounded p-2"
@@ -496,15 +564,15 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                     </div>
         
                     <div className="flex flex-col items-center text-center">
-                        <h3 class="fechas_letra">Fechas</h3>
-                        <label className="mb-2" for="fec_entr">Entrada</label>
+                        <h3 class="fechas_letra"><span className="text-xl text-black">Fechas</span></h3>
+                        <label className="mb-2" for="fec_entr">Entrada <span className="text-red-600">(*)</span></label>
                         <input type="date"  className="w-60 border border-gray-300 rounded p-2"
                         name="fechaEntrada"
                         value={formData.seccion1?.fechaEntrada || ""}
                         onChange={handleChange}
                         required
                         />
-                        <label className="mb-2" for="fec_sal">Pago/Salida</label>
+                        <label className="mb-2" for="fec_sal">Pago/Salida <span className="text-red-600">(*)</span></label>
                         <input type="date" className="w-60 border border-gray-300 rounded p-2"
                         name="fechaSalida"
                         value={formData.seccion1?.fechaSalida || ""}
@@ -512,6 +580,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         required
                         />
                     </div>
+
                 </div>
             </section>   
             <h3 className="text-lg mb-4 text-center">Tasas a nivel de pedimento</h3>
@@ -523,8 +592,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                                 <select
                                     className="w-full border border-gray-300 rounded p-2 bg-white"
                                     value={section.contribucion}
-                                    onChange={(e) => handleSectionChange(section.id, "contribucion", e.target.value)}
-                                >
+                                    onChange={(e) => handleSectionChange(section.id, "contribucion", e.target.value)}>
                                     <option value="" disabled>
                                         Seleccione una opción
                                     </option>
@@ -559,6 +627,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                                     <option value="DFC">DFC</option>
                                 </select>
                             </div>
+
                             <div>
                                 <label className="mb-2 block">Clave del tipo de tasa</label>
                                 <select
@@ -576,6 +645,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                                     ))}
                                 </select>
                             </div>
+
                             <div>
                                 <label className="mb-2 block">Tasa</label>
                                 <input
@@ -585,12 +655,13 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                                     onChange={(e) => handleSectionChange(section.id, "tasa", e.target.value)}
                                 />
                             </div>
+
                             <div className="col-span-3 text-right">
                                 <button
                                     className="btn-eliminar"
                                     onClick={() => handleRemoveSection(section.id)}
                                 >
-                                    Eliminar Contribución
+                                    Eliminar
                                 </button>
                             </div>
                         </div>
@@ -600,7 +671,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                             className="btn-agregar"
                             onClick={handleAddSection}
                         >
-                            Agregar Contribución
+                            Agregar 
                         </button>
                     </div>
                 </div>
@@ -620,7 +691,7 @@ function Section1({ formData, setFormData,  sections , setSections, sections2, s
                         <button
                         className="btn-agregar"
                         onClick={handleAddSection2}>
-                            Agregar CuaLi
+                            Agregar 
                         </button>
                     </div>
                 </div>

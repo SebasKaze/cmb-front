@@ -154,7 +154,10 @@ function Seccion7({ formData, setFormData }) {
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="number"
                                         value={section.CantiUMCS7P}
-                                        onChange={(e) => handleSectionChange(section.id, "CantiUMCS7P", e.target.value)}
+                                        onChange={(e) => {
+                                            const intValue = Math.trunc(Number(e.target.value)); // elimina decimales
+                                            handleSectionChange(section.id, "CantiUMCS7P", intValue);
+                                        }}
                                     />
                                 </div>
                                 <div className="flex flex-col items-center text-center">
@@ -172,7 +175,10 @@ function Seccion7({ formData, setFormData }) {
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="number"
                                         value={section.CantiUMTS7P}
-                                        onChange={(e) => handleSectionChange(section.id, "CantiUMTS7P", e.target.value)}
+                                        onChange={(e) => {
+                                            const intValue = Math.trunc(Number(e.target.value)); // elimina decimales
+                                            handleSectionChange(section.id, "CantiUMTS7P", intValue);
+                                        }}
                                     />
                                 </div>
                                 <div className="flex flex-col items-center text-center">
