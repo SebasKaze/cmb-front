@@ -93,7 +93,7 @@ export default function NavBar({ userData }) {
       </div>
 
       <div className="navbar-end flex items-center p-2 gap-4">
-        {(userData.tipo_de_cuenta === 1 || userData.tipo_de_cuenta === 4) && companies.length > 0 && (
+        {(userData.tipo_de_cuenta === 1 ) && companies.length > 0 && (
           <div className="relative">
             <select 
               className="select-custom bg-yellow-700 text-white"
@@ -141,8 +141,10 @@ export default function NavBar({ userData }) {
 
         <div className="dropdown dropdown-left">
           <div tabIndex="0" role="button" className="avatar px-2 btn btn-ghost btn-circle hover:bg-green-200">
-            <div className="w-10 rounded-full ring-2 ring-red-700">
-              <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="Usuario" />
+            <div className="w-10 h-10 flex items-center justify-center rounded-full ring-4 ring-red-700 bg-yellow-600 text-white font-bold text-lg">
+              {userData?.imagen
+                ? <img className="w-full h-full rounded-full" src={userData.imagen} alt="Usuario" />
+                : userData?.nombre_usuario?.charAt(0)?.toUpperCase() || "?"}
             </div>
           </div>
           <ul tabIndex="0" className="menu menu-sm dropdown-content bg-green-50 rounded-box z-[1] mt-3 w-52 p-2 shadow-lg border border-green-200">

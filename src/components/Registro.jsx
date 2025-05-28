@@ -149,7 +149,11 @@ function Registro() {
 
     // Manejar cambios en los inputs de usuario
     const handleChangeUsuario = (e) => {
-        setFormDataUsuario({ ...formDataUsuario, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+        setFormDataUsuario((prevData) => ({
+            ...prevData,
+            [name]: value,
+        }));
     };
 
     const handleSubmitUsuario = async (e) => {
@@ -454,9 +458,11 @@ function Registro() {
                         disabled={!domicilioSeleccionado}
                         required
                     >
+                        <option disabled value="">Seleccione un rol</option>
                         <option value="1">Administrador CMB</option>
                         <option value="2">Administrador Empresa</option>
                         <option value="3">Usuario Empresa</option>
+                        <option value="4">SAT</option>
                     </select>
                     </div>
 
