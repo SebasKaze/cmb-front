@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 function Login({ onLogin }) {
+    const backConection = import.meta.env.VITE_BACK_URL;
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -49,19 +50,34 @@ function Login({ onLogin }) {
         }));
     };
 
-    const handleContactSubmit = (e) => {
+    const handleContactSubmit = async (e) => {
         e.preventDefault();
-        // Aquí iría la lógica para enviar el formulario de contacto
-        console.log("Formulario de contacto enviado:", contactForm);
-        setContactSuccess(true);
-        setTimeout(() => setContactSuccess(false), 3000);
-        setContactForm({
-            name: "",
-            company: "",
-            email: "",
-            phone: "",
-            message: ""
-        });
+
+        try {
+            const response = await fetch(`${backConection}/contacto`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(contactForm),
+            });
+
+            if (response.ok) {
+                setContactSuccess(true);
+                setContactForm({
+                    name: "",
+                    company: "",
+                    email: "",
+                    phone: "",
+                    message: "",
+                });
+                setTimeout(() => setContactSuccess(false), 3000);
+            } else {
+                console.error("Error al enviar correo");
+            }
+        } catch (error) {
+            console.error("Error en la solicitud:", error);
+        }
     };
 
     return (

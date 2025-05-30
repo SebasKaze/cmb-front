@@ -45,6 +45,7 @@ export default function Pedimento() {
               <th className="border p-2"></th>
             </tr>
           </thead>
+          
           <tbody>
             {data.map((row) => {
               const fechaEnDate = new Date(row.fecha_en);
@@ -63,25 +64,28 @@ export default function Pedimento() {
                 ? "bg-yellow-500 text-black" 
                 : "bg-green-500 text-white";
 
+              // Extraer patente desde el pedimento
+              const patente = row.no_pedimento?.substring(4, 8);
+
               return (
                 <tr key={row.no_pedimento} className="text-center">
                   <td className="border p-2">{row.no_pedimento}</td>
-                  <td className="border p-2">{row.tipo_oper}</td>
+                  <td className="border p-2">{patente}</td>
                   <td className="border p-2">{row.fecha_en}</td>
                   <td className="border p-2">Sin documentos</td>
                   <td className={`border p-2 ${bgColor} font-bold`}>{estatus}</td>
                   <td className="border p-2 flex justify-center gap-2">
-                  {(userData.tipo_de_cuenta !== 3 && userData.tipo_de_cuenta !== 4) && (
-                    <button 
-                    className="text-blue-500 hover:text-blue-800"
-                    onClick={() => handleEdit(row.no_pedimento)}
-                    >
-                      <FaEdit />
-                    </button>
-                  )}
+                    {(userData.tipo_de_cuenta !== 3 && userData.tipo_de_cuenta !== 4) && (
+                      <button 
+                        className="text-blue-500 hover:text-blue-800"
+                        onClick={() => handleEdit(row.no_pedimento)}
+                      >
+                        <FaEdit />
+                      </button>
+                    )}
                     <button 
                       className="text-green-500 hover:text-green-800"
-                      onClick={() => handleView(row.no_pedimento)} // Redirige al ver el pedimento
+                      onClick={() => handleView(row.no_pedimento)}
                     >
                       <FaEye />
                     </button>
@@ -90,6 +94,7 @@ export default function Pedimento() {
               );
             })}
           </tbody>
+
         </table>
       </div>
     </div>
