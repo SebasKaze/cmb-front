@@ -12,6 +12,7 @@ function App() {
     const [userData, setUserData] = useState(null);
     const [selectedCompany, setSelectedCompany] = useState(localStorage.getItem("selectedEmpresa") || "");
     const [selectedAddress, setSelectedAddress] = useState(localStorage.getItem("selectedDomicilio") || "");
+    const [socket, setSocket] = useState(null);
     const getStoredToken = () => localStorage.getItem("token");
     const decodeToken = (token) => {
         try {
@@ -36,6 +37,32 @@ function App() {
         }
     };
 
+    const connectWebSocket = (userId) => {
+        const ws = new WebSocket("ws://localhost:4000");
+
+        ws.onopen = () => {
+            console.log("✅ WebSocket conectado");
+            ws.send(JSON.stringify({ userId }));
+        };
+
+        ws.onmessage = (event) => {
+            const data = JSON.parse(event.data);
+            if (data.type === "logout") {
+                alert(data.reason);
+                handleLogout(); // Forzar logout si el servidor lo indica
+            }
+        };
+
+        ws.onerror = (error) => {
+            console.error("❌ Error WebSocket:", error);
+        };
+
+        ws.onclose = () => {
+            console.warn("🔴 WebSocket cerrado");
+        };
+
+        setSocket(ws);
+    };
     useEffect(() => {
         const token = getStoredToken();
         if (token) {
@@ -46,6 +73,7 @@ function App() {
                 localStorage.setItem("userData", JSON.stringify(user));
                 setSelectedCompany(user.id_empresa);
                 setSelectedAddress(localStorage.getItem("selectedDomicilio") || "");
+                connectWebSocket(user.id_usuario);
             }
         }
     }, []);
@@ -64,6 +92,7 @@ function App() {
                     localStorage.setItem("userData", JSON.stringify(user));
                     setSelectedCompany(user.id_empresa);
                     setSelectedAddress(localStorage.getItem("selectedDomicilio") || "");
+                    connectWebSocket(user.id_usuario);
                 }
             }
         } catch (error) {
@@ -82,6 +111,11 @@ function App() {
         setUserData(null);
         setSelectedCompany("");
         setSelectedAddress("");
+        
+        if (socket) {
+            socket.close();
+            setSocket(null);
+        }
     };
     const handleCompanyChange = (newCompanyId) => {
         setSelectedCompany(newCompanyId);
