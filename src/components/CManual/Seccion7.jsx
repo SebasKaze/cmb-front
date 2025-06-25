@@ -113,21 +113,21 @@ function Seccion7({ formData, setFormData }) {
                                     />
                                 </div>
                                 <div className="flex flex-col items-center text-center">
-                                    <label className="mb-2">Vinc.</label>
-                                    <input
-                                        className="w-full border border-gray-300 rounded p-2"
-                                        type="text"
-                                        value={section.vinc}
-                                        onChange={(e) => handleSectionChange(section.id, "vinc", e.target.value)}
-                                    />
-                                </div>
-                                <div className="flex flex-col items-center text-center">
                                     <label className="mb-2">Subd.</label>
                                     <input
                                         className="w-full border border-gray-300 rounded p-2"
                                         type="text"
                                         value={section.Subd}
                                         onChange={(e) => handleSectionChange(section.id, "Subd", e.target.value)}
+                                    />
+                                </div>
+                                <div className="flex flex-col items-center text-center">
+                                    <label className="mb-2">Vinc.</label>
+                                    <input
+                                        className="w-full border border-gray-300 rounded p-2"
+                                        type="text"
+                                        value={section.vinc}
+                                        onChange={(e) => handleSectionChange(section.id, "vinc", e.target.value)}
                                     />
                                 </div>
                                 <div className="flex flex-col items-center text-center">

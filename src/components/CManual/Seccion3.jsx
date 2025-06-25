@@ -58,7 +58,7 @@ function Seccion3({ formData, setFormData }) {
                 </div>
                 <div className="flex flex-col items-center text-center">
                     <label className="mb-2" for="">Num. CDFI</label>
-                    <input className="w-full border border-gray-300 rounded p-2" type="number"
+                    <input className="w-full border border-gray-300 rounded p-2" type="text"
                     name="numCDFI"
                     value={formData.seccion3?.numCDFI || ""}
                     onChange={handleChange}

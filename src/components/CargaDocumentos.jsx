@@ -88,6 +88,14 @@ function CargarDocumentos() {
             setIsSubmitting(false);
         }
     };
+    const handlePruebas = async () => {
+        try {
+            const response = await axios.get("https://e7a8-2806-107e-1b-c242-d3d-4e89-a5f3-bae7.ngrok-free.app/test");
+            console.log("✅ Conexión exitosa con servidor en PC:", response.data);
+        } catch (error) {
+            console.error("❌ Error al conectar con el servidor en la PC:", error.message);
+        }
+    };
 
     return (
         <div className="max-w-3xl mx-auto p-20 bg-white shadow-md rounded-lg ">
@@ -160,6 +168,9 @@ function CargarDocumentos() {
                 disabled={isSubmitting}
             >
                 {isSubmitting ? 'Enviando...' : 'Enviar documentos'}
+            </button>
+            <button className="btn-crud" onClick={handlePruebas}>
+                Pruebas
             </button>
         </div>
     );
