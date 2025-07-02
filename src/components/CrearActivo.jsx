@@ -55,7 +55,7 @@ function CambioCrearActivo() {
     useEffect(() => {
         const fetchPedimentos = async () => {
             try {
-                const response = await axios.get(`${backConection}/api/pedimentos/activofijo?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`);
+                const response = await axios.get(`${backConection}/api/pedimentoAf/activofijo?id_empresa=${id_empresa}&id_domicilio=${id_domicilio}`);
                 setPedimentos(response.data);
             } catch (error) {
                 console.error("Error al obtener pedimentos:", error);
