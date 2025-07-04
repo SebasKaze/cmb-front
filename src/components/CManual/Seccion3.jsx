@@ -1,7 +1,59 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
 
 function Seccion3({ formData, setFormData }) {
+
+    useEffect(() => {
+        if (!formData.seccion3?.numCDFI || formData.seccion3.numCDFI.length === 0) {
+            setFormData((prev) => ({
+            ...prev,
+            seccion3: {
+                ...prev.seccion3,
+                numCDFI: [""],
+            },
+            }));
+        }
+    }, []);
+
+    const addNumCDFI = () => {
+        setFormData((prev) => ({
+        ...prev,
+        seccion3: {
+            ...prev.seccion3,
+            numCDFI: [...prev.seccion3.numCDFI, ""],
+        },
+        }));
+    };
+
+    const removeNumCDFI = (index) => {
+        setFormData((prev) => {
+        const copia = [...prev.seccion3.numCDFI];
+        if (copia.length > 1) {
+            copia.splice(index, 1);
+        }
+        return {
+            ...prev,
+            seccion3: {
+                ...prev.seccion3,
+                numCDFI: copia,
+            },
+        };
+        });
+    };
+
+    const handleNumCDFIChange = (index, valor) => {
+        setFormData((prev) => {
+        const copia = [...prev.seccion3.numCDFI];
+        copia[index] = valor;
+        return {
+        ...prev,
+        seccion3: {
+            ...prev.seccion3,
+            numCDFI: copia,
+        },
+        };
+    });
+    };
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData((prev) => ({
@@ -56,14 +108,41 @@ function Seccion3({ formData, setFormData }) {
                         <option value="no">NO</option>
                     </select>
                 </div>
-                <div className="flex flex-col items-center text-center">
-                    <label className="mb-2" for="">Num. CDFI</label>
-                    <input className="w-full border border-gray-300 rounded p-2" type="number"
-                    name="numCDFI"
-                    value={formData.seccion3?.numCDFI || ""}
-                    onChange={handleChange}
+                <div className="flex flex-col items-center text-center col-span-3 mb-4">
+                <label className="mb-2">Num. CDFI</label>
+
+                {formData.seccion3?.numCDFI?.map((valor, index) => (
+                  <div key={index} className="w-full flex gap-2 mb-2">
+                    <input
+                      type="text"
+                      className="flex-1 border border-gray-300 rounded p-2"
+                      value={valor}
+                      onChange={(e) => handleNumCDFIChange(index, e.target.value)}
                     />
-                </div>
+                    <button
+                      type="button"
+                      className="bg-red-500 text-white px-2 rounded disabled:opacity-50"
+                      onClick={() => removeNumCDFI(index)}
+                      disabled={formData.seccion3.numCDFI.length === 1}
+                      title={
+                        formData.seccion3.numCDFI.length === 1
+                          ? "Debe haber al menos un campo"
+                          : "Eliminar"
+                      }
+                    >
+                      ✕
+                    </button>
+                  </div>
+                ))}
+
+                <button
+                  type="button"
+                  className="bg-blue-500 text-white px-4 py-1 rounded"
+                  onClick={addNumCDFI}
+                >
+                  + Agregar CDFI
+                </button>
+              </div>
                 <div className="flex flex-col items-center text-center">
                     <label className="mb-2" for="">Fecha</label>
                     <input className="w-full border border-gray-300 rounded p-2" type="date"
